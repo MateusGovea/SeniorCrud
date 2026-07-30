@@ -9,10 +9,6 @@ export const storage = {
     localStorage.setItem(TOKEN_KEY, token)
   },
 
-  removeToken(): void {
-    localStorage.removeItem(TOKEN_KEY)
-  },
-
   clear(): void {
     localStorage.removeItem(TOKEN_KEY)
   },

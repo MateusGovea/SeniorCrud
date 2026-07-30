@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Button } from '@/components/Button'
 import { useDeleteAddress } from '@/features/addresses/hooks'
 import type { AddressResponse } from '@/features/addresses/types'
@@ -11,7 +11,6 @@ interface DeleteAddressDialogProps {
 
 export function DeleteAddressDialog({ isOpen, onClose, address }: DeleteAddressDialogProps) {
   const deleteMutation = useDeleteAddress()
-  const [serverError, setServerError] = useState<string | null>(null)
 
   useEffect(() => {
     if (deleteMutation.isSuccess) {
@@ -22,12 +21,7 @@ export function DeleteAddressDialog({ isOpen, onClose, address }: DeleteAddressD
   if (!isOpen) return null
 
   async function handleConfirm() {
-    setServerError(null)
-    try {
-      await deleteMutation.mutateAsync({ id: address.id, userId: address.userId })
-    } catch (err) {
-      setServerError(err instanceof Error ? err.message : 'Erro inesperado')
-    }
+    await deleteMutation.mutateAsync({ id: address.id, userId: address.userId })
   }
 
   return (
@@ -52,12 +46,12 @@ export function DeleteAddressDialog({ isOpen, onClose, address }: DeleteAddressD
           <p className="mt-0.5 text-xs text-gray-400">Esta ação não pode ser desfeita.</p>
         </div>
 
-        {(serverError || (deleteMutation.isError && !serverError)) && (
+        {deleteMutation.isError && (
           <div className="mt-4 flex items-start gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-700">
             <svg className="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="currentColor">
               <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 5a1 1 0 012 0v3a1 1 0 01-2 0V5zm1 7a1 1 0 110-2 1 1 0 010 2z" />
             </svg>
-            <span>{serverError ?? deleteMutation.error?.message ?? 'Erro ao excluir endereço'}</span>
+            <span>{deleteMutation.error?.message ?? 'Erro ao excluir endereço'}</span>
           </div>
         )}
 
