@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
-import { useUsers } from '@/features/users/hooks'
+import { useUsers, useExportUsers } from '@/features/users/hooks'
 import { Card } from '@/components/Card'
 
 export function Dashboard() {
   const { user } = useAuth()
   const navigate = useNavigate()
   const { data: users } = useUsers()
+  const exportMutation = useExportUsers()
 
   const totalUsers = users?.length ?? 0
   const activeUsers = users?.filter((u) => u.isActive).length ?? 0
@@ -23,6 +24,7 @@ export function Dashboard() {
       ),
       color: 'text-accent',
       bg: 'bg-accent/10',
+      onClick: () => navigate('/users', { state: { filter: 'all' } }),
     },
     {
       label: 'Usuários Ativos',
@@ -34,6 +36,7 @@ export function Dashboard() {
       ),
       color: 'text-success',
       bg: 'bg-success/10',
+      onClick: () => navigate('/users', { state: { filter: 'active' } }),
     },
     {
       label: 'Administradores',
@@ -45,6 +48,7 @@ export function Dashboard() {
       ),
       color: 'text-warning',
       bg: 'bg-warning/10',
+      onClick: () => navigate('/users', { state: { filter: 'admin' } }),
     },
   ]
 
@@ -61,7 +65,14 @@ export function Dashboard() {
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
         {metrics.map((metric) => (
-          <div key={metric.label} className="rounded-xl border border-border-primary bg-bg-surface p-5 transition-all duration-200 hover:border-border-hover hover:shadow-lg hover:shadow-black/20">
+          <div
+            key={metric.label}
+            onClick={metric.onClick}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); metric.onClick() } }}
+            className="rounded-xl border border-border-primary bg-bg-surface p-5 transition-all duration-200 hover:border-border-hover hover:shadow-lg hover:shadow-black/20 cursor-pointer"
+          >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs font-medium text-text-muted">{metric.label}</p>
@@ -78,7 +89,7 @@ export function Dashboard() {
       <div>
         <h2 className="text-sm font-semibold text-text-primary mb-3">Ações Rápidas</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <Card hover onClick={() => navigate('/users')}>
+          <Card hover onClick={() => navigate('/users', { state: { openCreateUser: true } })}>
             <div className="flex items-center gap-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10 text-accent">
                 <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -91,7 +102,7 @@ export function Dashboard() {
               </div>
             </div>
           </Card>
-          <Card hover onClick={() => navigate('/users')}>
+          <Card hover onClick={() => exportMutation.mutate(undefined)}>
             <div className="flex items-center gap-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-success/10 text-success">
                 <svg className="h-5 w-5" viewBox="0 0 16 16" fill="currentColor">
@@ -105,7 +116,7 @@ export function Dashboard() {
               </div>
             </div>
           </Card>
-          <Card hover onClick={() => navigate('/users')}>
+          <Card hover onClick={() => navigate('/users', { state: { showAddressesHint: true } })}>
             <div className="flex items-center gap-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-warning/10 text-warning">
                 <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

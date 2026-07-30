@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useLocation, useNavigate, Link } from 'react-router-dom'
 import { useAddresses } from '@/features/addresses/hooks'
 import { AddressTable } from './AddressTable'
 import { AddressModal } from '@/features/addresses/components/AddressModal'
@@ -19,11 +19,25 @@ type DeleteState =
   | { type: 'closed' }
   | { type: 'confirm'; address: AddressResponse }
 
+function Chevron() {
+  return (
+    <svg className="h-3 w-3" viewBox="0 0 16 16" fill="currentColor">
+      <path fillRule="evenodd" d="M6.22 3.22a.75.75 0 011.06 0l4.25 4.25a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 010-1.06z" />
+    </svg>
+  )
+}
+
 export function UserAddresses() {
   const { id } = useParams<{ id: string }>()
+  const location = useLocation()
+  const navigate = useNavigate()
   const { data: addresses, isLoading, isError, error, refetch } = useAddresses(id)
   const [modal, setModal] = useState<ModalState>({ type: 'closed' })
   const [deleteDialog, setDeleteDialog] = useState<DeleteState>({ type: 'closed' })
+
+  const navState = location.state as { userName?: string; fromUsersSearch?: string } | null
+  const userName = navState?.userName
+  const fromUsersSearch = navState?.fromUsersSearch
 
   function handleCreate() {
     setModal({ type: 'create' })
@@ -53,11 +67,30 @@ export function UserAddresses() {
   return (
     <div className="animate-fade-in space-y-6">
       <div className="flex items-center gap-2 text-xs text-text-muted">
+        <Link to="/dashboard" className="hover:text-text-secondary transition-colors">Dashboard</Link>
+        <Chevron />
         <Link to="/users" className="hover:text-text-secondary transition-colors">Usuários</Link>
-        <svg className="h-3 w-3" viewBox="0 0 16 16" fill="currentColor">
-          <path fillRule="evenodd" d="M6.22 3.22a.75.75 0 011.06 0l4.25 4.25a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 010-1.06z" />
-        </svg>
+        {userName && (
+          <>
+            <Chevron />
+            <span className="text-text-muted">{userName}</span>
+          </>
+        )}
+        <Chevron />
         <span className="text-text-primary font-medium">Endereços</span>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => navigate('/users', { state: fromUsersSearch ? { search: fromUsersSearch } : undefined })}
+        >
+          <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+          </svg>
+          Voltar
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">

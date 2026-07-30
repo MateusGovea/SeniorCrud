@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useCallback, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useUsers, useExportUsers } from '@/features/users/hooks'
 import { UsersTable } from './UsersTable'
 import { UserModal } from '@/features/users/components/UserModal'
@@ -22,15 +22,46 @@ type DeleteState =
 
 export function Users() {
   const navigate = useNavigate()
+  const location = useLocation()
   const { data: users, isLoading, isError, error, refetch } = useUsers()
   const [search, setSearch] = useState('')
   const [modal, setModal] = useState<ModalState>({ type: 'closed' })
   const [deleteDialog, setDeleteDialog] = useState<DeleteState>({ type: 'closed' })
+  const [showAddressesHint, setShowAddressesHint] = useState(false)
   const exportMutation = useExportUsers()
 
+  useEffect(() => {
+    const state = location.state as Record<string, unknown> | null
+    if (!state) return
+
+    let shouldReplace = false
+
+    if (state.openCreateUser === true) {
+      setModal({ type: 'create' })
+      shouldReplace = true
+    }
+
+    if (state.showAddressesHint === true) {
+      setShowAddressesHint(true)
+      shouldReplace = true
+    }
+
+    if (typeof state.search === 'string' && state.search) {
+      setSearch(state.search)
+      shouldReplace = true
+    }
+
+    if (shouldReplace) {
+      navigate(location.pathname, { replace: true })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleViewAddresses = useCallback(
-    (user: UserListItem) => navigate(`/users/${user.id}/addresses`),
-    [navigate],
+    (user: UserListItem) => navigate(`/users/${user.id}/addresses`, {
+      state: { userName: user.nome, fromUsersSearch: search },
+    }),
+    [navigate, search],
   )
 
   function handleExport() {
@@ -87,6 +118,26 @@ export function Users() {
             <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 5a1 1 0 012 0v3a1 1 0 01-2 0V5zm1 7a1 1 0 110-2 1 1 0 010 2z" />
           </svg>
           <span>{exportMutation.error?.message ?? 'Erro ao exportar usuários'}</span>
+        </div>
+      )}
+
+      {showAddressesHint && (
+        <div className="flex items-start gap-2.5 rounded-lg bg-accent/10 p-3 text-sm text-accent">
+          <svg className="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+          </svg>
+          <div className="flex-1">
+            <p className="font-medium">Gerenciar Endereços</p>
+            <p className="mt-0.5 text-accent/80">Selecione um usuário na tabela abaixo e clique no ícone de endereço para visualizar ou gerenciar seus endereços.</p>
+          </div>
+          <button
+            onClick={() => setShowAddressesHint(false)}
+            className="shrink-0 text-accent/60 hover:text-accent transition-colors"
+          >
+            <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+          </button>
         </div>
       )}
 

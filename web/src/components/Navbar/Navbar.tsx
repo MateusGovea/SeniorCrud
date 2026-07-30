@@ -2,13 +2,15 @@ import { useLocation, Link } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { Button } from '@/components/Button'
 
-function usePageInfo(pathname: string): { title: string; parent?: { label: string; path: string } } {
+function usePageInfo(pathname: string, state: unknown): { title: string; parent?: { label: string; path: string } } {
   if (pathname === '/dashboard') return { title: 'Dashboard' }
   if (pathname === '/users') return { title: 'Usuários' }
   if (pathname.startsWith('/users/')) {
     const segments = pathname.split('/')
     if (segments.length === 4 && segments[3] === 'addresses') {
-      return { title: 'Endereços', parent: { label: 'Usuários', path: '/users' } }
+      const s = state as { userName?: string } | null
+      const label = s?.userName ?? 'Usuários'
+      return { title: 'Endereços', parent: { label, path: '/users' } }
     }
     if (segments.length === 3) {
       return { title: 'Detalhes do Usuário', parent: { label: 'Usuários', path: '/users' } }
@@ -20,7 +22,7 @@ function usePageInfo(pathname: string): { title: string; parent?: { label: strin
 export function Navbar() {
   const { user, logout } = useAuth()
   const location = useLocation()
-  const page = usePageInfo(location.pathname)
+  const page = usePageInfo(location.pathname, location.state)
 
   return (
     <header className="flex h-16 items-center justify-between border-b border-border-primary bg-bg-secondary px-6">
