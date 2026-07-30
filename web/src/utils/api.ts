@@ -13,3 +13,9 @@ export function unwrap<T>(result: ApiResult<T>): T {
   }
   return result.value
 }
+
+export function unwrapVoid(result: ApiResult<unknown>): void {
+  if (!result.isSuccess) {
+    throw new ApiError(result.error?.description ?? 'Erro inesperado')
+  }
+}

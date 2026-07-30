@@ -3,9 +3,11 @@ import { Button } from '@/components/Button'
 
 interface UsersTableProps {
   users: UserListItem[]
+  onEdit: (user: UserListItem) => void
+  onDelete: (user: UserListItem) => void
 }
 
-export function UsersTable({ users }: UsersTableProps) {
+export function UsersTable({ users, onEdit, onDelete }: UsersTableProps) {
   return (
     <div className="overflow-x-auto rounded-lg border border-gray-200">
       <table className="min-w-full divide-y divide-gray-200">
@@ -38,7 +40,7 @@ export function UsersTable({ users }: UsersTableProps) {
                 {user.email}
               </td>
               <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                {user.role}
+                {user.role === 'Admin' ? 'Admin' : 'Usuário'}
               </td>
               <td className="whitespace-nowrap px-6 py-4">
                 <span
@@ -52,10 +54,10 @@ export function UsersTable({ users }: UsersTableProps) {
                 </span>
               </td>
               <td className="whitespace-nowrap px-6 py-4 text-right text-sm">
-                <Button variant="ghost" size="sm" disabled>
+                <Button variant="ghost" size="sm" onClick={() => onEdit(user)}>
                   Editar
                 </Button>
-                <Button variant="ghost" size="sm" disabled>
+                <Button variant="ghost" size="sm" onClick={() => onDelete(user)}>
                   Excluir
                 </Button>
               </td>
