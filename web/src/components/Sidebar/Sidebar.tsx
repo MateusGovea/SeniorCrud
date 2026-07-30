@@ -1,64 +1,110 @@
 import { NavLink } from 'react-router-dom'
+import { useAuth } from '@/hooks/useAuth'
 
-const navigation = [
+const navGroups = [
   {
-    label: 'Dashboard',
-    path: '/dashboard',
-    icon: (
-      <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 6a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2zm0 6a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Usuários',
-    path: '/users',
-    icon: (
-      <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-      </svg>
-    ),
+    label: 'GERAL',
+    items: [
+      {
+        label: 'Dashboard',
+        path: '/dashboard',
+        icon: (
+          <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
+            <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
+          </svg>
+        ),
+      },
+      {
+        label: 'Usuários',
+        path: '/users',
+        icon: (
+          <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+          </svg>
+        ),
+      },
+    ],
   },
 ]
 
 export function Sidebar() {
+  const { user } = useAuth()
+
   return (
-    <aside className="flex w-64 flex-col border-r border-gray-200 bg-white">
-      <div className="flex h-16 items-center gap-2.5 border-b border-gray-200 px-6">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-sm font-bold text-white">
-          S
+    <aside className="flex w-60 flex-col border-r border-border-primary bg-bg-secondary">
+      <div className="flex h-16 items-center gap-3 border-b border-border-primary px-5">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent shadow-lg shadow-accent/20">
+          <span className="text-sm font-bold text-white">S</span>
         </div>
-        <span className="text-base font-semibold text-gray-900">SeniorCrud</span>
+        <div className="flex flex-col">
+          <span className="text-sm font-semibold text-text-primary">Senior CRUD</span>
+          <span className="text-[10px] leading-tight tracking-wider text-text-muted">ENTERPRISE DEMO</span>
+        </div>
       </div>
-      <nav className="flex-1 space-y-0.5 p-3">
-        {navigation.map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            end
-            className={({ isActive }) =>
-              `group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150 ${
-                isActive
-                  ? 'bg-blue-50 text-blue-700'
-                  : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <>
-                <span
-                  className={`shrink-0 transition-colors duration-150 ${
-                    isActive ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-600'
-                  }`}
+
+      <nav className="flex-1 space-y-4 overflow-y-auto p-3">
+        {navGroups.map((group) => (
+          <div key={group.label}>
+            <div className="mb-1 px-3 py-1">
+              <span className="text-[10px] font-semibold tracking-widest text-text-muted">{group.label}</span>
+            </div>
+            <div className="space-y-0.5">
+              {group.items.map((item) => (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  end
+                  className={({ isActive }) =>
+                    `group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150 ${
+                      isActive
+                        ? 'bg-accent/10 text-accent'
+                        : 'text-text-secondary hover:bg-bg-hover hover:text-text-primary'
+                    }`
+                  }
                 >
-                  {item.icon}
-                </span>
-                {item.label}
-              </>
-            )}
-          </NavLink>
+                  {({ isActive }) => (
+                    <>
+                      <span
+                        className={`shrink-0 transition-colors duration-150 ${
+                          isActive ? 'text-accent' : 'text-text-muted group-hover:text-text-secondary'
+                        }`}
+                      >
+                        {item.icon}
+                      </span>
+                      <span className="flex-1">{item.label}</span>
+                      {isActive && (
+                        <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                      )}
+                    </>
+                  )}
+                </NavLink>
+              ))}
+            </div>
+          </div>
         ))}
       </nav>
+
+      <div className="border-t border-border-primary p-3">
+        <div className="space-y-2">
+          <div className="flex items-center gap-2.5 rounded-lg bg-bg-hover px-3 py-2.5">
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-accent/10 text-xs font-medium text-accent ring-1 ring-accent/20">
+              {user?.name?.charAt(0).toUpperCase() ?? 'U'}
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <p className="truncate text-xs font-medium text-text-primary">{user?.name ?? 'Usuário'}</p>
+              <div className="flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-success" />
+                <span className="text-[10px] text-text-muted">Online</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center justify-between px-1">
+            <span className="text-[10px] text-text-muted">v1.0.0</span>
+            <span className="rounded border border-border-primary bg-bg-surface px-1.5 py-0.5 text-[10px] font-medium text-text-muted">PROD</span>
+          </div>
+        </div>
+      </div>
     </aside>
   )
 }

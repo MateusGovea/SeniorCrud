@@ -111,7 +111,7 @@ export function AddressForm({ defaultValues, onSave, onCancel, serverError }: Ad
   return (
     <form onSubmit={handleSubmit(onSave)} className="space-y-4">
       {serverError && (
-        <div className="flex items-start gap-2.5 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+        <div className="flex items-start gap-2.5 rounded-lg bg-danger-light p-3 text-sm text-danger">
           <svg className="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="currentColor">
             <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 5a1 1 0 012 0v3a1 1 0 01-2 0V5zm1 7a1 1 0 110-2 1 1 0 010 2z" />
           </svg>
@@ -189,14 +189,14 @@ export function AddressForm({ defaultValues, onSave, onCancel, serverError }: Ad
           />
         </div>
 
-        <div className="flex items-center gap-2.5 rounded-lg border border-gray-200 bg-gray-50/50 px-4 py-3">
+        <div className="flex items-center gap-2.5 rounded-lg border border-border-primary bg-bg-surface px-4 py-3">
           <input
             type="checkbox"
             id="isPrimary"
-            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            className="h-4 w-4 rounded border-border-primary bg-bg-surface text-accent focus:ring-accent/50"
             {...register('isPrimary')}
           />
-          <label htmlFor="isPrimary" className="text-sm font-medium text-gray-700">
+          <label htmlFor="isPrimary" className="text-sm font-medium text-text-secondary">
             Endereço principal
           </label>
         </div>

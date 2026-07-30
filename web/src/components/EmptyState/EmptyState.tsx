@@ -1,11 +1,13 @@
 import { Button } from '@/components/Button'
 
 interface EmptyStateProps {
+  title?: string
   message?: string
   action?: { label: string; onClick: () => void }
+  onCreateNew?: () => void
 }
 
-export function EmptyState({ message, action }: EmptyStateProps) {
+export function EmptyState({ title, message, action, onCreateNew }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-border-primary bg-bg-surface py-16">
       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-bg-hover">
@@ -14,14 +16,17 @@ export function EmptyState({ message, action }: EmptyStateProps) {
         </svg>
       </div>
       <div className="text-center">
-        <p className="text-sm font-medium text-text-primary">Nenhum registro encontrado</p>
+        <p className="text-sm font-medium text-text-primary">{title ?? 'Nenhum registro encontrado'}</p>
         <p className="mt-0.5 text-sm text-text-secondary">
           {message ?? 'Nenhum item para exibir no momento.'}
         </p>
       </div>
-      {action && (
-        <Button variant="outline" size="sm" onClick={action.onClick}>
-          {action.label}
+      {(action ?? onCreateNew) && (
+        <Button variant="outline" size="sm" onClick={() => {
+          if (action) action.onClick()
+          if (onCreateNew) onCreateNew()
+        }}>
+          {action?.label ?? 'Criar Novo'}
         </Button>
       )}
     </div>

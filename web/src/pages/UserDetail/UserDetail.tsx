@@ -1,7 +1,7 @@
 export function UserDetail() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-gray-900">
+    <div className="animate-fade-in">
+      <h1 className="text-2xl font-bold text-text-primary">
         Detalhes do Usuário
       </h1>
     </div>

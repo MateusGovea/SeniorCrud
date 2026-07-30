@@ -26,11 +26,11 @@ export function DeleteAddressDialog({ isOpen, onClose, address }: DeleteAddressD
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-sm animate-in rounded-xl bg-white p-6 shadow-2xl">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fade-in" onClick={onClose} />
+      <div className="relative z-10 w-full max-w-sm animate-scale-in rounded-xl border border-border-primary bg-bg-surface p-6 shadow-2xl shadow-black/40">
         <div className="flex flex-col items-center text-center">
-          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
-            <svg className="h-6 w-6 text-red-600" viewBox="0 0 20 20" fill="currentColor">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-danger-light">
+            <svg className="h-6 w-6 text-danger" viewBox="0 0 20 20" fill="currentColor">
               <path
                 fillRule="evenodd"
                 d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
@@ -38,16 +38,16 @@ export function DeleteAddressDialog({ isOpen, onClose, address }: DeleteAddressD
               />
             </svg>
           </div>
-          <h2 className="text-lg font-semibold text-gray-900">Excluir Endereço</h2>
-          <p className="mt-1 text-sm text-gray-500">
+          <h2 className="text-lg font-semibold text-text-primary">Excluir Endereço</h2>
+          <p className="mt-1 text-sm text-text-secondary">
             Deseja realmente excluir o endereço{' '}
-            <strong className="text-gray-700">{address.street}, {address.number}</strong>?
+            <strong className="text-text-primary">{address.street}, {address.number}</strong>?
           </p>
-          <p className="mt-0.5 text-xs text-gray-400">Esta ação não pode ser desfeita.</p>
+          <p className="mt-0.5 text-xs text-text-muted">Esta ação não pode ser desfeita.</p>
         </div>
 
         {deleteMutation.isError && (
-          <div className="mt-4 flex items-start gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+          <div className="mt-4 flex items-start gap-2 rounded-lg bg-danger-light p-3 text-sm text-danger">
             <svg className="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="currentColor">
               <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 5a1 1 0 012 0v3a1 1 0 01-2 0V5zm1 7a1 1 0 110-2 1 1 0 010 2z" />
             </svg>

@@ -10,42 +10,42 @@ interface UsersTableProps {
 
 export function UsersTable({ users, onEdit, onDelete, onViewAddresses }: UsersTableProps) {
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-200">
-      <table className="min-w-full divide-y divide-gray-200">
+    <div className="overflow-hidden rounded-xl border border-border-primary">
+      <table className="min-w-full divide-y divide-border-primary">
         <thead>
-          <tr className="border-b border-gray-100 bg-gray-50/80">
-            <th className="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+          <tr className="bg-bg-secondary/50">
+            <th className="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-text-muted">
               Nome
             </th>
-            <th className="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <th className="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-text-muted">
               E-mail
             </th>
-            <th className="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <th className="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-text-muted">
               Perfil
             </th>
-            <th className="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <th className="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-text-muted">
               Ativo
             </th>
-            <th className="px-6 py-3.5 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <th className="px-6 py-3.5 text-right text-xs font-semibold uppercase tracking-wider text-text-muted">
               Ações
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-100 bg-white">
+        <tbody className="divide-y divide-border-primary bg-bg-surface">
           {users.map((user) => (
-            <tr key={user.id} className="transition-colors hover:bg-gray-50/60">
-              <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+            <tr key={user.id} className="transition-colors hover:bg-bg-hover">
+              <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-text-primary">
                 {user.nome}
               </td>
-              <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+              <td className="whitespace-nowrap px-6 py-4 text-sm text-text-secondary">
                 {user.email}
               </td>
               <td className="whitespace-nowrap px-6 py-4">
                 <span
                   className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${
                     user.role === 'Admin'
-                      ? 'bg-purple-100 text-purple-700'
-                      : 'bg-gray-100 text-gray-600'
+                      ? 'bg-accent/10 text-accent'
+                      : 'bg-bg-hover text-text-secondary'
                   }`}
                 >
                   {user.role === 'Admin' ? (
@@ -62,14 +62,14 @@ export function UsersTable({ users, onEdit, onDelete, onViewAddresses }: UsersTa
               </td>
               <td className="whitespace-nowrap px-6 py-4">
                 <span
-                  className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                  className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${
                     user.isActive
-                      ? 'bg-emerald-100 text-emerald-700'
-                      : 'bg-red-100 text-red-700'
+                      ? 'bg-success-light text-success'
+                      : 'bg-danger-light text-danger'
                   }`}
                 >
                   <span className={`h-1.5 w-1.5 rounded-full ${
-                    user.isActive ? 'bg-emerald-500' : 'bg-red-500'
+                    user.isActive ? 'bg-success' : 'bg-danger'
                   }`} />
                   {user.isActive ? 'Ativo' : 'Inativo'}
                 </span>

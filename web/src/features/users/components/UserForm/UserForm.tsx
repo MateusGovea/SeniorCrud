@@ -33,6 +33,19 @@ const roles = [
   { value: 'User', label: 'Usuário' },
 ]
 
+function FormSection({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <div className="mb-3 flex items-center gap-2">
+        <div className="h-px flex-1 bg-border-primary" />
+        <span className="text-[10px] font-semibold tracking-widest text-text-muted">{title}</span>
+        <div className="h-px flex-1 bg-border-primary" />
+      </div>
+      <div className="space-y-4">{children}</div>
+    </div>
+  )
+}
+
 export function UserForm({ mode, defaultValues, onSave, onCancel, serverError }: UserFormProps) {
   const {
     register,
@@ -58,9 +71,9 @@ export function UserForm({ mode, defaultValues, onSave, onCancel, serverError }:
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       {serverError && (
-        <div className="flex items-start gap-2.5 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+        <div className="flex items-start gap-2.5 rounded-lg bg-danger-light p-3 text-sm text-danger">
           <svg className="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="currentColor">
             <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 5a1 1 0 012 0v3a1 1 0 01-2 0V5zm1 7a1 1 0 110-2 1 1 0 010 2z" />
           </svg>
@@ -68,78 +81,84 @@ export function UserForm({ mode, defaultValues, onSave, onCancel, serverError }:
         </div>
       )}
 
-      <Input
-        label="Nome"
-        placeholder="Nome completo"
-        error={errors.nome?.message}
-        {...register('nome')}
-      />
-
-      <Input
-        label="E-mail"
-        type="email"
-        placeholder="seu@email.com"
-        error={errors.email?.message}
-        {...register('email')}
-      />
-
-      {mode === 'create' && (
+      <FormSection title="INFORMAÇÕES PESSOAIS">
         <Input
-          label="Senha"
-          type="password"
-          placeholder="Mínimo 6 caracteres"
-          error={errors.password?.message}
-          {...register('password')}
+          label="Nome"
+          placeholder="Nome completo"
+          error={errors.nome?.message}
+          {...register('nome')}
         />
-      )}
 
-      <Input
-        label="CPF"
-        placeholder="Apenas números"
-        error={errors.cpf?.message}
-        {...register('cpf')}
-      />
+        <Input
+          label="CPF"
+          placeholder="Apenas números"
+          error={errors.cpf?.message}
+          {...register('cpf')}
+        />
+      </FormSection>
 
-      <div className="flex flex-col gap-1.5">
-        <label className="text-sm font-medium text-gray-700">Perfil</label>
-        <select
-          className={`h-10 w-full rounded-lg border px-3 text-sm text-gray-900 transition-all duration-150 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 ${
-            errors.role?.message
-              ? 'border-red-400'
-              : 'border-gray-300 hover:border-gray-400'
-          }`}
-          {...register('role')}
-        >
-          <option value="">Selecione...</option>
-          {roles.map((r) => (
-            <option key={r.value} value={r.value}>
-              {r.label}
-            </option>
-          ))}
-        </select>
-        {errors.role?.message && (
-          <span className="flex items-center gap-1 text-xs text-red-500">
-            <svg className="h-3.5 w-3.5 shrink-0" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 5a1 1 0 012 0v3a1 1 0 01-2 0V5zm1 7a1 1 0 110-2 1 1 0 010 2z" />
-            </svg>
-            {errors.role.message}
-          </span>
-        )}
-      </div>
+      <FormSection title="ACESSO">
+        <Input
+          label="E-mail"
+          type="email"
+          placeholder="seu@email.com"
+          error={errors.email?.message}
+          {...register('email')}
+        />
 
-      {mode === 'edit' && (
-        <div className="flex items-center gap-2.5 rounded-lg border border-gray-200 bg-gray-50/50 px-4 py-3">
-          <input
-            type="checkbox"
-            id="isActive"
-            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-            {...register('isActive')}
+        {mode === 'create' && (
+          <Input
+            label="Senha"
+            type="password"
+            placeholder="Mínimo 6 caracteres"
+            error={errors.password?.message}
+            {...register('password')}
           />
-          <label htmlFor="isActive" className="text-sm font-medium text-gray-700">
-            Usuário ativo
-          </label>
+        )}
+      </FormSection>
+
+      <FormSection title="PERMISSÕES">
+        <div className="flex flex-col gap-1.5">
+          <label className="text-sm font-medium text-text-secondary">Perfil</label>
+          <select
+            className={`h-9 w-full rounded-lg border bg-bg-surface px-3 text-sm text-text-primary transition-all duration-150 focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent/50 ${
+              errors.role?.message
+                ? 'border-danger/50'
+                : 'border-border-primary hover:border-border-hover'
+            }`}
+            {...register('role')}
+          >
+            <option value="">Selecione...</option>
+            {roles.map((r) => (
+              <option key={r.value} value={r.value}>
+                {r.label}
+              </option>
+            ))}
+          </select>
+          {errors.role?.message && (
+            <span className="flex items-center gap-1 text-xs text-danger">
+              <svg className="h-3.5 w-3.5 shrink-0" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 5a1 1 0 012 0v3a1 1 0 01-2 0V5zm1 7a1 1 0 110-2 1 1 0 010 2z" />
+              </svg>
+              {errors.role.message}
+            </span>
+          )}
         </div>
-      )}
+
+        {mode === 'edit' && (
+          <div className="flex items-center gap-2.5 rounded-lg border border-border-primary bg-bg-surface px-4 py-3">
+            <input
+              type="checkbox"
+              id="isActive"
+              className="h-4 w-4 rounded border-border-primary bg-bg-surface text-accent focus:ring-accent/50"
+              {...register('isActive')}
+            />
+            <label htmlFor="isActive" className="text-sm font-medium text-text-secondary">
+              Usuário ativo
+            </label>
+          </div>
+        )}
+      </FormSection>
 
       <div className="flex justify-end gap-3 pt-2">
         <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting}>

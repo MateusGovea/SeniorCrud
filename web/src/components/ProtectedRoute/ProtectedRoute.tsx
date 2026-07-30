@@ -7,8 +7,11 @@ export function ProtectedRoute() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <Loading size="lg" />
+      <div className="flex h-screen items-center justify-center bg-bg-primary">
+        <div className="flex flex-col items-center gap-3">
+          <Loading size="lg" />
+          <p className="text-sm text-text-muted">Carregando...</p>
+        </div>
       </div>
     )
   }

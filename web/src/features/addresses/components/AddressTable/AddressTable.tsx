@@ -9,67 +9,67 @@ interface AddressTableProps {
 
 export function AddressTable({ addresses, onEdit, onDelete }: AddressTableProps) {
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-200">
-      <table className="min-w-full divide-y divide-gray-200">
+    <div className="overflow-hidden rounded-xl border border-border-primary">
+      <table className="min-w-full divide-y divide-border-primary">
         <thead>
-          <tr className="border-b border-gray-100 bg-gray-50/80">
-            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+          <tr className="bg-bg-secondary/50">
+            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-text-muted">
               CEP
             </th>
-            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-text-muted">
               Logradouro
             </th>
-            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-text-muted">
               Número
             </th>
-            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-text-muted">
               Bairro
             </th>
-            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-text-muted">
               Cidade
             </th>
-            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-text-muted">
               Estado
             </th>
-            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-text-muted">
               Principal
             </th>
-            <th className="px-5 py-3.5 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <th className="px-5 py-3.5 text-right text-xs font-semibold uppercase tracking-wider text-text-muted">
               Ações
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-100 bg-white">
+        <tbody className="divide-y divide-border-primary bg-bg-surface">
           {addresses.map((address) => (
-            <tr key={address.id} className="transition-colors hover:bg-gray-50/60">
-              <td className="whitespace-nowrap px-5 py-4 text-sm font-mono text-gray-900">
+            <tr key={address.id} className="transition-colors hover:bg-bg-hover">
+              <td className="whitespace-nowrap px-5 py-4 text-sm font-mono text-text-primary">
                 {address.cep}
               </td>
-              <td className="whitespace-nowrap px-5 py-4 text-sm text-gray-500">
+              <td className="whitespace-nowrap px-5 py-4 text-sm text-text-secondary">
                 {address.street}
               </td>
-              <td className="whitespace-nowrap px-5 py-4 text-sm text-gray-500">
+              <td className="whitespace-nowrap px-5 py-4 text-sm text-text-secondary">
                 {address.number}
               </td>
-              <td className="whitespace-nowrap px-5 py-4 text-sm text-gray-500">
+              <td className="whitespace-nowrap px-5 py-4 text-sm text-text-secondary">
                 {address.neighborhood}
               </td>
-              <td className="whitespace-nowrap px-5 py-4 text-sm text-gray-500">
+              <td className="whitespace-nowrap px-5 py-4 text-sm text-text-secondary">
                 {address.city}
               </td>
-              <td className="whitespace-nowrap px-5 py-4 text-sm text-gray-500">
+              <td className="whitespace-nowrap px-5 py-4 text-sm text-text-secondary">
                 {address.state}
               </td>
               <td className="whitespace-nowrap px-5 py-4">
                 {address.isPrimary ? (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-700">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-accent/10 px-2.5 py-0.5 text-xs font-medium text-accent">
                     <svg className="h-3 w-3" viewBox="0 0 16 16" fill="currentColor">
-                      <path fillRule="evenodd" d="M10.854 6.146a.5.5 0 010 .708l-3 3a.5.5 0 01-.708 0l-1.5-1.5a.5.5 0 01.708-.708L7.5 8.793l2.646-2.647a.5.5 0 01.708 0z" clipRule="evenodd" />
+                      <path d="M13.854 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L6.5 10.293l6.646-6.647a.5.5 0 01.708 0z" />
                     </svg>
                     Principal
                   </span>
                 ) : (
-                  <span className="text-sm text-gray-300">—</span>
+                  <span className="text-xs text-text-muted">—</span>
                 )}
               </td>
               <td className="whitespace-nowrap px-5 py-4 text-right">

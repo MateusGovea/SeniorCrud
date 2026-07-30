@@ -1,11 +1,12 @@
 import { Button } from '@/components/Button'
 
 interface ErrorStateProps {
+  title?: string
   message?: string
   onRetry?: () => void
 }
 
-export function ErrorState({ message, onRetry }: ErrorStateProps) {
+export function ErrorState({ title, message, onRetry }: ErrorStateProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-danger/20 bg-danger-light/50 py-16">
       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-danger-light">
@@ -18,7 +19,7 @@ export function ErrorState({ message, onRetry }: ErrorStateProps) {
         </svg>
       </div>
       <div className="text-center">
-        <p className="text-sm font-medium text-danger">Erro ao carregar dados</p>
+        <p className="text-sm font-medium text-danger">{title ?? 'Erro ao carregar dados'}</p>
         <p className="mt-0.5 text-sm text-text-secondary">
           {message ?? 'Não foi possível carregar as informações.'}
         </p>
