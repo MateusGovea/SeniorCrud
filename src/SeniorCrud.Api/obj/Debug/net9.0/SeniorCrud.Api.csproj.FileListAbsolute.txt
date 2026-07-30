@@ -134,3 +134,4 @@ C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\runtimes\
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\BCrypt.Net-Next.dll
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\AutoMapper.dll
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\OpenTelemetry.Instrumentation.EntityFrameworkCore.dll

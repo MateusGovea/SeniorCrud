@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "44etY+SfSfk=",
+  "dgSpecHash": "MAEOofuZSrU=",
   "success": true,
   "projectFilePath": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Api\\SeniorCrud.Api.csproj",
   "expectedPackageFiles": [
@@ -64,6 +64,7 @@
     "C:\\Users\\Mateus\\.nuget\\packages\\opentelemetry.exporter.console\\1.17.0\\opentelemetry.exporter.console.1.17.0.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\opentelemetry.extensions.hosting\\1.17.0\\opentelemetry.extensions.hosting.1.17.0.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\opentelemetry.instrumentation.aspnetcore\\1.17.0\\opentelemetry.instrumentation.aspnetcore.1.17.0.nupkg.sha512",
+    "C:\\Users\\Mateus\\.nuget\\packages\\opentelemetry.instrumentation.entityframeworkcore\\1.17.0-beta.1\\opentelemetry.instrumentation.entityframeworkcore.1.17.0-beta.1.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\opentelemetry.instrumentation.http\\1.17.0\\opentelemetry.instrumentation.http.1.17.0.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\polly\\7.2.4\\polly.7.2.4.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\polly.extensions.http\\3.0.0\\polly.extensions.http.3.0.0.nupkg.sha512",

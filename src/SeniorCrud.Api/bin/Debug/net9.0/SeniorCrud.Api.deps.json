@@ -15,6 +15,7 @@
           "OpenTelemetry.Exporter.Console": "1.17.0",
           "OpenTelemetry.Extensions.Hosting": "1.17.0",
           "OpenTelemetry.Instrumentation.AspNetCore": "1.17.0",
+          "OpenTelemetry.Instrumentation.EntityFrameworkCore": "1.17.0-beta.1",
           "OpenTelemetry.Instrumentation.Http": "1.17.0",
           "SeniorCrud.Application": "1.0.0",
           "SeniorCrud.Infrastructure": "1.0.0",
@@ -699,6 +700,19 @@
           "lib/net8.0/OpenTelemetry.Instrumentation.AspNetCore.dll": {
             "assemblyVersion": "1.17.0.1204",
             "fileVersion": "1.17.0.1204"
+          }
+        }
+      },
+      "OpenTelemetry.Instrumentation.EntityFrameworkCore/1.17.0-beta.1": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "10.0.10",
+          "Microsoft.Extensions.Options": "10.0.10",
+          "OpenTelemetry.Api.ProviderBuilderExtensions": "1.17.0"
+        },
+        "runtime": {
+          "lib/net8.0/OpenTelemetry.Instrumentation.EntityFrameworkCore.dll": {
+            "assemblyVersion": "1.17.0.1207",
+            "fileVersion": "1.17.0.1207"
           }
         }
       },
@@ -1517,6 +1531,13 @@
       "sha512": "sha512-rGbmk1vuy1kvgZmE0ps7Vb99YZvDap6AalrrF60FwnNit1uW/PbeFZj1cpb0T8MPkYmjhBrRJ1/JB6QqXkRjHA==",
       "path": "opentelemetry.instrumentation.aspnetcore/1.17.0",
       "hashPath": "opentelemetry.instrumentation.aspnetcore.1.17.0.nupkg.sha512"
+    },
+    "OpenTelemetry.Instrumentation.EntityFrameworkCore/1.17.0-beta.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BPSv1rk6qEkGZUGTNBfk7XmYqBAWdF3FBdjXEjVClp0bKUl6VCumlaosT84qvlK7YnHLCv5FFqJHx2N62TbKEw==",
+      "path": "opentelemetry.instrumentation.entityframeworkcore/1.17.0-beta.1",
+      "hashPath": "opentelemetry.instrumentation.entityframeworkcore.1.17.0-beta.1.nupkg.sha512"
     },
     "OpenTelemetry.Instrumentation.Http/1.17.0": {
       "type": "package",
