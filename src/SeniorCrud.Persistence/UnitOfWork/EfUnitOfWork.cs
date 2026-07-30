@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore.Storage;
+using SeniorCrud.Application.Interfaces.Persistence;
 using SeniorCrud.Persistence.Contexts;
 
 namespace SeniorCrud.Persistence.UnitOfWork;
@@ -18,15 +19,14 @@ public sealed class EfUnitOfWork : IUnitOfWork
         return await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
+    public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
     {
         if (_currentTransaction is not null)
         {
-            return _currentTransaction;
+            return;
         }
 
         _currentTransaction = await _dbContext.Database.BeginTransactionAsync(cancellationToken);
-        return _currentTransaction;
     }
 
     public async Task CommitTransactionAsync(CancellationToken cancellationToken = default)

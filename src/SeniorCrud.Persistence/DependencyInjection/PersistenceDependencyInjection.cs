@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SeniorCrud.Application.Interfaces.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SeniorCrud.Persistence.Contexts;
@@ -15,7 +16,6 @@ public static class PersistenceDependencyInjection
     {
         services.AddScoped<AuditSaveChangesInterceptor>();
         services.AddScoped<UpdateTimestampsSaveChangesInterceptor>();
-        services.AddScoped<SoftDeleteSaveChangesInterceptor>();
 
         services.AddDbContext<SeniorCrudDbContext>((serviceProvider, options) =>
         {
@@ -35,12 +35,11 @@ public static class PersistenceDependencyInjection
 
             options.AddInterceptors(
                 serviceProvider.GetRequiredService<AuditSaveChangesInterceptor>(),
-                serviceProvider.GetRequiredService<UpdateTimestampsSaveChangesInterceptor>(),
-                serviceProvider.GetRequiredService<SoftDeleteSaveChangesInterceptor>());
+                serviceProvider.GetRequiredService<UpdateTimestampsSaveChangesInterceptor>());
         });
 
-        services.AddScoped<UserRepository>();
-        services.AddScoped<AddressRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IAddressRepository, AddressRepository>();
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         services.AddScoped<IPersistenceSeeder, PersistenceSeeder>();
 

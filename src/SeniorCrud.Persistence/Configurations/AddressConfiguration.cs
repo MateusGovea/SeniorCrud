@@ -54,15 +54,6 @@ public sealed class AddressConfiguration : IEntityTypeConfiguration<Address>
             .IsRowVersion()
             .IsConcurrencyToken();
 
-        builder.Property<bool>("IsDeleted")
-            .HasDefaultValue(false)
-            .IsRequired();
-
-        builder.Property<DateTimeOffset?>("DeletedAt")
-            .IsRequired(false);
-
-        builder.HasQueryFilter(address => !EF.Property<bool>(address, "IsDeleted"));
-
         builder.OwnsOne(address => address.Cep, cep =>
         {
             cep.Property(value => value.Value)
@@ -91,7 +82,7 @@ public sealed class AddressConfiguration : IEntityTypeConfiguration<Address>
         builder.HasIndex(address => address.UserId);
 
         builder.HasIndex(address => new { address.UserId, address.IsPrimary })
-            .HasFilter("[IsPrimary] = 1 AND [IsDeleted] = 0")
+            .HasFilter("[IsPrimary] = 1")
             .IsUnique();
     }
 }

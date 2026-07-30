@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Metadata;
 using SeniorCrud.Domain.Constants;
 using SeniorCrud.Domain.Entities;
 
@@ -42,15 +41,6 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property<byte[]>("RowVersion")
             .IsRowVersion()
             .IsConcurrencyToken();
-
-        builder.Property<bool>("IsDeleted")
-            .HasDefaultValue(false)
-            .IsRequired();
-
-        builder.Property<DateTimeOffset?>("DeletedAt")
-            .IsRequired(false);
-
-        builder.HasQueryFilter(user => !EF.Property<bool>(user, "IsDeleted"));
 
         builder.OwnsOne(user => user.Email, email =>
         {

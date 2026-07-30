@@ -27,8 +27,6 @@ namespace SeniorCrud.Persistence.Migrations
                     PasswordHash = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Role = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
@@ -53,8 +51,6 @@ namespace SeniorCrud.Persistence.Migrations
                     City = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     State = table.Column<string>(type: "char(2)", unicode: false, fixedLength: true, maxLength: 2, nullable: false),
                     IsPrimary = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
@@ -89,7 +85,7 @@ namespace SeniorCrud.Persistence.Migrations
                 table: "Addresses",
                 columns: new[] { "UserId", "IsPrimary" },
                 unique: true,
-                filter: "[IsPrimary] = 1 AND [IsDeleted] = 0");
+                filter: "[IsPrimary] = 1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Cpf",

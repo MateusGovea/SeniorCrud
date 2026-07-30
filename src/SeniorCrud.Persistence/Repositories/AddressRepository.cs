@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using SeniorCrud.Application.Interfaces.Persistence;
 using SeniorCrud.Domain.Entities;
 using SeniorCrud.Persistence.Contexts;
 
 namespace SeniorCrud.Persistence.Repositories;
 
-public sealed class AddressRepository
+public sealed class AddressRepository : IAddressRepository
 {
     private readonly SeniorCrudDbContext _dbContext;
 

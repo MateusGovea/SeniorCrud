@@ -1,11 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using SeniorCrud.Application.Interfaces.Persistence;
 using SeniorCrud.Domain.Entities;
 using SeniorCrud.Domain.ValueObjects;
 using SeniorCrud.Persistence.Contexts;
 
 namespace SeniorCrud.Persistence.Repositories;
 
-public sealed class UserRepository
+public sealed class UserRepository : IUserRepository
 {
     private readonly SeniorCrudDbContext _dbContext;
 
