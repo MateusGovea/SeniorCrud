@@ -1,7 +1,7 @@
 import { api } from '@/api/axios'
 import { unwrap, unwrapVoid } from '@/utils/api'
 import type { ApiResult } from '@/types/api'
-import type { AddressResponse } from '@/features/addresses/types'
+import type { AddressResponse, ViaCepResponseDto } from '@/features/addresses/types'
 
 export interface CreateAddressRequest {
   userId: string
@@ -27,6 +27,11 @@ export interface UpdateAddressRequest {
 }
 
 export const addressesApi = {
+  async getAddressByCep(cep: string): Promise<ViaCepResponseDto> {
+    const { data } = await api.get<ApiResult<ViaCepResponseDto>>(`/api/viacep/${cep}`)
+    return unwrap(data)
+  },
+
   async getAddressesByUser(userId: string): Promise<AddressResponse[]> {
     const { data } = await api.get<ApiResult<AddressResponse[]>>(`/api/users/${userId}/addresses`)
     return unwrap(data)

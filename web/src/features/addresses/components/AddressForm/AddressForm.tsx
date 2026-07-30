@@ -1,8 +1,11 @@
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Input } from '@/components/Input'
 import { Button } from '@/components/Button'
+import { Loading } from '@/components/Loading'
+import { useViaCep } from '@/features/addresses/hooks'
 
 const schema = z.object({
   cep: z
@@ -47,6 +50,8 @@ export function AddressForm({ defaultValues, onSave, onCancel, serverError }: Ad
   const {
     register,
     handleSubmit,
+    getValues,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: resolver as never,
@@ -57,6 +62,61 @@ export function AddressForm({ defaultValues, onSave, onCancel, serverError }: Ad
     },
   })
 
+  const [searchedCep, setSearchedCep] = useState('')
+  const { data: viaCepData, isFetching: viaCepLoading, isError: viaCepIsError, error: viaCepQueryError } = useViaCep(searchedCep)
+  const [viaCepErrorMessage, setViaCepErrorMessage] = useState<string | null>(null)
+  const fieldSnapshotRef = useRef<Record<string, string>>({})
+
+  const handleCepBlur = useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
+      const digits = e.target.value.replace(/\D/g, '')
+      if (digits.length === 8 && digits !== searchedCep) {
+        const values = getValues()
+        fieldSnapshotRef.current = {
+          street: values.street || '',
+          neighborhood: values.neighborhood || '',
+          city: values.city || '',
+          state: values.state || '',
+        }
+        setViaCepErrorMessage(null)
+        setSearchedCep(digits)
+      }
+    },
+    [getValues, searchedCep],
+  )
+
+  useEffect(() => {
+    if (viaCepData) {
+      setViaCepErrorMessage(null)
+      const snapshot = fieldSnapshotRef.current
+      if (viaCepData.logradouro && !snapshot.street) {
+        setValue('street', viaCepData.logradouro)
+      }
+      if (viaCepData.bairro && !snapshot.neighborhood) {
+        setValue('neighborhood', viaCepData.bairro)
+      }
+      if (viaCepData.localidade && !snapshot.city) {
+        setValue('city', viaCepData.localidade)
+      }
+      if (viaCepData.uf && !snapshot.state) {
+        setValue('state', viaCepData.uf)
+      }
+    }
+  }, [viaCepData, setValue])
+
+  useEffect(() => {
+    if (viaCepIsError && viaCepQueryError) {
+      const msg = viaCepQueryError instanceof Error ? viaCepQueryError.message.toLowerCase() : ''
+      if (msg.includes('não encontrado') || msg.includes('not found')) {
+        setViaCepErrorMessage('CEP não encontrado.')
+      } else {
+        setViaCepErrorMessage('Não foi possível consultar o CEP.')
+      }
+    }
+  }, [viaCepIsError, viaCepQueryError])
+
+  const cepField = register('cep')
+
   return (
     <form onSubmit={handleSubmit(onSave)} className="space-y-4">
       {serverError && (
@@ -65,12 +125,25 @@ export function AddressForm({ defaultValues, onSave, onCancel, serverError }: Ad
         </div>
       )}
 
-      <Input
-        label="CEP"
-        placeholder="Somente números"
-        error={errors.cep?.message}
-        {...register('cep')}
-      />
+      <div className="flex items-end gap-2">
+        <div className="flex-1">
+          <Input
+            label="CEP"
+            placeholder="Somente números"
+            error={errors.cep?.message || viaCepErrorMessage || undefined}
+            {...cepField}
+            onBlur={(e) => {
+              cepField.onBlur(e)
+              handleCepBlur(e)
+            }}
+          />
+        </div>
+        {viaCepLoading && (
+          <div className="pb-2">
+            <Loading size="sm" />
+          </div>
+        )}
+      </div>
 
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-2">

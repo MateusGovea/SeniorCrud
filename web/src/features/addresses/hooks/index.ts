@@ -5,3 +5,4 @@ export {
   useUpdateAddress,
   useDeleteAddress,
 } from './use-addresses'
+export { useViaCep } from './use-via-cep'
