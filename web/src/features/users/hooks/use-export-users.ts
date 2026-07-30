@@ -51,24 +51,6 @@ function parseCsv(text: string): string[][] {
   return lines
 }
 
-const headerMap: Record<string, string> = {
-  Id: 'ID',
-  Nome: 'Nome',
-  Email: 'Email',
-  Cpf: 'CPF',
-  Role: 'Perfil',
-  IsActive: 'Status',
-  CreatedAt: 'Data de Cadastro',
-  Cep: 'CEP',
-  Street: 'Logradouro',
-  Number: 'Número',
-  Complement: 'Complemento',
-  Neighborhood: 'Bairro',
-  City: 'Cidade',
-  State: 'Estado',
-  IsPrimary: 'Principal',
-}
-
 function translateRole(val: string): string {
   const s = val.trim().toLowerCase()
   if (s === 'admin' || s === 'administrador') return 'Administrador'
@@ -95,6 +77,42 @@ function formatDate(val: string): string {
   return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`
 }
 
+function formatCep(val: string): string {
+  const digits = val.replace(/\D/g, '')
+  if (digits.length === 8) {
+    return `${digits.slice(0, 5)}-${digits.slice(5)}`
+  }
+  return val
+}
+
+function formatAddress(
+  street: string,
+  number: string,
+  complement: string,
+  neighborhood: string,
+  city: string,
+  state: string,
+): string {
+  if (!street && !number && !neighborhood && !city) return ''
+
+  const parts: string[] = []
+  const streetPart = `${street}${number ? `, ${number}` : ''}`
+  if (streetPart) parts.push(streetPart)
+  if (complement) parts.push(complement)
+  if (neighborhood) parts.push(neighborhood)
+  const cityState = `${city}${state ? `/${state}` : ''}`
+  if (cityState && cityState !== '/') parts.push(cityState)
+
+  return parts.join(' - ')
+}
+
+function escapeCsvField(field: string): string {
+  if (field.includes(',') || field.includes('"') || field.includes('\n')) {
+    return `"${field.replace(/"/g, '""')}"`
+  }
+  return field
+}
+
 function transformCsv(text: string): string {
   const rows = parseCsv(text)
   if (rows.length === 0) return text
@@ -102,55 +120,82 @@ function transformCsv(text: string): string {
   const headers = rows[0]
   const dataRows = rows.slice(1)
 
-  const transformedHeaders = headers.map((h) => {
-    const trimmed = h.trim()
-    return headerMap[trimmed] ?? trimmed
-  })
+  const h = (name: string) =>
+    headers.findIndex((h) => h.trim().toLowerCase() === name.toLowerCase())
 
-  const roleIdx = headers.findIndex((h) => h.trim().toLowerCase() === 'role')
-  const statusIdx = headers.findIndex((h) => h.trim().toLowerCase() === 'isactive')
-  const cpfIdx = headers.findIndex((h) => h.trim().toLowerCase() === 'cpf')
-  const dateIdx = headers.findIndex((h) => h.trim().toLowerCase() === 'createdat')
-
-  const outputRows: string[] = [transformedHeaders.join(',')]
-
-  for (const row of dataRows) {
-    const newRow = [...row]
-    if (roleIdx >= 0 && roleIdx < newRow.length) {
-      newRow[roleIdx] = translateRole(newRow[roleIdx])
-    }
-    if (statusIdx >= 0 && statusIdx < newRow.length) {
-      newRow[statusIdx] = translateStatus(newRow[statusIdx])
-    }
-    if (cpfIdx >= 0 && cpfIdx < newRow.length) {
-      newRow[cpfIdx] = formatCpf(newRow[cpfIdx])
-    }
-    if (dateIdx >= 0 && dateIdx < newRow.length) {
-      newRow[dateIdx] = formatDate(newRow[dateIdx])
-    }
-    const escaped = newRow.map((f) => {
-      if (f.includes(',') || f.includes('"') || f.includes('\n')) {
-        return `"${f.replace(/"/g, '""')}"`
-      }
-      return f
-    })
-    outputRows.push(escaped.join(','))
+  const idx = {
+    nome: h('Nome'),
+    email: h('Email'),
+    cpf: h('Cpf'),
+    role: h('Role'),
+    isActive: h('IsActive'),
+    createdAt: h('CreatedAt'),
+    cep: h('Cep'),
+    street: h('Street'),
+    number: h('Number'),
+    complement: h('Complement'),
+    neighborhood: h('Neighborhood'),
+    city: h('City'),
+    state: h('State'),
   }
 
-  return '\uFEFF' + outputRows.join('\r\n')
+  const outputHeaders = [
+    'Nome',
+    'Email',
+    'CPF',
+    'Perfil',
+    'Status',
+    'Endereço Principal',
+    'CEP',
+    'Data de Cadastro',
+  ]
+
+  const outputRows = dataRows.map((row) => {
+    const nome = row[idx.nome] ?? ''
+    const email = row[idx.email] ?? ''
+    const cpf = formatCpf(row[idx.cpf] ?? '')
+    const role = translateRole(row[idx.role] ?? '')
+    const status = translateStatus(row[idx.isActive] ?? '')
+    const address = formatAddress(
+      row[idx.street] ?? '',
+      row[idx.number] ?? '',
+      row[idx.complement] ?? '',
+      row[idx.neighborhood] ?? '',
+      row[idx.city] ?? '',
+      row[idx.state] ?? '',
+    )
+    const cep = formatCep(row[idx.cep] ?? '')
+    const createdAt = formatDate(row[idx.createdAt] ?? '')
+
+    return [nome, email, cpf, role, status, address, cep, createdAt]
+  })
+
+  outputRows.sort((a, b) => a[0].localeCompare(b[0], 'pt-BR'))
+
+  const lines: string[] = [outputHeaders.join(',')]
+  for (const row of outputRows) {
+    lines.push(row.map(escapeCsvField).join(','))
+  }
+
+  return '\uFEFF' + lines.join('\r\n')
 }
 
 export function useExportUsers() {
+  const today = new Date()
+  const pad = (n: number) => String(n).padStart(2, '0')
+  const dateStr = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`
+  const defaultFilename = `Relatorio_Usuarios_${dateStr}.csv`
+
   return useMutation({
     mutationFn: (userIds?: string[]) => usersApi.exportUsersCsv(userIds),
-    onSuccess: async ({ blob, filename }) => {
+    onSuccess: async ({ blob }) => {
       const text = await blob.text()
       const transformed = transformCsv(text)
       const newBlob = new Blob([transformed], { type: 'text/csv;charset=utf-8;' })
       const url = URL.createObjectURL(newBlob)
       const a = document.createElement('a')
       a.href = url
-      a.download = filename && filename !== 'users.csv' ? filename : 'usuarios.csv'
+      a.download = defaultFilename
       a.style.display = 'none'
       document.body.appendChild(a)
       a.click()
