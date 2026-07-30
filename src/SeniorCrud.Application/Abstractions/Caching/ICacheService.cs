@@ -1,4 +1,4 @@
-namespace SeniorCrud.Infrastructure.Caching;
+namespace SeniorCrud.Application.Abstractions.Caching;
 
 public interface ICacheService
 {

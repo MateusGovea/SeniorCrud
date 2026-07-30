@@ -1,4 +1,4 @@
-namespace SeniorCrud.Infrastructure.Services;
+namespace SeniorCrud.Application.Abstractions.DateTime;
 
 public interface IDateTimeProvider
 {

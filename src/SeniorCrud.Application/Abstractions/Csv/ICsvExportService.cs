@@ -1,4 +1,4 @@
-namespace SeniorCrud.Infrastructure.Csv;
+namespace SeniorCrud.Application.Abstractions.Csv;
 
 public interface ICsvExportService
 {

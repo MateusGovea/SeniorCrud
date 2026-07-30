@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Http;
+using SeniorCrud.Application.Abstractions.Identity;
 
 namespace SeniorCrud.Infrastructure.Authentication;
 

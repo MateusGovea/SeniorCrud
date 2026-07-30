@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace SeniorCrud.Infrastructure.ViaCep;
+namespace SeniorCrud.Application.Abstractions.ViaCep;
 
 public sealed class ViaCepAddressResponse
 {

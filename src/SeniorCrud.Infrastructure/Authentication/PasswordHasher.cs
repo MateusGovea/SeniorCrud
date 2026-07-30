@@ -1,3 +1,5 @@
+using SeniorCrud.Application.Abstractions.Authentication;
+
 namespace SeniorCrud.Infrastructure.Authentication;
 
 public sealed class PasswordHasher : IPasswordHasher

@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace SeniorCrud.Infrastructure.Authentication;
+namespace SeniorCrud.Application.Abstractions.Authentication;
 
 public interface IJwtTokenGenerator
 {

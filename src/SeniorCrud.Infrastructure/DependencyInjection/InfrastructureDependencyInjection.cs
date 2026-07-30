@@ -1,4 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
+using SeniorCrud.Application.Abstractions.Authentication;
+using SeniorCrud.Application.Abstractions.Caching;
+using SeniorCrud.Application.Abstractions.Csv;
+using SeniorCrud.Application.Abstractions.DateTime;
+using SeniorCrud.Application.Abstractions.Identity;
+using SeniorCrud.Application.Abstractions.ViaCep;
 using SeniorCrud.Infrastructure.Authentication;
 using SeniorCrud.Infrastructure.Authentication.Options;
 using SeniorCrud.Infrastructure.Caching;

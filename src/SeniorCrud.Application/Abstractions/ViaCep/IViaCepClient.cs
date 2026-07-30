@@ -1,4 +1,4 @@
-namespace SeniorCrud.Infrastructure.ViaCep;
+namespace SeniorCrud.Application.Abstractions.ViaCep;
 
 public interface IViaCepClient
 {

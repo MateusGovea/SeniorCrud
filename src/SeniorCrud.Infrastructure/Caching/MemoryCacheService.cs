@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Caching.Memory;
+using SeniorCrud.Application.Abstractions.Caching;
 
 namespace SeniorCrud.Infrastructure.Caching;
 

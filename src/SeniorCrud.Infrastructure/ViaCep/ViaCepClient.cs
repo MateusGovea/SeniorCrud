@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using Microsoft.Extensions.Options;
+using SeniorCrud.Application.Abstractions.ViaCep;
 using SeniorCrud.Infrastructure.ViaCep.Options;
 
 namespace SeniorCrud.Infrastructure.ViaCep;

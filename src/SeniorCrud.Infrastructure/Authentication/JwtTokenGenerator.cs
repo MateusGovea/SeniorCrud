@@ -3,8 +3,9 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using SeniorCrud.Application.Abstractions.Authentication;
+using SeniorCrud.Application.Abstractions.DateTime;
 using SeniorCrud.Infrastructure.Authentication.Options;
-using SeniorCrud.Infrastructure.Services;
 
 namespace SeniorCrud.Infrastructure.Authentication;
 
