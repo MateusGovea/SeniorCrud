@@ -11,6 +11,12 @@ public interface IUserRepository
 
     Task<User?> GetByCpfAsync(Cpf cpf, CancellationToken cancellationToken = default);
 
+    Task<bool> ExistsByEmailAsync(Email email, Guid? excludingUserId = null, CancellationToken cancellationToken = default);
+
+    Task<bool> ExistsByCpfAsync(Cpf cpf, Guid? excludingUserId = null, CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyList<User>> GetPagedAsync(int pageNumber, int pageSize, string? search, CancellationToken cancellationToken = default);
+
     Task AddAsync(User user, CancellationToken cancellationToken = default);
 
     void Update(User user);
