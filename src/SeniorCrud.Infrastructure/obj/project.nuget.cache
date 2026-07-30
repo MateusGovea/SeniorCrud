@@ -1,14 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "PLEkTaiC11g=",
+  "dgSpecHash": "fkOLBctbeuQ=",
   "success": true,
   "projectFilePath": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Infrastructure\\SeniorCrud.Infrastructure.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Mateus\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\csvhelper\\33.1.0\\csvhelper.33.1.0.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\12.1.1\\fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\mediatr\\14.2.0\\mediatr.14.2.0.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\Mateus\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\9.0.8\\microsoft.extensions.caching.abstractions.9.0.8.nupkg.sha512",
+    "C:\\Users\\Mateus\\.nuget\\packages\\microsoft.extensions.caching.memory\\9.0.8\\microsoft.extensions.caching.memory.9.0.8.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.10\\microsoft.extensions.configuration.10.0.10.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\10.0.10\\microsoft.extensions.configuration.abstractions.10.0.10.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\microsoft.extensions.configuration.binder\\10.0.10\\microsoft.extensions.configuration.binder.10.0.10.nupkg.sha512",
@@ -29,7 +32,8 @@
     "C:\\Users\\Mateus\\.nuget\\packages\\microsoft.identitymodel.tokens\\8.14.0\\microsoft.identitymodel.tokens.8.14.0.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\polly\\7.2.4\\polly.7.2.4.nupkg.sha512",
     "C:\\Users\\Mateus\\.nuget\\packages\\polly.extensions.http\\3.0.0\\polly.extensions.http.3.0.0.nupkg.sha512",
-    "C:\\Users\\Mateus\\.nuget\\packages\\system.diagnostics.diagnosticsource\\10.0.10\\system.diagnostics.diagnosticsource.10.0.10.nupkg.sha512"
+    "C:\\Users\\Mateus\\.nuget\\packages\\system.diagnostics.diagnosticsource\\10.0.10\\system.diagnostics.diagnosticsource.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mateus\\.nuget\\packages\\system.identitymodel.tokens.jwt\\8.10.0\\system.identitymodel.tokens.jwt.8.10.0.nupkg.sha512"
   ],
   "logs": []
 }

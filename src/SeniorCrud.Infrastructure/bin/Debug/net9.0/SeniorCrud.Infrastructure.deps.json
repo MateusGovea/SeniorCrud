@@ -8,13 +8,25 @@
     ".NETCoreApp,Version=v9.0": {
       "SeniorCrud.Infrastructure/1.0.0": {
         "dependencies": {
+          "BCrypt.Net-Next": "4.0.3",
           "CsvHelper": "33.1.0",
+          "Microsoft.Extensions.Caching.Memory": "9.0.8",
           "Microsoft.Extensions.Http.Polly": "10.0.10",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "10.0.10",
           "SeniorCrud.Application": "1.0.0",
-          "SeniorCrud.Domain": "1.0.0"
+          "SeniorCrud.Domain": "1.0.0",
+          "System.IdentityModel.Tokens.Jwt": "8.10.0"
         },
         "runtime": {
           "SeniorCrud.Infrastructure.dll": {}
+        }
+      },
+      "BCrypt.Net-Next/4.0.3": {
+        "runtime": {
+          "lib/net6.0/BCrypt.Net-Next.dll": {
+            "assemblyVersion": "4.0.3.0",
+            "fileVersion": "4.0.3.0"
+          }
         }
       },
       "CsvHelper/33.1.0": {
@@ -64,6 +76,32 @@
           "lib/netstandard2.0/MediatR.Contracts.dll": {
             "assemblyVersion": "2.0.1.0",
             "fileVersion": "2.0.1.0"
+          }
+        }
+      },
+      "Microsoft.Extensions.Caching.Abstractions/9.0.8": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "10.0.10"
+        },
+        "runtime": {
+          "lib/net9.0/Microsoft.Extensions.Caching.Abstractions.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.825.36511"
+          }
+        }
+      },
+      "Microsoft.Extensions.Caching.Memory/9.0.8": {
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Abstractions": "9.0.8",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.10",
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.10",
+          "Microsoft.Extensions.Options": "10.0.10",
+          "Microsoft.Extensions.Primitives": "10.0.10"
+        },
+        "runtime": {
+          "lib/net9.0/Microsoft.Extensions.Caching.Memory.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.825.36511"
           }
         }
       },
@@ -305,6 +343,18 @@
           }
         }
       },
+      "System.IdentityModel.Tokens.Jwt/8.10.0": {
+        "dependencies": {
+          "Microsoft.IdentityModel.JsonWebTokens": "8.14.0",
+          "Microsoft.IdentityModel.Tokens": "8.14.0"
+        },
+        "runtime": {
+          "lib/net9.0/System.IdentityModel.Tokens.Jwt.dll": {
+            "assemblyVersion": "8.10.0.0",
+            "fileVersion": "8.10.0.60515"
+          }
+        }
+      },
       "SeniorCrud.Application/1.0.0": {
         "dependencies": {
           "FluentValidation": "12.1.1",
@@ -334,6 +384,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "BCrypt.Net-Next/4.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-W+U9WvmZQgi5cX6FS5GDtDoPzUCV4LkBLkywq/kRZhuDwcbavOzcDAr3LXJFqHUi952Yj3LEYoWW0jbEUQChsA==",
+      "path": "bcrypt.net-next/4.0.3",
+      "hashPath": "bcrypt.net-next.4.0.3.nupkg.sha512"
     },
     "CsvHelper/33.1.0": {
       "type": "package",
@@ -369,6 +426,20 @@
       "sha512": "sha512-FYv95bNT4UwcNA+G/J1oX5OpRiSUxteXaUt2BJbRSdRNiIUNbggJF69wy6mnk2wYToaanpdXZdCwVylt96MpwQ==",
       "path": "mediatr.contracts/2.0.1",
       "hashPath": "mediatr.contracts.2.0.1.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Caching.Abstractions/9.0.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4h7bsVoKoiK+SlPM+euX/ayGnKZhl47pPCidLTiio9xyG+vgVVfcYxcYQgjm0SCrdSxjG0EGIAKF8EFr3G8Ifw==",
+      "path": "microsoft.extensions.caching.abstractions/9.0.8",
+      "hashPath": "microsoft.extensions.caching.abstractions.9.0.8.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Caching.Memory/9.0.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-grR+oPyj8HVn4DT8CFUUdSw2pZZKS13KjytFe4txpHQliGM1GEDotohmjgvyl3hm7RFB3FRqvbouEX3/1ewp5A==",
+      "path": "microsoft.extensions.caching.memory/9.0.8",
+      "hashPath": "microsoft.extensions.caching.memory.9.0.8.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration/10.0.10": {
       "type": "package",
@@ -516,6 +587,13 @@
       "sha512": "sha512-cjtKi6ERMYWp6b9UTVPcwDT29PjKDtlM3W9OwnWL5abRsI8ku42Q2wqZoLIIXJnT/XF2s2CjuK8Nl4a3mmTxQQ==",
       "path": "system.diagnostics.diagnosticsource/10.0.10",
       "hashPath": "system.diagnostics.diagnosticsource.10.0.10.nupkg.sha512"
+    },
+    "System.IdentityModel.Tokens.Jwt/8.10.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-UYIcKbMifWTg1CdljV3YSr7X4MKGSjUwLMKNLuSNKOsF65NvDPez0917YSDOr3tXF1GTZKCkfbZwYyPsW2owsQ==",
+      "path": "system.identitymodel.tokens.jwt/8.10.0",
+      "hashPath": "system.identitymodel.tokens.jwt.8.10.0.nupkg.sha512"
     },
     "SeniorCrud.Application/1.0.0": {
       "type": "project",
