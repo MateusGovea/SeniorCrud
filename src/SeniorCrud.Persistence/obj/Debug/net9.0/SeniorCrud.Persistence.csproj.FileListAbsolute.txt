@@ -15,3 +15,4 @@ C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\S
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\refint\SeniorCrud.Persistence.dll
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\SeniorCrud.Persistence.pdb
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\ref\SeniorCrud.Persistence.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\SeniorCrud.Persistence.sourcelink.json

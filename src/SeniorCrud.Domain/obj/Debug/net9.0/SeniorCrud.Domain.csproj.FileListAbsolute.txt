@@ -9,3 +9,4 @@ C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\Senior
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\refint\SeniorCrud.Domain.dll
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\SeniorCrud.Domain.pdb
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\ref\SeniorCrud.Domain.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\SeniorCrud.Domain.sourcelink.json

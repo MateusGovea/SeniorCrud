@@ -173,3 +173,4 @@ C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.IntegrationTests\obj\Debug\n
 C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.IntegrationTests\obj\Debug\net9.0\SeniorCrud.IntegrationTests.pdb
 C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.IntegrationTests\obj\Debug\net9.0\SeniorCrud.IntegrationTests.genruntimeconfig.cache
 C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.IntegrationTests\obj\Debug\net9.0\ref\SeniorCrud.IntegrationTests.dll
+C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.IntegrationTests\obj\Debug\net9.0\SeniorCrud.IntegrationTests.sourcelink.json

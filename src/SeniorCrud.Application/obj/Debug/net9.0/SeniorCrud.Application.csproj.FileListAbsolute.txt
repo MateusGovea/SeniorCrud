@@ -13,3 +13,4 @@ C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\S
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\refint\SeniorCrud.Application.dll
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\SeniorCrud.Application.pdb
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\ref\SeniorCrud.Application.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\SeniorCrud.Application.sourcelink.json
