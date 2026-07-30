@@ -50,3 +50,5 @@ app.MapHealthChecks("/readiness", new HealthCheckOptions
 });
 
 app.Run();
+
+public partial class Program;
