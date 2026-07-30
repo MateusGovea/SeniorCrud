@@ -1,0 +1,1 @@
+export { DeleteAddressDialog } from './DeleteAddressDialog'

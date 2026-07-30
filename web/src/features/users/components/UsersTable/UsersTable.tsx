@@ -5,9 +5,10 @@ interface UsersTableProps {
   users: UserListItem[]
   onEdit: (user: UserListItem) => void
   onDelete: (user: UserListItem) => void
+  onViewAddresses: (user: UserListItem) => void
 }
 
-export function UsersTable({ users, onEdit, onDelete }: UsersTableProps) {
+export function UsersTable({ users, onEdit, onDelete, onViewAddresses }: UsersTableProps) {
   return (
     <div className="overflow-x-auto rounded-lg border border-gray-200">
       <table className="min-w-full divide-y divide-gray-200">
@@ -54,6 +55,9 @@ export function UsersTable({ users, onEdit, onDelete }: UsersTableProps) {
                 </span>
               </td>
               <td className="whitespace-nowrap px-6 py-4 text-right text-sm">
+                <Button variant="ghost" size="sm" onClick={() => onViewAddresses(user)}>
+                  Endereços
+                </Button>
                 <Button variant="ghost" size="sm" onClick={() => onEdit(user)}>
                   Editar
                 </Button>

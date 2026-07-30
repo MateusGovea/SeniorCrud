@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useUsers } from '@/features/users/hooks'
 import { UsersTable } from '@/features/users/components/UsersTable'
 import { LoadingState } from '@/features/users/components/LoadingState'
@@ -19,9 +20,15 @@ type DeleteState =
   | { type: 'confirm'; user: UserListItem }
 
 export function Users() {
+  const navigate = useNavigate()
   const { data: users, isLoading, isError, error, refetch } = useUsers()
   const [modal, setModal] = useState<ModalState>({ type: 'closed' })
   const [deleteDialog, setDeleteDialog] = useState<DeleteState>({ type: 'closed' })
+
+  const handleViewAddresses = useCallback(
+    (user: UserListItem) => navigate(`/users/${user.id}/addresses`),
+    [navigate],
+  )
 
   function handleCreate() {
     setModal({ type: 'create' })
@@ -47,7 +54,14 @@ export function Users() {
     if (isLoading) return <LoadingState />
     if (isError) return <ErrorState message={error?.message} onRetry={refetch} />
     if (!users || users.length === 0) return <EmptyState />
-    return <UsersTable users={users} onEdit={handleEdit} onDelete={handleDelete} />
+    return (
+      <UsersTable
+        users={users}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        onViewAddresses={handleViewAddresses}
+      />
+    )
   }
 
   return (
