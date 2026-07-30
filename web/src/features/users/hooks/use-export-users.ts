@@ -59,6 +59,14 @@ const headerMap: Record<string, string> = {
   Role: 'Perfil',
   IsActive: 'Status',
   CreatedAt: 'Data de Cadastro',
+  Cep: 'CEP',
+  Street: 'Logradouro',
+  Number: 'Número',
+  Complement: 'Complemento',
+  Neighborhood: 'Bairro',
+  City: 'Cidade',
+  State: 'Estado',
+  IsPrimary: 'Principal',
 }
 
 function translateRole(val: string): string {

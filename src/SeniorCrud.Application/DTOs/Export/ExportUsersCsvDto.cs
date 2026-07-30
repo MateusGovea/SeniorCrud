@@ -7,4 +7,12 @@ public sealed record ExportUsersCsvDto(
     string? Cpf,
     string Role,
     bool IsActive,
-    DateTimeOffset CreatedAt);
+    DateTimeOffset CreatedAt,
+    string? Cep,
+    string? Street,
+    string? Number,
+    string? Complement,
+    string? Neighborhood,
+    string? City,
+    string? State,
+    bool? IsPrimary);

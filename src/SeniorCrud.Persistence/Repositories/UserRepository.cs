@@ -82,6 +82,7 @@ public sealed class UserRepository : IUserRepository
 
     public IQueryable<User> Query()
     {
-        return _dbContext.Users.AsQueryable();
+        return _dbContext.Users
+            .Include(user => user.Addresses);
     }
 }

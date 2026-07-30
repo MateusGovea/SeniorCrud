@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SeniorCrud.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a8b53d2ecbc19b9ff7ebc0cb5f8bd4172589d193")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3744bb93cf44581d71d74798c209476c01bde42e")]
 [assembly: System.Reflection.AssemblyProductAttribute("SeniorCrud.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SeniorCrud.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
