@@ -1,0 +1,7 @@
+{
+  "SeniorCrud.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Api",
+  "SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Application",
+  "SeniorCrud.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Domain",
+  "SeniorCrud.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Infrastructure",
+  "SeniorCrud.Persistence, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Persistence"
+}

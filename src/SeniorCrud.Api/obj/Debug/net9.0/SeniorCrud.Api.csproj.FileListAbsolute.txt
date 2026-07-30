@@ -20,7 +20,6 @@ C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\FluentVal
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\MediatR.dll
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\MediatR.Contracts.dll
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\Microsoft.Extensions.Configuration.dll
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Binder.dll

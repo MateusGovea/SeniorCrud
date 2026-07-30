@@ -11,7 +11,6 @@
           "FluentValidation.DependencyInjectionExtensions": "12.1.1",
           "MediatR": "14.2.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "9.0.8",
-          "Microsoft.AspNetCore.OpenApi": "9.0.15",
           "OpenTelemetry.Exporter.Console": "1.17.0",
           "OpenTelemetry.Extensions.Hosting": "1.17.0",
           "OpenTelemetry.Instrumentation.AspNetCore": "1.17.0",
@@ -146,17 +145,6 @@
           "lib/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {
             "assemblyVersion": "9.0.8.0",
             "fileVersion": "9.0.825.36808"
-          }
-        }
-      },
-      "Microsoft.AspNetCore.OpenApi/9.0.15": {
-        "dependencies": {
-          "Microsoft.OpenApi": "2.7.5"
-        },
-        "runtime": {
-          "lib/net9.0/Microsoft.AspNetCore.OpenApi.dll": {
-            "assemblyVersion": "9.0.15.0",
-            "fileVersion": "9.0.1526.17607"
           }
         }
       },
@@ -1223,13 +1211,6 @@
       "sha512": "sha512-pEuE/xaXHk2Rr2YiTraS7i2MNoTXSnX79VlJcdKx9MczrhDfBO4tHdF4HWOo542WPbjSeZx2PFjmHygo0XnK3Q==",
       "path": "microsoft.aspnetcore.authentication.jwtbearer/9.0.8",
       "hashPath": "microsoft.aspnetcore.authentication.jwtbearer.9.0.8.nupkg.sha512"
-    },
-    "Microsoft.AspNetCore.OpenApi/9.0.15": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-QQW4lLEgMMgVSAlTocaoEf5xZstKZFLyIYtrRP/bq3BmvsJkU8ugiU7MaUWz4vEednZLNhGq1JSZq22QFQqIfg==",
-      "path": "microsoft.aspnetcore.openapi/9.0.15",
-      "hashPath": "microsoft.aspnetcore.openapi.9.0.15.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
       "type": "package",

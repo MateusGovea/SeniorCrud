@@ -172,14 +172,14 @@
         }
       }
     },
-    "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\tests\\SeniorCrud.UnitTests\\SeniorCrud.UnitTests.csproj": {
+    "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Infrastructure\\SeniorCrud.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\tests\\SeniorCrud.UnitTests\\SeniorCrud.UnitTests.csproj",
-        "projectName": "SeniorCrud.UnitTests",
-        "projectPath": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\tests\\SeniorCrud.UnitTests\\SeniorCrud.UnitTests.csproj",
+        "projectUniqueName": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Infrastructure\\SeniorCrud.Infrastructure.csproj",
+        "projectName": "SeniorCrud.Infrastructure",
+        "projectPath": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Infrastructure\\SeniorCrud.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Mateus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\tests\\SeniorCrud.UnitTests\\obj\\",
+        "outputPath": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -229,9 +229,125 @@
           "framework": "net9.0",
           "targetAlias": "net9.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[33.1.0, )"
+            },
+            "Microsoft.Extensions.Caching.Memory": {
+              "target": "Package",
+              "version": "[9.0.8, )"
+            },
+            "Microsoft.Extensions.Http.Polly": {
+              "target": "Package",
+              "version": "[10.0.10, )"
+            },
+            "Microsoft.Extensions.Options.ConfigurationExtensions": {
+              "target": "Package",
+              "version": "[10.0.10, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.10.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300-preview.0.26177.108/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\tests\\SeniorCrud.UnitTests\\SeniorCrud.UnitTests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\tests\\SeniorCrud.UnitTests\\SeniorCrud.UnitTests.csproj",
+        "projectName": "SeniorCrud.UnitTests",
+        "projectPath": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\tests\\SeniorCrud.UnitTests\\SeniorCrud.UnitTests.csproj",
+        "packagesPath": "C:\\Users\\Mateus\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\tests\\SeniorCrud.UnitTests\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Mateus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Users\\Mateus\\Documents\\.Dependencies": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "framework": "net9.0",
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Application\\SeniorCrud.Application.csproj": {
+                "projectPath": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Application\\SeniorCrud.Application.csproj"
+              },
+              "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Domain\\SeniorCrud.Domain.csproj": {
+                "projectPath": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Domain\\SeniorCrud.Domain.csproj"
+              },
+              "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Infrastructure\\SeniorCrud.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Mateus\\Desktop\\SeniorCrud\\src\\SeniorCrud.Infrastructure\\SeniorCrud.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "framework": "net9.0",
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[17.12.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.72, )"
             },
             "coverlet.collector": {
               "target": "Package",
