@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SeniorCrud.Persistence")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ace7f2e73d9a22242898378459a44c005a5c1aa0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cea357e0fc27794fbf87bed2863491fed943d31d")]
 [assembly: System.Reflection.AssemblyProductAttribute("SeniorCrud.Persistence")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SeniorCrud.Persistence")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -118,3 +118,4 @@ C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.UnitTests\bin\Debug\net9.0\A
 C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.UnitTests\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.UnitTests\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
 C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.UnitTests\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
+C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.UnitTests\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
