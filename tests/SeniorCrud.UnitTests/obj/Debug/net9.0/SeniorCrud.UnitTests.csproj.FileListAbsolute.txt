@@ -114,3 +114,7 @@ C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.UnitTests\obj\Debug\net9.0\S
 C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.UnitTests\obj\Debug\net9.0\SeniorCrud.UnitTests.genruntimeconfig.cache
 C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.UnitTests\obj\Debug\net9.0\ref\SeniorCrud.UnitTests.dll
 C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.UnitTests\obj\Debug\net9.0\SeniorCrud.UnitTests.sourcelink.json
+C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.UnitTests\bin\Debug\net9.0\AutoMapper.dll
+C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.UnitTests\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.UnitTests\bin\Debug\net9.0\Microsoft.Extensions.Options.dll
+C:\Users\Mateus\Desktop\SeniorCrud\tests\SeniorCrud.UnitTests\bin\Debug\net9.0\Microsoft.Extensions.Primitives.dll
