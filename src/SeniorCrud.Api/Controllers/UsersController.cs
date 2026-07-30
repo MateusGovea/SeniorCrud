@@ -1,6 +1,7 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SeniorCrud.Application.Features.Export.Commands;
 using SeniorCrud.Application.DTOs.Users;
 using SeniorCrud.Application.Features.Users.Commands;
 using SeniorCrud.Application.Features.Users.Queries;
@@ -26,6 +27,32 @@ public sealed class UsersController : ControllerBase
     public async Task<Result<IReadOnlyList<UserListItemDto>>> GetUsers([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20, [FromQuery] string? search = null, CancellationToken cancellationToken = default)
     {
         return await _mediator.Send(new GetUsersQuery(pageNumber, pageSize, search), cancellationToken);
+    }
+
+    [HttpGet("export/csv")]
+    [Produces("text/csv")]
+    public async Task<ContentResult> ExportUsersCsv([FromQuery] List<Guid>? userIds, CancellationToken cancellationToken = default)
+    {
+        var result = await _mediator.Send(new ExportUsersCsvCommand(userIds), cancellationToken);
+
+        if (!result.IsSuccess || string.IsNullOrEmpty(result.Value))
+        {
+            return new ContentResult
+            {
+                StatusCode = StatusCodes.Status404NotFound,
+                ContentType = "text/plain",
+                Content = result.Error.Description
+            };
+        }
+
+        Response.Headers.ContentDisposition = "attachment; filename=users.csv";
+
+        return new ContentResult
+        {
+            StatusCode = StatusCodes.Status200OK,
+            ContentType = "text/csv",
+            Content = result.Value
+        };
     }
 
     [HttpGet("{id:guid}")]
