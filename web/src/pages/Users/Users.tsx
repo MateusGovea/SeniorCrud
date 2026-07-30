@@ -53,7 +53,7 @@ export function Users() {
   const renderContent = () => {
     if (isLoading) return <LoadingState />
     if (isError) return <ErrorState message={error?.message} onRetry={refetch} />
-    if (!users || users.length === 0) return <EmptyState />
+    if (!users || users.length === 0) return <EmptyState message="Nenhum usuário cadastrado." action={{ label: 'Novo Usuário', onClick: handleCreate }} />
     return (
       <UsersTable
         users={users}
@@ -65,10 +65,18 @@ export function Users() {
   }
 
   return (
-    <div>
+    <div className="animate-in">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Usuários</h1>
-        <Button onClick={handleCreate}>Novo Usuário</Button>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Usuários</h1>
+          <p className="mt-0.5 text-sm text-gray-500">Gerencie os usuários do sistema</p>
+        </div>
+        <Button onClick={handleCreate}>
+          <svg className="h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 2a.5.5 0 01.5.5v5h5a.5.5 0 010 1h-5v5a.5.5 0 01-1 0v-5h-5a.5.5 0 010-1h5v-5A.5.5 0 018 2z" />
+          </svg>
+          Novo Usuário
+        </Button>
       </div>
 
       {renderContent()}

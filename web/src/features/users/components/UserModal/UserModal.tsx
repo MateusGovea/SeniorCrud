@@ -17,6 +17,9 @@ export function UserModal({ isOpen, onClose, mode, user }: UserModalProps) {
   const updateMutation = useUpdateUser()
 
   const title = mode === 'create' ? 'Novo Usuário' : 'Editar Usuário'
+  const subtitle = mode === 'create'
+    ? 'Preencha os campos para criar um novo usuário'
+    : `Editando ${user?.nome ?? 'usuário'}`
   const serverError =
     createMutation.error?.message ??
     updateMutation.error?.message ??
@@ -60,10 +63,10 @@ export function UserModal({ isOpen, onClose, mode, user }: UserModalProps) {
   const isFetchingUser = mode === 'edit' && isLoading
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={title}>
+    <Modal isOpen={isOpen} onClose={onClose} title={title} subtitle={subtitle}>
       {isFetchingUser ? (
-        <div className="flex justify-center py-8">
-          <Loading />
+        <div className="flex items-center justify-center py-12">
+          <Loading size="lg" />
         </div>
       ) : (
         <UserForm

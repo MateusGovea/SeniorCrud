@@ -120,8 +120,11 @@ export function AddressForm({ defaultValues, onSave, onCancel, serverError }: Ad
   return (
     <form onSubmit={handleSubmit(onSave)} className="space-y-4">
       {serverError && (
-        <div className="rounded-md bg-red-50 p-3 text-sm text-red-700">
-          {serverError}
+        <div className="flex items-start gap-2.5 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+          <svg className="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 5a1 1 0 012 0v3a1 1 0 01-2 0V5zm1 7a1 1 0 110-2 1 1 0 010 2z" />
+          </svg>
+          <span>{serverError}</span>
         </div>
       )}
 
@@ -195,21 +198,21 @@ export function AddressForm({ defaultValues, onSave, onCancel, serverError }: Ad
           />
         </div>
 
-        <div className="flex items-center gap-2 pt-5">
+        <div className="flex items-center gap-2.5 rounded-lg border border-gray-200 bg-gray-50/50 px-4 py-3">
           <input
             type="checkbox"
             id="isPrimary"
-            className="h-4 w-4 rounded border-gray-300 text-blue-600"
+            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             {...register('isPrimary')}
           />
-          <label htmlFor="isPrimary" className="text-sm text-gray-700">
+          <label htmlFor="isPrimary" className="text-sm font-medium text-gray-700">
             Endereço principal
           </label>
         </div>
       </div>
 
       <div className="flex justify-end gap-3 pt-2">
-        <Button type="button" variant="outline" onClick={onCancel}>
+        <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting}>
           Cancelar
         </Button>
         <Button type="submit" isLoading={isSubmitting}>

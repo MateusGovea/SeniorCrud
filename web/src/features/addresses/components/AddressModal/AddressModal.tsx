@@ -20,6 +20,9 @@ export function AddressModal({ isOpen, onClose, mode, userId, address }: Address
   const [serverError, setServerError] = useState<string | null>(null)
 
   const title = mode === 'create' ? 'Novo Endereço' : 'Editar Endereço'
+  const subtitle = mode === 'create'
+    ? 'Preencha os campos para adicionar um endereço'
+    : `Editando ${address?.street}, ${address?.number}`
 
   function sanitizeCep(cep: string): string {
     return cep.replace(/\D/g, '')
@@ -74,10 +77,10 @@ export function AddressModal({ isOpen, onClose, mode, userId, address }: Address
   const isFetching = mode === 'edit' && isLoading
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={title}>
+    <Modal isOpen={isOpen} onClose={onClose} title={title} subtitle={subtitle}>
       {isFetching ? (
-        <div className="flex justify-center py-8">
-          <Loading />
+        <div className="flex items-center justify-center py-12">
+          <Loading size="lg" />
         </div>
       ) : (
         <AddressForm
