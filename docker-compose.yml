@@ -1,0 +1,62 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: seniorcrud-db
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${SQL_SA_PASSWORD:-Your_password123}
+      MSSQL_PID: Developer
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    ports:
+      - "1433:1433"
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "${SQL_SA_PASSWORD:-Your_password123}" -C -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - seniorcrud
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: seniorcrud-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: Server=sqlserver,1433;Database=SeniorCrudDb;User Id=sa;Password=${SQL_SA_PASSWORD:-Your_password123};TrustServerCertificate=True;
+      Jwt__SecretKey: ${JWT_SECRET_KEY:-THIS_IS_A_FAKE_KEY_FOR_LOCAL_DEVELOPMENT_ONLY}
+    ports:
+      - "5000:8080"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    networks:
+      - seniorcrud
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ""
+    container_name: seniorcrud-web
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    networks:
+      - seniorcrud
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:
+
+networks:
+  seniorcrud:
+    driver: bridge

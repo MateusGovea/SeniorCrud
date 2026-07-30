@@ -414,65 +414,125 @@ permitindo melhor diagnóstico e monitoramento.
 
 ---
 
-# Como Executar
+# Executando com Docker
+
+**Pré-requisito:** apenas Docker Desktop instalado.
+
+> ⚠️ **Importante:** antes de executar, certifique-se de que as portas `1433` (SQL Server) e `80` (frontend) não estão em uso. A API será exposta na porta `5000`.
+
+## Passo único
+
+```bash
+docker compose up --build
+```
+
+## URLs
+
+| Serviço   | URL                                 |
+|-----------|-------------------------------------|
+| Frontend  | http://localhost                    |
+| API       | http://localhost:5000               |
+| Swagger   | http://localhost:5000/swagger       |
+| Health    | http://localhost:5000/health        |
+| SQL Server| `localhost,1433` (sa / Your_password123) |
+
+## Login
+
+Não há usuário seed. Crie um usuário via Swagger (`POST /api/users`) e faça login normalmente.
+
+## Parar os containers
+
+```bash
+docker compose down
+```
+
+Para remover também o volume do banco de dados:
+
+```bash
+docker compose down -v
+```
+
+---
+
+# Executando sem Docker
 
 ## Pré-requisitos
 
 - .NET SDK 9
-- SQL Server
+- SQL Server (local ou container)
+- Node.js 20+
 - Git
 
 ---
 
-## Restaurar dependências
+## Backend
+
+### Restaurar dependências
 
 ```bash
 dotnet restore
 ```
 
----
+### Configurar banco de dados
 
-## Configurar banco de dados
+Atualize a Connection String em `appsettings.json` conforme seu ambiente.
 
-Atualize a Connection String em:
-
-```
-appsettings.json
-```
-
-ou
-
-```
-appsettings.Development.json
-```
-
-conforme seu ambiente.
-
----
-
-## Aplicar as Migrations
+### Aplicar as Migrations
 
 ```bash
 dotnet ef database update --project src/SeniorCrud.Persistence --startup-project src/SeniorCrud.Api
 ```
 
----
-
-## Executar a aplicação
+### Executar a API
 
 ```bash
 dotnet run --project src/SeniorCrud.Api
 ```
 
----
+A API será iniciada em `http://localhost:5029` (padrão do `launchSettings.json`).
 
-## Swagger
+### Swagger
 
 Após iniciar a aplicação, acesse:
 
 ```
-/swagger
+http://localhost:5029/swagger
 ```
+
+---
+
+## Frontend
+
+### Configurar URL da API
+
+Edite `web/.env` e ajuste a variável `VITE_API_URL` para a URL da sua API:
+
+```
+VITE_API_URL=http://localhost:5029
+```
+
+### Instalar dependências
+
+```bash
+cd web
+npm install
+```
+
+### Executar em desenvolvimento
+
+```bash
+npm run dev
+```
+
+O frontend será iniciado em `http://localhost:5173`.
+
+### Build de produção
+
+```bash
+npm run build
+```
+
+Os arquivos estáticos serão gerados em `web/dist/`.
 
 ---
 
@@ -508,7 +568,6 @@ Os testes cobrem principalmente:
 Embora a solução esteja funcional, algumas evoluções podem ser consideradas:
 
 - Refresh Token
-- Docker e Docker Compose
 - Pipeline de CI/CD
 - Redis como cache distribuído
 - Versionamento da API
