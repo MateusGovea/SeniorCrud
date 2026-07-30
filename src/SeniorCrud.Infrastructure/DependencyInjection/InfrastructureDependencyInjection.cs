@@ -1,4 +1,8 @@
+using System.Net;
 using Microsoft.Extensions.DependencyInjection;
+using Polly;
+using Polly.Extensions.Http;
+using Polly.Timeout;
 using SeniorCrud.Application.Abstractions.Authentication;
 using SeniorCrud.Application.Abstractions.Caching;
 using SeniorCrud.Application.Abstractions.Csv;
@@ -19,6 +23,15 @@ namespace SeniorCrud.Infrastructure.DependencyInjection;
 
 public static class InfrastructureDependencyInjection
 {
+    private static readonly HttpStatusCode[] RetryStatusCodes =
+    [
+        HttpStatusCode.RequestTimeout,
+        HttpStatusCode.InternalServerError,
+        HttpStatusCode.BadGateway,
+        HttpStatusCode.ServiceUnavailable,
+        HttpStatusCode.GatewayTimeout
+    ];
+
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddHttpContextAccessor();
@@ -40,7 +53,10 @@ public static class InfrastructureDependencyInjection
             .BindConfiguration(CacheOptions.SectionName)
             .ValidateOnStart();
 
-        services.AddHttpClient<IViaCepClient, ViaCepClient>();
+        services.AddHttpClient<IViaCepClient, ViaCepClient>()
+            .AddPolicyHandler(CreateRetryPolicy())
+            .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(5)))
+            .AddPolicyHandler(CreateCircuitBreakerPolicy());
 
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
@@ -50,5 +66,27 @@ public static class InfrastructureDependencyInjection
         services.AddScoped<ICacheService, MemoryCacheService>();
 
         return services;
+    }
+
+    private static IAsyncPolicy<HttpResponseMessage> CreateRetryPolicy()
+    {
+        return HttpPolicyExtensions
+            .HandleTransientHttpError()
+            .Or<TimeoutRejectedException>()
+            .OrResult(response => RetryStatusCodes.Contains(response.StatusCode))
+            .WaitAndRetryAsync(
+                retryCount: 3,
+                sleepDurationProvider: attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt)));
+    }
+
+    private static IAsyncPolicy<HttpResponseMessage> CreateCircuitBreakerPolicy()
+    {
+        return HttpPolicyExtensions
+            .HandleTransientHttpError()
+            .Or<TimeoutRejectedException>()
+            .OrResult(response => RetryStatusCodes.Contains(response.StatusCode))
+            .CircuitBreakerAsync(
+                handledEventsAllowedBeforeBreaking: 5,
+                durationOfBreak: TimeSpan.FromSeconds(30));
     }
 }
