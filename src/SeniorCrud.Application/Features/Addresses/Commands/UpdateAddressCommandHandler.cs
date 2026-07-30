@@ -62,6 +62,7 @@ public sealed class UpdateAddressCommandHandler : IRequestHandler<UpdateAddressC
 
         _cacheService.Remove(ApplicationCacheKeys.Address(address.Id));
         _cacheService.Remove(ApplicationCacheKeys.UserAddresses(address.UserId));
+        _cacheService.Remove(ApplicationCacheKeys.AddressesListVersion);
 
         return Result<AddressResponseDto>.Success(_mapper.Map<AddressResponseDto>(address));
     }

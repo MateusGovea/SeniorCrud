@@ -16,9 +16,17 @@ public static class ApplicationCacheKeys
         return $"viacep:{normalized}";
     }
 
+    public const string AddressesListVersion = "addresses:list";
+
     public static string UsersList(string version, int pageNumber, int pageSize, string? search)
     {
         var normalizedSearch = (search ?? string.Empty).Trim().ToLowerInvariant();
         return $"users:list:{version}:page:{pageNumber}:size:{pageSize}:search:{normalizedSearch}";
+    }
+
+    public static string AddressesList(string version, int pageNumber, int pageSize, string? search)
+    {
+        var normalizedSearch = (search ?? string.Empty).Trim().ToLowerInvariant();
+        return $"addresses:list:{version}:page:{pageNumber}:size:{pageSize}:search:{normalizedSearch}";
     }
 }

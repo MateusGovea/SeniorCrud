@@ -14,6 +14,27 @@ public sealed class AddressRepository : IAddressRepository
         _dbContext = dbContext;
     }
 
+    public async Task<IReadOnlyList<Address>> GetPagedAsync(int pageNumber, int pageSize, string? search, CancellationToken cancellationToken = default)
+    {
+        var query = _dbContext.Addresses.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var normalizedSearch = search.Trim().ToLowerInvariant();
+            query = query.Where(address =>
+                address.Street.ToLower().Contains(normalizedSearch) ||
+                address.City.ToLower().Contains(normalizedSearch) ||
+                address.Neighborhood.ToLower().Contains(normalizedSearch));
+        }
+
+        return await query
+            .OrderBy(address => address.Street)
+            .ThenBy(address => address.Number.Value)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<Address?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _dbContext.Addresses

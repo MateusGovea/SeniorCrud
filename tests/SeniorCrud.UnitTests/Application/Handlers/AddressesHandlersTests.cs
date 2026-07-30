@@ -63,7 +63,7 @@ public class AddressesHandlersTests
 
         result.IsSuccess.Should().BeTrue();
         createdAddress.Should().NotBeNull();
-        cache.Verify(c => c.Remove(It.IsAny<string>()), Times.Exactly(2));
+        cache.Verify(c => c.Remove(It.IsAny<string>()), Times.Exactly(3));
     }
 
     [Fact]

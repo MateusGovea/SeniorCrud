@@ -32,6 +32,7 @@ public sealed class DeleteAddressCommandHandler : IRequestHandler<DeleteAddressC
 
         _cacheService.Remove(ApplicationCacheKeys.Address(address.Id));
         _cacheService.Remove(ApplicationCacheKeys.UserAddresses(address.UserId));
+        _cacheService.Remove(ApplicationCacheKeys.AddressesListVersion);
 
         return Result.Success();
     }
