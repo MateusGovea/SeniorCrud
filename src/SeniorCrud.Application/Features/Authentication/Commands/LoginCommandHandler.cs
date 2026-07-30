@@ -31,13 +31,13 @@ public sealed class LoginCommandHandler : IRequestHandler<LoginCommand, Result<L
 
         if (user is null)
         {
-            return Result<LoginResponseDto>.Unauthorized("Authentication.InvalidCredentials", "Invalid e-mail or password.");
+            return Result<LoginResponseDto>.Unauthorized("Authentication.InvalidCredentials", "Email ou senha inválidos.");
         }
 
         var isValidPassword = _passwordHasher.VerifyPassword(request.Password, user.PasswordHash.Value);
         if (!isValidPassword)
         {
-            return Result<LoginResponseDto>.Unauthorized("Authentication.InvalidCredentials", "Invalid e-mail or password.");
+            return Result<LoginResponseDto>.Unauthorized("Authentication.InvalidCredentials", "Email ou senha inválidos.");
         }
 
         var accessToken = _jwtTokenGenerator.GenerateAccessToken(user.Id, user.Name);
