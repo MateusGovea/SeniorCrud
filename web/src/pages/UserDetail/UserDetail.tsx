@@ -1,0 +1,9 @@
+export function UserDetail() {
+  return (
+    <div>
+      <h1 className="text-2xl font-bold text-gray-900">
+        Detalhes do Usuário
+      </h1>
+    </div>
+  )
+}
