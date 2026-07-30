@@ -1,5 +1,7 @@
 using AutoMapper;
 using MediatR;
+using SeniorCrud.Application.Abstractions.Caching;
+using SeniorCrud.Application.Common.Caching;
 using SeniorCrud.Application.DTOs.Users;
 using SeniorCrud.Application.Interfaces.Persistence;
 using SeniorCrud.Application.Results;
@@ -11,15 +13,18 @@ public sealed class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICacheService _cacheService;
     private readonly IMapper _mapper;
 
     public UpdateUserCommandHandler(
         IUserRepository userRepository,
         IUnitOfWork unitOfWork,
+        ICacheService cacheService,
         IMapper mapper)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
+        _cacheService = cacheService;
         _mapper = mapper;
     }
 
@@ -62,6 +67,10 @@ public sealed class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand
 
         _userRepository.Update(user);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        _cacheService.Remove(ApplicationCacheKeys.User(user.Id));
+        _cacheService.Remove(ApplicationCacheKeys.UsersListVersion);
+        _cacheService.Remove(ApplicationCacheKeys.UserAddresses(user.Id));
 
         return Result<UserResponseDto>.Success(_mapper.Map<UserResponseDto>(user));
     }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SeniorCrud.IntegrationTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6f3b62db3ea0950f0f045b95511c4c82e0505e24")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5b934d4754f96289f17185e165f8f401c95ea5fd")]
 [assembly: System.Reflection.AssemblyProductAttribute("SeniorCrud.IntegrationTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SeniorCrud.IntegrationTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,6 +1,8 @@
 using AutoMapper;
 using MediatR;
 using SeniorCrud.Application.Abstractions.Authentication;
+using SeniorCrud.Application.Abstractions.Caching;
+using SeniorCrud.Application.Common.Caching;
 using SeniorCrud.Application.DTOs.Users;
 using SeniorCrud.Application.Interfaces.Persistence;
 using SeniorCrud.Application.Results;
@@ -15,17 +17,20 @@ public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPasswordHasher _passwordHasher;
+    private readonly ICacheService _cacheService;
     private readonly IMapper _mapper;
 
     public CreateUserCommandHandler(
         IUserRepository userRepository,
         IUnitOfWork unitOfWork,
         IPasswordHasher passwordHasher,
+        ICacheService cacheService,
         IMapper mapper)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
         _passwordHasher = passwordHasher;
+        _cacheService = cacheService;
         _mapper = mapper;
     }
 
@@ -62,6 +67,9 @@ public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand
 
         await _userRepository.AddAsync(user, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        _cacheService.Remove(ApplicationCacheKeys.User(user.Id));
+        _cacheService.Remove(ApplicationCacheKeys.UsersListVersion);
 
         return Result<UserResponseDto>.Success(_mapper.Map<UserResponseDto>(user));
     }
