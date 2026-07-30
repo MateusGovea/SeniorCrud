@@ -1,4 +1,4 @@
-import { useForm, type Resolver } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Input } from '@/components/Input'
@@ -16,16 +16,9 @@ const schema = z.object({
   isActive: z.boolean().optional(),
 })
 
-type FormData = {
-  nome: string
-  email: string
-  password?: string
-  cpf?: string
-  role: string
-  isActive?: boolean
-}
+type FormData = z.infer<typeof schema>
 
-const resolver = zodResolver(schema) as Resolver<FormData>
+const resolver = zodResolver(schema)
 
 interface UserFormProps {
   mode: 'create' | 'edit'

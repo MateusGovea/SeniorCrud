@@ -26,16 +26,7 @@ const schema = z.object({
   isPrimary: z.boolean().optional(),
 })
 
-type FormData = {
-  cep: string
-  street: string
-  number: string
-  complement?: string
-  neighborhood: string
-  city: string
-  state: string
-  isPrimary?: boolean
-}
+type FormData = z.infer<typeof schema>
 
 const resolver = zodResolver(schema)
 
@@ -54,7 +45,7 @@ export function AddressForm({ defaultValues, onSave, onCancel, serverError }: Ad
     setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
-    resolver: resolver as never,
+    resolver,
     defaultValues: {
       complement: '',
       isPrimary: false,

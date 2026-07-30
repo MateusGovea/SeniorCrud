@@ -20,7 +20,6 @@ api.interceptors.response.use(
   (error) => {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
       storage.clear()
-      window.location.href = '/login'
     }
     return Promise.reject(error)
   },
