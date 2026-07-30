@@ -1,0 +1,15 @@
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\bin\Debug\net9.0\SeniorCrud.Application.deps.json
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\bin\Debug\net9.0\SeniorCrud.Application.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\bin\Debug\net9.0\SeniorCrud.Application.pdb
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\bin\Debug\net9.0\SeniorCrud.Domain.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\bin\Debug\net9.0\SeniorCrud.Domain.pdb
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\SeniorCrud.Application.csproj.AssemblyReference.cache
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\SeniorCrud.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\SeniorCrud.Application.AssemblyInfoInputs.cache
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\SeniorCrud.Application.AssemblyInfo.cs
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\SeniorCrud.Application.csproj.CoreCompileInputs.cache
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\SeniorCr.E7117410.Up2Date
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\SeniorCrud.Application.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\refint\SeniorCrud.Application.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\SeniorCrud.Application.pdb
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Application\obj\Debug\net9.0\ref\SeniorCrud.Application.dll

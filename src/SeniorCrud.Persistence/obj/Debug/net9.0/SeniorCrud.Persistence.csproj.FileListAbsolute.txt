@@ -1,0 +1,17 @@
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\bin\Debug\net9.0\SeniorCrud.Persistence.deps.json
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\bin\Debug\net9.0\SeniorCrud.Persistence.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\bin\Debug\net9.0\SeniorCrud.Persistence.pdb
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\bin\Debug\net9.0\SeniorCrud.Application.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\bin\Debug\net9.0\SeniorCrud.Domain.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\bin\Debug\net9.0\SeniorCrud.Application.pdb
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\bin\Debug\net9.0\SeniorCrud.Domain.pdb
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\SeniorCrud.Persistence.csproj.AssemblyReference.cache
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\SeniorCrud.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\SeniorCrud.Persistence.AssemblyInfoInputs.cache
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\SeniorCrud.Persistence.AssemblyInfo.cs
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\SeniorCrud.Persistence.csproj.CoreCompileInputs.cache
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\SeniorCr.8E722EDE.Up2Date
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\SeniorCrud.Persistence.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\refint\SeniorCrud.Persistence.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\SeniorCrud.Persistence.pdb
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Persistence\obj\Debug\net9.0\ref\SeniorCrud.Persistence.dll
