@@ -100,6 +100,26 @@ public sealed class SeniorCrudApiFactory : WebApplicationFactory<Program>
         public Task<IReadOnlyList<Address>> ListByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
             => Task.FromResult((IReadOnlyList<Address>)_addresses.Where(address => address.UserId == userId).OrderBy(address => address.CreatedAt).ToList());
 
+        public Task<IReadOnlyList<Address>> GetPagedAsync(int pageNumber, int pageSize, string? search, CancellationToken cancellationToken = default)
+        {
+            var query = _addresses.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var s = search.ToLower();
+                query = query.Where(a =>
+                    a.Street.ToLower().Contains(s) ||
+                    a.City.ToLower().Contains(s) ||
+                    a.Neighborhood.ToLower().Contains(s));
+            }
+            var result = query
+                .OrderBy(a => a.Street)
+                .ThenBy(a => a.Number.Value)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            return Task.FromResult((IReadOnlyList<Address>)result);
+        }
+
         public Task AddAsync(Address address, CancellationToken cancellationToken = default)
         {
             _addresses.Add(address);

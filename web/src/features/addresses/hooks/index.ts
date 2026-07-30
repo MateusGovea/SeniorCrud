@@ -1,4 +1,5 @@
 export {
+  useAddressesList,
   useAddresses,
   useAddress,
   useCreateAddress,

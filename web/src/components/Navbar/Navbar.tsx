@@ -5,6 +5,7 @@ import { Button } from '@/components/Button'
 function usePageInfo(pathname: string, state: unknown): { title: string; parent?: { label: string; path: string } } {
   if (pathname === '/dashboard') return { title: 'Dashboard' }
   if (pathname === '/users') return { title: 'Usuários' }
+  if (pathname === '/addresses') return { title: 'Endereços' }
   if (pathname.startsWith('/users/')) {
     const segments = pathname.split('/')
     if (segments.length === 4 && segments[3] === 'addresses') {

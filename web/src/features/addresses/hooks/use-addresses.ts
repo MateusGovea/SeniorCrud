@@ -2,6 +2,14 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { addressesApi } from '@/features/addresses/api'
 import type { CreateAddressRequest, UpdateAddressRequest } from '@/features/addresses/api'
 
+export function useAddressesList(search: string = '') {
+  const pageSize = 200
+  return useQuery({
+    queryKey: ['addresses', 'list', search],
+    queryFn: () => addressesApi.getAddresses(1, pageSize, search || undefined),
+  })
+}
+
 export function useAddresses(userId: string | undefined) {
   return useQuery({
     queryKey: ['addresses', userId],
@@ -25,6 +33,7 @@ export function useCreateAddress() {
     mutationFn: (data: CreateAddressRequest) => addressesApi.createAddress(data),
     onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ['addresses', response.userId] })
+      queryClient.invalidateQueries({ queryKey: ['addresses', 'list'] })
     },
   })
 }
@@ -37,6 +46,7 @@ export function useUpdateAddress() {
       addressesApi.updateAddress(variables.id, variables.data),
     onSuccess: (_response, variables) => {
       queryClient.invalidateQueries({ queryKey: ['addresses', variables.userId] })
+      queryClient.invalidateQueries({ queryKey: ['addresses', 'list'] })
     },
   })
 }
@@ -49,6 +59,7 @@ export function useDeleteAddress() {
       addressesApi.deleteAddress(variables.id),
     onSuccess: (_response, variables) => {
       queryClient.invalidateQueries({ queryKey: ['addresses', variables.userId] })
+      queryClient.invalidateQueries({ queryKey: ['addresses', 'list'] })
     },
   })
 }

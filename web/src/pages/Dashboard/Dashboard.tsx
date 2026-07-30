@@ -116,7 +116,7 @@ export function Dashboard() {
               </div>
             </div>
           </Card>
-          <Card hover onClick={() => navigate('/users', { state: { showAddressesHint: true } })}>
+          <Card hover onClick={() => navigate('/addresses')}>
             <div className="flex items-center gap-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-warning/10 text-warning">
                 <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -125,7 +125,7 @@ export function Dashboard() {
               </div>
               <div>
                 <p className="text-sm font-medium text-text-primary">Gerenciar Endereços</p>
-                <p className="text-xs text-text-muted">Visualizar endereços dos usuários</p>
+                <p className="text-xs text-text-muted">Gerenciar endereços de todos os usuários</p>
               </div>
             </div>
           </Card>

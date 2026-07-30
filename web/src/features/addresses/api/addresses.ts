@@ -27,6 +27,13 @@ export interface UpdateAddressRequest {
 }
 
 export const addressesApi = {
+  async getAddresses(pageNumber: number = 1, pageSize: number = 100, search?: string): Promise<AddressResponse[]> {
+    const { data } = await api.get<ApiResult<AddressResponse[]>>('/api/addresses', {
+      params: { pageNumber, pageSize, search },
+    })
+    return unwrap(data)
+  },
+
   async getAddressByCep(cep: string): Promise<ViaCepResponseDto> {
     const { data } = await api.get<ApiResult<ViaCepResponseDto>>(`/api/viacep/${cep}`)
     return unwrap(data)

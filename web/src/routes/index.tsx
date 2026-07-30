@@ -7,6 +7,7 @@ import { NotFound } from '@/pages/NotFound'
 import { Users } from '@/pages/Users'
 import { UserDetail } from '@/pages/UserDetail'
 import { UserAddresses } from '@/pages/UserAddresses'
+import { Addresses } from '@/pages/Addresses'
 
 export function AppRoutes() {
   return (
@@ -19,6 +20,7 @@ export function AppRoutes() {
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<UserDetail />} />
           <Route path="/users/:id/addresses" element={<UserAddresses />} />
+          <Route path="/addresses" element={<Addresses />} />
         </Route>
       </Route>
 
