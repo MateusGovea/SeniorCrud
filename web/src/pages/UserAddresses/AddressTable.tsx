@@ -5,12 +5,13 @@ import { Button } from '@/components/Button'
 
 interface AddressTableProps {
   addresses: AddressResponse[]
+  onEdit: (address: AddressResponse) => void
   onDelete: (address: AddressResponse) => void
 }
 
 const ROWS_PER_PAGE = 8
 
-export function AddressTable({ addresses, onDelete }: AddressTableProps) {
+export function AddressTable({ addresses, onEdit, onDelete }: AddressTableProps) {
   const [page, setPage] = useState(0)
 
   const totalPages = Math.ceil(addresses.length / ROWS_PER_PAGE)
@@ -67,7 +68,7 @@ export function AddressTable({ addresses, onDelete }: AddressTableProps) {
                 </td>
                 <td className="px-4 py-3.5">
                   <div className="flex items-center justify-end gap-1">
-                    <Button variant="ghost" size="sm" title="Editar">
+                    <Button variant="ghost" size="sm" onClick={() => onEdit(addr)} title="Editar">
                       <svg className="h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
                         <path d="M12.146.146a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-10 10a.5.5 0 01-.168.11l-5 2a.5.5 0 01-.65-.65l2-5a.5.5 0 01.11-.168l10-10z" />
                       </svg>

@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import type { UserListItem } from '@/features/users/types'
 import { Badge } from '@/components/Badge'
 import { Button } from '@/components/Button'
@@ -8,6 +7,7 @@ interface UsersTableProps {
   users: UserListItem[]
   onEdit: (user: UserListItem) => void
   onDelete: (user: UserListItem) => void
+  onViewAddresses: (user: UserListItem) => void
 }
 
 const ROWS_PER_PAGE = 8
@@ -27,9 +27,8 @@ function UserAvatar({ nome, email }: { nome: string; email: string }) {
   )
 }
 
-export function UsersTable({ users, onEdit, onDelete }: UsersTableProps) {
+export function UsersTable({ users, onEdit, onDelete, onViewAddresses }: UsersTableProps) {
   const [page, setPage] = useState(0)
-  const navigate = useNavigate()
 
   const totalPages = Math.ceil(users.length / ROWS_PER_PAGE)
   const paged = users.slice(page * ROWS_PER_PAGE, (page + 1) * ROWS_PER_PAGE)
@@ -111,7 +110,7 @@ export function UsersTable({ users, onEdit, onDelete }: UsersTableProps) {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => navigate(`/users/${user.id}/addresses`)}
+                      onClick={() => onViewAddresses(user)}
                       title="Endereços"
                     >
                       <svg className="h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
