@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SeniorCrud.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+67f72092d6d4968566352467690076d6cc98d41f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5119f493dfc734e69ada1e45273db1feec81ac02")]
 [assembly: System.Reflection.AssemblyProductAttribute("SeniorCrud.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SeniorCrud.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
