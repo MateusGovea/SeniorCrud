@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using SeniorCrud.Application.Abstractions.Authentication;
 using SeniorCrud.Application.Abstractions.ViaCep;
 using SeniorCrud.Application.Interfaces.Persistence;
 using SeniorCrud.Domain.Entities;
+using SeniorCrud.Domain.Enums;
 using SeniorCrud.Domain.ValueObjects;
 
 namespace SeniorCrud.IntegrationTests.Common;
@@ -31,7 +33,23 @@ public sealed class SeniorCrudApiFactory : WebApplicationFactory<Program>
 
     private sealed class InMemoryUserRepository : IUserRepository
     {
-        private readonly List<User> _users = [];
+        private readonly List<User> _users;
+
+        public InMemoryUserRepository(IPasswordHasher passwordHasher)
+        {
+            _users = [SeedAdmin(passwordHasher)];
+        }
+
+        private static User SeedAdmin(IPasswordHasher passwordHasher)
+        {
+            return new User(
+                Guid.NewGuid(),
+                "Admin Test",
+                new Email("admin@test.com"),
+                new PasswordHash(passwordHasher.HashPassword("admin123")),
+                UserRole.Admin,
+                DateTimeOffset.UtcNow);
+        }
 
         public Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
             => Task.FromResult(_users.FirstOrDefault(user => user.Id == id));

@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using FluentAssertions;
@@ -27,10 +28,7 @@ public class ApiScenariosTests
             BaseAddress = new Uri("https://localhost")
         });
 
-        var createResponse = await client.PostAsJsonAsync("/api/users", new CreateUserDto("Login User", "login@test.com", "password123", "39053344705", new DateOnly(1990, 1, 1)));
-        createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-
-        var response = await client.PostAsJsonAsync("/api/auth/login", new LoginRequestDto("login@test.com", "password123"));
+        var response = await client.PostAsJsonAsync("/api/auth/login", new LoginRequestDto("admin@test.com", "admin123"));
         response.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var payload = await DeserializeAsync<ApiResult<LoginResponseDto>>(response);
@@ -41,10 +39,21 @@ public class ApiScenariosTests
     }
 
     [Fact]
-    public async Task Users_Should_Support_Crud_Flow()
+    public async Task Protected_Endpoints_Should_Reject_Anonymous_Requests()
     {
         await using var factory = new SeniorCrudApiFactory();
         using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { BaseAddress = new Uri("https://localhost") });
+
+        var response = await client.GetAsync("/api/users");
+
+        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+    }
+
+    [Fact]
+    public async Task Users_Should_Support_Crud_Flow()
+    {
+        await using var factory = new SeniorCrudApiFactory();
+        using var client = await CreateAuthenticatedClientAsync(factory);
 
         var create = await client.PostAsJsonAsync("/api/users", new CreateUserDto("CRUD User", "crud@test.com", "password123", "52998224725", null));
         var created = await DeserializeAsync<ApiResult<UserResponseDto>>(create);
@@ -75,7 +84,7 @@ public class ApiScenariosTests
     public async Task Addresses_Should_Support_Crud_Flow()
     {
         await using var factory = new SeniorCrudApiFactory();
-        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { BaseAddress = new Uri("https://localhost") });
+        using var client = await CreateAuthenticatedClientAsync(factory);
 
         var userCreate = await client.PostAsJsonAsync("/api/users", new CreateUserDto("Address User", "address@test.com", "password123", "39053344705", null));
         var createdUser = await DeserializeAsync<ApiResult<UserResponseDto>>(userCreate);
@@ -110,7 +119,7 @@ public class ApiScenariosTests
     public async Task ViaCep_Should_Return_Address_When_Cep_Is_Known()
     {
         await using var factory = new SeniorCrudApiFactory();
-        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { BaseAddress = new Uri("https://localhost") });
+        using var client = await CreateAuthenticatedClientAsync(factory);
 
         var response = await client.GetAsync("/api/viacep/01001000");
         var payload = await DeserializeAsync<ApiResult<ViaCepResponseDto>>(response);
@@ -123,7 +132,7 @@ public class ApiScenariosTests
     public async Task ExportCsv_Should_Return_Csv_Content()
     {
         await using var factory = new SeniorCrudApiFactory();
-        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { BaseAddress = new Uri("https://localhost") });
+        using var client = await CreateAuthenticatedClientAsync(factory);
 
         await client.PostAsJsonAsync("/api/users", new CreateUserDto("Csv One", "csv1@test.com", "password123", "39053344705", null));
         await client.PostAsJsonAsync("/api/users", new CreateUserDto("Csv Two", "csv2@test.com", "password123", "52998224725", null));
@@ -135,6 +144,19 @@ public class ApiScenariosTests
         var csv = await response.Content.ReadAsStringAsync();
         csv.Should().Contain("Nome");
         csv.Should().Contain("Csv One");
+    }
+
+    private static async Task<HttpClient> CreateAuthenticatedClientAsync(SeniorCrudApiFactory factory)
+    {
+        var client = factory.CreateClient(new WebApplicationFactoryClientOptions { BaseAddress = new Uri("https://localhost") });
+
+        var loginResponse = await client.PostAsJsonAsync("/api/auth/login", new LoginRequestDto("admin@test.com", "admin123"));
+        var loginPayload = await DeserializeAsync<ApiResult<LoginResponseDto>>(loginResponse);
+
+        client.DefaultRequestHeaders.Authorization =
+            new AuthenticationHeaderValue("Bearer", loginPayload.Value!.AccessToken);
+
+        return client;
     }
 
     private static async Task<T> DeserializeAsync<T>(HttpResponseMessage response)

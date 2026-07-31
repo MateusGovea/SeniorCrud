@@ -1,5 +1,6 @@
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SeniorCrud.Application.DTOs.Authentication;
 using SeniorCrud.Application.Features.Authentication.Commands;
@@ -9,6 +10,7 @@ namespace SeniorCrud.Api.Controllers;
 
 [ApiController]
 [Route("api/auth")]
+[AllowAnonymous]
 public sealed class AuthController : ControllerBase
 {
     private readonly IMediator _mediator;

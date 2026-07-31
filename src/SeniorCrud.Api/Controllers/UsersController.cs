@@ -1,5 +1,6 @@
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SeniorCrud.Application.Features.Export.Commands;
 using SeniorCrud.Application.DTOs.Users;
@@ -11,6 +12,7 @@ namespace SeniorCrud.Api.Controllers;
 
 [ApiController]
 [Route("api/users")]
+[Authorize]
 public sealed class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;

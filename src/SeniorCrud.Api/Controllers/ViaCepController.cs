@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SeniorCrud.Application.DTOs.ViaCep;
 using SeniorCrud.Application.Features.ViaCep.Queries;
@@ -8,6 +9,7 @@ namespace SeniorCrud.Api.Controllers;
 
 [ApiController]
 [Route("api/viacep")]
+[Authorize]
 public sealed class ViaCepController : ControllerBase
 {
     private readonly IMediator _mediator;

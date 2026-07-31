@@ -1,5 +1,6 @@
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SeniorCrud.Application.DTOs.Addresses;
 using SeniorCrud.Application.Features.Addresses.Commands;
@@ -10,6 +11,7 @@ namespace SeniorCrud.Api.Controllers;
 
 [ApiController]
 [Route("api/addresses")]
+[Authorize]
 public sealed class AddressesController : ControllerBase
 {
     private readonly IMediator _mediator;
