@@ -55,17 +55,17 @@ SeniorCRUD é uma aplicação full stack (.NET 9 + React 19) para gerenciamento 
 | CRUD de Endereços | Funcional | ✅ |
 | Integração ViaCEP | Funcional | ✅ |
 | Exportação CSV | Funcional | ✅ |
-| JWT (JSON Web Token) | Técnico | ✅ |
-| Swagger / OpenAPI | Técnico | ✅ |
-| Logs estruturados (Serilog) | Técnico | ✅ |
-| Paginação, ordenação e filtros | Técnico | ✅ |
-| Cache ViaCEP | Técnico | ✅ |
-| Timeout, Retry e Fallback (Polly) | Técnico | ✅ |
-| Health Checks (SQL Server, ViaCEP, MemoryCache) | Técnico | ✅ |
-| C# + SQL Server | Técnico | ✅ |
-| Clean Architecture, CQRS, FluentValidation | Diferencial | ✅ |
-| Rate Limiting | Diferencial | ⏳ melhoria futura |
-| Versionamento de API | Diferencial | ✅ |
+| JWT (JSON Web Token) | Funcional | ✅ |
+| Swagger / OpenAPI | Funcional | ✅ |
+| Logs estruturados (Serilog) | Funcional | ✅ |
+| Paginação, ordenação e filtros | Funcional | ✅ |
+| Cache ViaCEP | Funcional | ✅ |
+| Timeout, Retry e Fallback (Polly) | Funcional | ✅ |
+| Health Checks (SQL Server, ViaCEP, MemoryCache) | Funcional | ✅ |
+| C# + SQL Server | Funcional | ✅ |
+| Clean Architecture, CQRS, FluentValidation | Funcional | ✅ |
+| Rate Limiting | Funcional | ✅ |
+| Versionamento de API | Funcional | ✅ |
 
 ---
 
@@ -233,7 +233,7 @@ Toda operação retorna `Result` ou `Result<T>`, nunca lança exceções como fl
 ```
 SeniorCrud/
 ├── src/      → os 5 projetos da solução (detalhados abaixo)
-├── tests/    → SeniorCrud.UnitTests (65 testes) + SeniorCrud.IntegrationTests (6 cenários, WebApplicationFactory)
+├── tests/    → SeniorCrud.UnitTests (65 testes) + SeniorCrud.IntegrationTests (16 cenários, WebApplicationFactory)
 └── web/      → Frontend React (features, pages, components, hooks, utils)
 ```
 
@@ -265,7 +265,7 @@ Persistência com EF Core. Depende de `Application`. Contém: `SeniorCrudDbConte
 
 ### SeniorCrud.Api
 
-Apresentação. Depende de `Application` + `Infrastructure` + `Persistence`. Contém: controllers (`Auth`, `Users`, `Addresses`, `ViaCep`); `CorrelationIdMiddleware`; `GlobalExceptionHandler` (ProblemDetails RFC 7807); health checks (SQL Server, ViaCEP, MemoryCache); `ApiDependencyInjection` (JWT, CORS, OpenTelemetry, Swagger, Response Compression); `Program.cs` com o pipeline HTTP completo.
+Apresentação. Depende de `Application` + `Infrastructure` + `Persistence`. Contém: controllers (`Auth`, `Users`, `Addresses`, `ViaCep`); `CorrelationIdMiddleware`; `GlobalExceptionHandler` (ProblemDetails RFC 7807); health checks (SQL Server, ViaCEP, MemoryCache); `ApiDependencyInjection` (JWT, CORS, OpenTelemetry, Swagger, API Versioning, Response Compression); `Program.cs` com o pipeline HTTP completo — o pipeline também contém **API Versioning** (rotas `/api/v{version}/...`) e **Rate Limiting** (Fixed Window por IP).
 
 ---
 
@@ -487,6 +487,9 @@ Todas as bibliotecas resolvem um problema concreto — nenhuma foi adicionada po
 | **BCrypt.Net-Next** | 4.0.3 | Hash de senhas com salt automático |
 | **CsvHelper** | 33.1.0 | Escrita tipada de CSV (delimitador/encoding) |
 | **Swashbuckle** | 10.2.3 | OpenAPI gerada dos endpoints + UI Swagger |
+| **Asp.Versioning.Mvc** | 8.1.1 | Versionamento de API por segmento de URL (`/api/v1/...`) |
+| **Asp.Versioning.Mvc.ApiExplorer** | 8.1.1 | Descoberta das versões para gerar um SwaggerDoc por versão |
+| **Microsoft.AspNetCore.RateLimiting** | 9.x (shared framework) | Rate Limiting Fixed Window por IP (política global + login) |
 | **EF Core** | 9.0.8 | ORM: LINQ, migrations, change tracking |
 | **React Query** | 5.x | Estado servidor: cache, invalidação, deduplicação |
 | **React Hook Form** | 7.53 | Formulários performáticos (inputs uncontrolled + Zod) |
@@ -555,6 +558,13 @@ sequenceDiagram
 
 Coberto por teste de integração dedicado (`Endpoints protegidos rejeitam requests anônimos → 401`).
 
+### Proteção contra Força Bruta (Rate Limiting)
+
+- **Rate Limiting** protege a API contra abuso e força bruta (implementação oficial `Microsoft.AspNetCore.RateLimiting`)
+- **Login** (`POST /api/v1/auth/login`) tem política própria mais restritiva — **10 tentativas/minuto por IP**
+- **Demais endpoints** usam a política global — **100 requisições/minuto por IP**
+- Detalhes da política, resposta `429` e configuração em [Rate Limiting](#rate-limiting)
+
 ### Proteção de Dados e Boas Práticas
 
 - A API expõe apenas DTOs — `PasswordHash`, `RowVersion` e campos internos nunca são serializados
@@ -606,6 +616,23 @@ A resiliência perpassa também o tratamento de erros da API:
 
 ---
 
+## Rate Limiting
+
+Proteção contra abuso e força bruta usando a implementação **oficial do ASP.NET Core** (`Microsoft.AspNetCore.RateLimiting`, parte do shared framework do .NET 9) — **sem bibliotecas de terceiros** e **in-memory** (sem Redis/banco).
+
+**Política aplicada:**
+- **Global (todos os endpoints):** Fixed Window — **100 requisições/minuto por IP**, `QueueLimit = 0` (sem fila, rejeição imediata). Aplicada via `GlobalLimiter`, sem decorar controllers.
+- **Login (`POST /api/v1/auth/login`):** Fixed Window — **10 tentativas/minuto por IP** (orçamento próprio no `GlobalLimiter` para a rota de login, mais restritivo e independente do orçamento global).
+- **Identificação do cliente:** IP — prioriza o primeiro valor de `X-Forwarded-For` (setado pelo nginx no proxy `/api/`); sem esse header, usa `RemoteIpAddress`. Não usa JWT nem API Key.
+- **Excedeu o limite:** `HTTP 429` com `Retry-After` (segundos restantes) e corpo padronizado `Result` (`isSuccess=false`, `error.code="RateLimit.Exceeded"`).
+- **Health checks** (`/health`, `/liveness`, `/readiness`) ficam **fora** do rate limiting.
+
+**Motivo da escolha:** Fixed Window é simples, previsível e suficiente para CRUDs — é o que normalmente aparece em APIs corporativas. Evita-se Sliding Window (precisão maior, porém complexidade e custo de memória) e Token Bucket (bursts controlados, porém mais sutil de dimensionar).
+
+**Como alterar os limites:** edite a seção `RateLimiting` em `src/SeniorCrud.Api/appsettings.json` (ou via env vars `RateLimiting__Global__PermitLimit`, `RateLimiting__Login__PermitLimit` etc.). Valores inválidos (ex.: `PermitLimit <= 0`) fazem o startup falhar (validação explícita em `RateLimitingOptions.EnsureValid()`).
+
+---
+
 ## Observabilidade
 
 ### Logging Estruturado (Serilog)
@@ -626,7 +653,7 @@ Console (desenvolvimento/Docker), File (rolling diário) e `FromLogContext` — 
 
 ### Correlation ID
 
-`X-Correlation-ID` de entrada (gerado se ausente) → `HttpContext.TraceIdentifier` → `LogContext.PushProperty("CorrelationId", ...)`, devolvido no response — o template de log é `HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed} ms (CorrelationId: {CorrelationId})`.
+`X-Correlation-ID` de entrada (gerado se ausente) → `HttpContext.TraceIdentifier` → `LogContext.PushProperty("CorrelationId", ...)`, devolvido no response — o template de log é `HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed} ms (CorrelationId: {CorrelationId})`. Respostas `429` (Rate Limiting) passam pelo mesmo template — cada rejeição é registrada com `StatusCode=429`, `CorrelationId` e `TraceIdentifier`, rastreável de ponta a ponta.
 
 ### Tracing Distribuído (OpenTelemetry)
 
@@ -802,7 +829,7 @@ Cachear **listagens paginadas com filtros** gera uma explosão de chaves (`page`
 | Handlers | 18 | xUnit + Moq | Users CRUD, Addresses CRUD, Login, ViaCEP, Export |
 | Infraestrutura | 6 | xUnit | Cache, CSV, ViaCEP, PasswordHasher, JWT |
 
-### Integration Tests (6 cenários)
+### Integration Tests (16 cenários)
 
 xUnit + FluentAssertions + `WebApplicationFactory<Program>`, com repositórios em memória (`InMemoryUserRepository`, `InMemoryAddressRepository`), `NoOpUnitOfWork` e `StubViaCepClient` (CEP fixo "01001000"):
 
@@ -812,6 +839,10 @@ xUnit + FluentAssertions + `WebApplicationFactory<Program>`, com repositórios e
 4. CRUD completo de endereços
 5. ViaCEP com CEP conhecido → 200 + dados do endereço
 6. Exportação CSV → 200 + conteúdo CSV
+7. Versionamento: versão atual, sem versão e versão inexistente (404) + Swagger + header `api-supported-versions`
+8. Rate Limiting global: abaixo do limite → 200; acima do limite → 429 + `Retry-After` + corpo padronizado
+9. Rate Limiting de login: política mais restritiva (429) e orçamento global intacto
+10. Rate Limiting: health checks (`/health`, `/liveness`) não são limitados
 
 ---
 
@@ -877,7 +908,7 @@ npm run dev  # http://localhost:5173
 
 ```bash
 dotnet test
-# Unit: 65/65 | Integration: 11/11 (requer SQL Server)
+# Unit: 65/65 | Integration: 16/16 (requer SQL Server)
 ```
 
 ---
@@ -893,7 +924,7 @@ dotnet test
 
 ### Melhorias Técnicas
 
-- **Rate Limiting** — protege contra força bruta em login e abusos; `System.Threading.RateLimiting` (nativo .NET 7+) ou `AspNetCoreRateLimit`.
+- **Rate Limiting distribuído** — hoje Fixed Window in-memory (ver [Rate Limiting](#rate-limiting)); em multi-instância o estado precisa ser compartilhado (limite preciso por IP independente da instância que atende) via Redis (ex.: `Microsoft.AspNetCore.RateLimiting` com particionamento por `IDistributedCache`).
 - **Redis como Cache Distribuído** — múltiplas instâncias compartilham o cache ViaCEP/listagens; troca transparente de `MemoryCacheService` por `IDistributedCache` (a interface `ICacheService` já abstrai).
 - **CI/CD Pipeline** — automatiza build, testes, análise de qualidade e deploy (GitHub Actions): `push/PR → dotnet restore → build → test → sonarcloud → docker build/push → deploy (Kubernetes / Azure App Service)`.
 - **Kubernetes** — orquestração com escalabilidade automática, rolling updates, self-healing; manifestos: Deployment, Service, Ingress, ConfigMap, Secret, HorizontalPodAutoscaler.
@@ -934,7 +965,7 @@ O SeniorCRUD foi projetado para crescer em três dimensões:
 
 **Código**
 - **Build limpo:** `dotnet build` sem erros; frontend com `tsc -b` e `vite build` sem erros
-- **65 unit tests + 6 integration tests** cobrindo domínio, aplicação, infraestrutura e fluxos completos da API
+- **65 unit tests + 16 integration tests** cobrindo domínio, aplicação, infraestrutura e fluxos completos da API
 - **SOLID e Clean Code:** handlers enxutos, responsabilidade única, nomes expressivos, sem código morto
 - **Única exceção conhecida:** AutoMapper 12.0.1 com NU1903 / CVE-2026-32933 — risco baixo neste contexto, atualização para 15.1.1+ planejada (detalhes em [Decisões Técnicas](#decisões-técnicas))
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.RateLimiting;
 using Serilog;
 using SeniorCrud.Api.Middleware;
 using SeniorCrud.Api.DependencyInjection;
@@ -11,6 +12,7 @@ builder.Host.UseSerilog((context, loggerConfiguration) =>
     loggerConfiguration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddApiFoundation(builder.Configuration);
+builder.Services.AddApplicationRateLimiting(builder.Configuration);
 
 var app = builder.Build();
 
@@ -39,19 +41,20 @@ app.UseSerilogRequestLogging(options =>
 app.UseHttpsRedirection();
 app.UseResponseCompression();
 app.UseCors("Default");
+app.UseApplicationRateLimiting();
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHealthChecks("/health");
+app.MapHealthChecks("/health").DisableRateLimiting();
 app.MapHealthChecks("/liveness", new HealthCheckOptions
 {
     Predicate = registration => registration.Tags.Contains("live")
-});
+}).DisableRateLimiting();
 app.MapHealthChecks("/readiness", new HealthCheckOptions
 {
     Predicate = registration => registration.Tags.Contains("ready")
-});
+}).DisableRateLimiting();
 
 app.Run();
 
