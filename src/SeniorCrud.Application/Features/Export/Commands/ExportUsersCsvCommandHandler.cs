@@ -37,7 +37,38 @@ public sealed class ExportUsersCsvCommandHandler : IRequestHandler<ExportUsersCs
             .OrderBy(user => user.Name)
             .ToList();
 
-        var exportRows = _mapper.Map<IReadOnlyList<ExportUsersCsvDto>>(users);
+        var baseRows = _mapper.Map<List<ExportUsersCsvDto>>(users);
+        var exportRows = new List<ExportUsersCsvDto>(users.Count);
+
+        for (var i = 0; i < users.Count; i++)
+        {
+            var user = users[i];
+            var baseRow = baseRows[i];
+            var addresses = user.Addresses.ToList();
+
+            if (addresses.Count == 0)
+            {
+                exportRows.Add(baseRow);
+            }
+            else
+            {
+                foreach (var address in addresses)
+                {
+                    exportRows.Add(baseRow with
+                    {
+                        Cep = address.Cep.Value,
+                        Street = address.Street,
+                        Number = address.Number.Value,
+                        Complement = address.Complement,
+                        Neighborhood = address.Neighborhood,
+                        City = address.City,
+                        State = address.State,
+                        IsPrimary = address.IsPrimary,
+                    });
+                }
+            }
+        }
+
         var csvContent = _csvExportService.Export(exportRows);
 
         return Task.FromResult(Result<string>.Success(csvContent));

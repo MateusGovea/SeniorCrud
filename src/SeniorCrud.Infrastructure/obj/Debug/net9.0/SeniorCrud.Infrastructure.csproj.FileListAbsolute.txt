@@ -10,9 +10,9 @@ C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Infrastructure\obj\Debug\net9.
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Infrastructure\obj\Debug\net9.0\SeniorCrud.Infrastructure.AssemblyInfoInputs.cache
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Infrastructure\obj\Debug\net9.0\SeniorCrud.Infrastructure.AssemblyInfo.cs
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Infrastructure\obj\Debug\net9.0\SeniorCrud.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Infrastructure\obj\Debug\net9.0\SeniorCrud.Infrastructure.sourcelink.json
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Infrastructure\obj\Debug\net9.0\SeniorCr.5F38751E.Up2Date
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Infrastructure\obj\Debug\net9.0\SeniorCrud.Infrastructure.dll
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Infrastructure\obj\Debug\net9.0\refint\SeniorCrud.Infrastructure.dll
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Infrastructure\obj\Debug\net9.0\SeniorCrud.Infrastructure.pdb
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Infrastructure\obj\Debug\net9.0\ref\SeniorCrud.Infrastructure.dll
-C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Infrastructure\obj\Debug\net9.0\SeniorCrud.Infrastructure.sourcelink.json

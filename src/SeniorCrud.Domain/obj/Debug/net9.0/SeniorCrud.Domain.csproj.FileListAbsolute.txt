@@ -5,8 +5,8 @@ C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\Senior
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\SeniorCrud.Domain.AssemblyInfoInputs.cache
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\SeniorCrud.Domain.AssemblyInfo.cs
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\SeniorCrud.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\SeniorCrud.Domain.sourcelink.json
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\SeniorCrud.Domain.dll
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\refint\SeniorCrud.Domain.dll
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\SeniorCrud.Domain.pdb
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\ref\SeniorCrud.Domain.dll
-C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Domain\obj\Debug\net9.0\SeniorCrud.Domain.sourcelink.json
