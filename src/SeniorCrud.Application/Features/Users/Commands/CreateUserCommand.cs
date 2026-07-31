@@ -8,4 +8,5 @@ public sealed record CreateUserCommand(
     string Email,
     string Password,
     string? Cpf,
-    DateOnly? BirthDate) : ICommand<UserResponseDto>;
+    DateOnly? BirthDate,
+    string Role = "User") : ICommand<UserResponseDto>;

@@ -9,4 +9,5 @@ public sealed record UpdateUserCommand(
     string Email,
     string? Cpf,
     DateOnly? BirthDate,
-    bool IsActive) : ICommand<UserResponseDto>;
+    bool IsActive,
+    string Role = "User") : ICommand<UserResponseDto>;

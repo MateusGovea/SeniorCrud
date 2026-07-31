@@ -5,6 +5,7 @@ using SeniorCrud.Application.Common.Caching;
 using SeniorCrud.Application.DTOs.Users;
 using SeniorCrud.Application.Interfaces.Persistence;
 using SeniorCrud.Application.Results;
+using SeniorCrud.Domain.Enums;
 using SeniorCrud.Domain.ValueObjects;
 
 namespace SeniorCrud.Application.Features.Users.Commands;
@@ -53,8 +54,10 @@ public sealed class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand
         }
 
         var now = DateTimeOffset.UtcNow;
+        var role = Enum.Parse<UserRole>(request.Role, ignoreCase: true);
 
         user.UpdateProfile(request.Nome, email, cpf, request.BirthDate, now);
+        user.ChangeRole(role, now);
 
         if (request.IsActive)
         {

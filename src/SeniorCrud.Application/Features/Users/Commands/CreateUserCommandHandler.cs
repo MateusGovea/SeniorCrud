@@ -54,13 +54,14 @@ public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand
 
         var passwordHash = new PasswordHash(_passwordHasher.HashPassword(request.Password));
         var now = DateTimeOffset.UtcNow;
+        var role = Enum.Parse<UserRole>(request.Role, ignoreCase: true);
 
         var user = new User(
             id: Guid.NewGuid(),
             name: request.Nome,
             email: email,
             passwordHash: passwordHash,
-            role: UserRole.User,
+            role: role,
             createdAtUtc: now,
             cpf: cpf,
             birthDate: request.BirthDate);

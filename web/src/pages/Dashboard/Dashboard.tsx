@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { useUsers, useExportUsers } from '@/features/users/hooks'
 import { useAddressesList } from '@/features/addresses/hooks'
@@ -10,7 +9,6 @@ import { Badge } from '@/components/Badge'
 
 export function Dashboard() {
   const { user } = useAuth()
-  const navigate = useNavigate()
   const [showNewUser, setShowNewUser] = useState(false)
   const [showNewAddress, setShowNewAddress] = useState(false)
   const { data: users } = useUsers()
@@ -233,7 +231,7 @@ export function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+      <div className="grid grid-cols-1 gap-6">
         <div className="space-y-4 lg:col-span-3">
           <h2 className="text-sm font-semibold text-text-primary">Distribuição por Estado</h2>
           {stateDistribution.length > 0 ? (
@@ -269,40 +267,6 @@ export function Dashboard() {
               <p className="text-sm text-text-muted">Nenhum endereço cadastrado.</p>
             </div>
           )}
-        </div>
-
-        <div className="space-y-4 lg:col-span-2">
-          <h2 className="text-sm font-semibold text-text-primary">Navegação</h2>
-          <div className="grid grid-cols-1 gap-3">
-            <button
-              onClick={() => navigate('/users')}
-              className="flex items-center gap-3 rounded-xl border border-border-primary bg-bg-surface px-4 py-3.5 text-left transition-all duration-200 hover:border-border-hover hover:bg-bg-hover"
-            >
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-bg-hover text-text-muted">
-                <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-text-primary">Usuários</p>
-                <p className="text-xs text-text-muted">Ver lista completa</p>
-              </div>
-            </button>
-            <button
-              onClick={() => navigate('/addresses')}
-              className="flex items-center gap-3 rounded-xl border border-border-primary bg-bg-surface px-4 py-3.5 text-left transition-all duration-200 hover:border-border-hover hover:bg-bg-hover"
-            >
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-bg-hover text-text-muted">
-                <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-text-primary">Endereços</p>
-                <p className="text-xs text-text-muted">Ver lista completa</p>
-              </div>
-            </button>
-          </div>
         </div>
       </div>
 

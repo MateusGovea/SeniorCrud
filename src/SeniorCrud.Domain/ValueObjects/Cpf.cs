@@ -30,27 +30,29 @@ public sealed class Cpf : ValueObject
         yield return Value;
     }
 
-    private static string Normalize(string value)
+    private static string Normalize(string? value)
     {
         return new string((value ?? string.Empty).Where(char.IsDigit).ToArray());
     }
 
-    private static bool IsValid(string cpf)
+    public static bool IsValid(string? value)
     {
-        if (cpf.Length != DomainConstraints.CpfLength)
+        var normalized = Normalize(value);
+
+        if (normalized.Length != DomainConstraints.CpfLength)
         {
             return false;
         }
 
-        if (cpf.Distinct().Count() == 1)
+        if (normalized.Distinct().Count() == 1)
         {
             return false;
         }
 
-        var firstDigit = CalculateDigit(cpf.AsSpan(0, 9), 10);
-        var secondDigit = CalculateDigit(cpf.AsSpan(0, 10), 11);
+        var firstDigit = CalculateDigit(normalized.AsSpan(0, 9), 10);
+        var secondDigit = CalculateDigit(normalized.AsSpan(0, 10), 11);
 
-        return cpf[9] - '0' == firstDigit && cpf[10] - '0' == secondDigit;
+        return normalized[9] - '0' == firstDigit && normalized[10] - '0' == secondDigit;
     }
 
     private static int CalculateDigit(ReadOnlySpan<char> digits, int factor)

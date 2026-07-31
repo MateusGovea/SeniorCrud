@@ -9,6 +9,7 @@ export interface CreateUserRequest {
   email: string
   password: string
   cpf?: string | null
+  role: string
 }
 
 export interface UpdateUserRequest {
@@ -16,6 +17,7 @@ export interface UpdateUserRequest {
   email: string
   cpf?: string | null
   isActive: boolean
+  role: string
 }
 
 export const usersApi = {

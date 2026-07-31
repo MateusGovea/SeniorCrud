@@ -20,6 +20,9 @@ export function AddressesTable({ addresses, userNameMap, onEdit, onDelete }: Add
               Usuário
             </th>
             <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-text-muted">
+              Logradouro
+            </th>
+            <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-text-muted">
               Cidade
             </th>
             <th className="px-5 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-text-muted">
@@ -41,6 +44,14 @@ export function AddressesTable({ addresses, userNameMap, onEdit, onDelete }: Add
             <tr key={address.id} className="transition-colors hover:bg-bg-hover">
               <td className="whitespace-nowrap px-5 py-4 text-sm font-medium text-text-primary">
                 {userNameMap[address.userId] ?? '---'}
+              </td>
+              <td className="px-5 py-4">
+                <div>
+                  <p className="text-sm font-medium text-text-primary">{address.street}, {address.number}</p>
+                  {address.complement && (
+                    <p className="text-[11px] text-text-muted">{address.complement}</p>
+                  )}
+                </div>
               </td>
               <td className="whitespace-nowrap px-5 py-4 text-sm text-text-secondary">
                 {address.city}

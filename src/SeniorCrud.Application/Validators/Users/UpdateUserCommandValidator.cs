@@ -1,6 +1,8 @@
 using FluentValidation;
 using SeniorCrud.Application.Features.Users.Commands;
 using SeniorCrud.Domain.Constants;
+using SeniorCrud.Domain.Enums;
+using SeniorCrud.Domain.ValueObjects;
 
 namespace SeniorCrud.Application.Validators.Users;
 
@@ -22,8 +24,12 @@ public sealed class UpdateUserCommandValidator : AbstractValidator<UpdateUserCom
             .EmailAddress();
 
         RuleFor(command => command.Cpf)
-            .Must(value => string.IsNullOrWhiteSpace(value) || value.Where(char.IsDigit).Count() == DomainConstraints.CpfLength)
-            .WithMessage("Cpf must contain 11 digits when provided.");
+            .Must(value => string.IsNullOrWhiteSpace(value) || Cpf.IsValid(value))
+            .WithMessage("Cpf is invalid.");
+
+        RuleFor(command => command.Role)
+            .NotEmpty()
+            .IsEnumName(typeof(UserRole));
 
         RuleFor(command => command.BirthDate)
             .LessThanOrEqualTo(DateOnly.FromDateTime(DateTime.UtcNow))

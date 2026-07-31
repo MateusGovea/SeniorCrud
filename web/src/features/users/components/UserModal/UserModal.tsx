@@ -46,6 +46,7 @@ export function UserModal({ isOpen, onClose, onSuccess, mode, user }: UserModalP
         email: data.email,
         password: data.password!,
         cpf: sanitizeCpf(data.cpf),
+        role: data.role,
       })
     } else {
       await updateMutation.mutateAsync({
@@ -55,6 +56,7 @@ export function UserModal({ isOpen, onClose, onSuccess, mode, user }: UserModalP
           email: data.email,
           cpf: sanitizeCpf(data.cpf),
           isActive: data.isActive ?? true,
+          role: data.role,
         },
       })
     }
