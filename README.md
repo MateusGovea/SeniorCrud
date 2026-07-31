@@ -21,6 +21,29 @@ SeniorCRUD é uma aplicação full stack (.NET 9 + React 19) para gerenciamento 
 
 ---
 
+## Índice
+
+- [Sobre o Projeto](#sobre-o-projeto)
+- [Objetivos do Teste](#objetivos-do-teste)
+- [Arquitetura](#arquitetura)
+- [Estrutura da Solução](#estrutura-da-solução)
+- [Decisões Técnicas](#decisões-técnicas)
+- [Bibliotecas Utilizadas](#bibliotecas-utilizadas)
+- [Segurança](#segurança)
+- [Resiliência](#resiliência)
+- [Observabilidade](#observabilidade)
+- [Frontend](#frontend)
+- [Funcionalidades Implementadas](#funcionalidades-implementadas)
+- [Cache](#cache)
+- [Testes](#testes)
+- [Como Executar](#como-executar)
+- [Melhorias para Produção](#melhorias-para-produção)
+- [Escalabilidade](#escalabilidade)
+- [Desafios Encontrados](#desafios-encontrados)
+- [Qualidade](#qualidade)
+
+---
+
 ## Objetivos do Teste
 
 ### Requisitos do Desafio
