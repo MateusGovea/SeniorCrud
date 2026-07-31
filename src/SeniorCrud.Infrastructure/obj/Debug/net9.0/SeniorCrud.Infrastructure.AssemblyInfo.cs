@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SeniorCrud.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eabe3b63d2e29fb93e1ee611c863b00d02213833")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+babac96c93c8f9f2d22cb741e0b66fafe7d81da9")]
 [assembly: System.Reflection.AssemblyProductAttribute("SeniorCrud.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SeniorCrud.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

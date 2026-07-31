@@ -180,6 +180,21 @@ function transformCsv(text: string): string {
   return '\uFEFF' + lines.join('\r\n')
 }
 
+async function downloadCsv(blob: Blob, filename: string) {
+  const text = await blob.text()
+  const transformed = transformCsv(text)
+  const newBlob = new Blob([transformed], { type: 'text/csv;charset=utf-8;' })
+  const url = URL.createObjectURL(newBlob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  a.style.display = 'none'
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
+}
+
 export function useExportUsers() {
   const today = new Date()
   const pad = (n: number) => String(n).padStart(2, '0')
@@ -189,18 +204,16 @@ export function useExportUsers() {
   return useMutation({
     mutationFn: (userIds?: string[]) => usersApi.exportUsersCsv(userIds),
     onSuccess: async ({ blob }) => {
-      const text = await blob.text()
-      const transformed = transformCsv(text)
-      const newBlob = new Blob([transformed], { type: 'text/csv;charset=utf-8;' })
-      const url = URL.createObjectURL(newBlob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = defaultFilename
-      a.style.display = 'none'
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
+      await downloadCsv(blob, defaultFilename)
+    },
+  })
+}
+
+export function useExportUser() {
+  return useMutation({
+    mutationFn: (id: string) => usersApi.exportUserCsv(id),
+    onSuccess: async ({ blob, filename }) => {
+      await downloadCsv(blob, filename)
     },
   })
 }

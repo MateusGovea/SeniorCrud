@@ -59,6 +59,43 @@ public sealed class UsersController : ControllerBase
         };
     }
 
+    [HttpGet("{id:guid}/export/csv")]
+    [Produces("text/csv")]
+    public async Task<ContentResult> ExportUserCsv([FromRoute] Guid id, CancellationToken cancellationToken = default)
+    {
+        var user = await _mediator.Send(new GetUserByIdQuery(id), cancellationToken);
+        if (!user.IsSuccess)
+        {
+            return new ContentResult
+            {
+                StatusCode = StatusCodes.Status404NotFound,
+                ContentType = "text/plain",
+                Content = user.Error.Description
+            };
+        }
+
+        var result = await _mediator.Send(new ExportUsersCsvCommand([id]), cancellationToken);
+
+        if (!result.IsSuccess || string.IsNullOrEmpty(result.Value))
+        {
+            return new ContentResult
+            {
+                StatusCode = StatusCodes.Status404NotFound,
+                ContentType = "text/plain",
+                Content = result.Error.Description
+            };
+        }
+
+        Response.Headers.ContentDisposition = $"attachment; filename=user_{id:N}.csv";
+
+        return new ContentResult
+        {
+            StatusCode = StatusCodes.Status200OK,
+            ContentType = "text/csv",
+            Content = result.Value
+        };
+    }
+
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(Result<UserResponseDto>), StatusCodes.Status200OK)]
     public async Task<Result<UserResponseDto>> GetUserById([FromRoute] Guid id, CancellationToken cancellationToken = default)

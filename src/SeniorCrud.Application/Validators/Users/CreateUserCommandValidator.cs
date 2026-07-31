@@ -27,7 +27,7 @@ public sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCom
 
         RuleFor(command => command.Cpf)
             .Must(value => string.IsNullOrWhiteSpace(value) || Cpf.IsValid(value))
-            .WithMessage("Cpf is invalid.");
+            .WithMessage("Informe um CPF válido.");
 
         RuleFor(command => command.Role)
             .NotEmpty()

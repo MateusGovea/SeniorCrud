@@ -8,6 +8,8 @@ interface UsersTableProps {
   onEdit: (user: UserListItem) => void
   onDelete: (user: UserListItem) => void
   onViewAddresses: (user: UserListItem) => void
+  onExport: (user: UserListItem) => void
+  exportingUserId?: string | null
 }
 
 const ROWS_PER_PAGE = 8
@@ -27,7 +29,7 @@ function UserAvatar({ nome, email }: { nome: string; email: string }) {
   )
 }
 
-export function UsersTable({ users, onEdit, onDelete, onViewAddresses }: UsersTableProps) {
+export function UsersTable({ users, onEdit, onDelete, onViewAddresses, onExport, exportingUserId }: UsersTableProps) {
   const [page, setPage] = useState(0)
 
   const totalPages = Math.ceil(users.length / ROWS_PER_PAGE)
@@ -115,6 +117,18 @@ export function UsersTable({ users, onEdit, onDelete, onViewAddresses }: UsersTa
                     >
                       <svg className="h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
                         <path fillRule="evenodd" d="M8 1a5 5 0 015 5c0 2.5-2 4.5-5 7-3-2.5-5-4.5-5-7a5 5 0 015-5zm0 4a1 1 0 100 2 1 1 0 000-2z" clipRule="evenodd" />
+                      </svg>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => onExport(user)}
+                      title="Exportar CSV"
+                      isLoading={exportingUserId === user.id}
+                    >
+                      <svg className="h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 1a.5.5 0 01.5.5v7.793l2.646-2.647a.5.5 0 01.708.708l-3.5 3.5a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 01.708-.708L7.5 9.293V1.5A.5.5 0 018 1z" />
+                        <path d="M1.5 10a.5.5 0 01.5.5v3a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-3a.5.5 0 011 0v3A1.5 1.5 0 0113.5 15h-11A1.5 1.5 0 011 13.5v-3a.5.5 0 01.5-.5z" />
                       </svg>
                     </Button>
                     <Button

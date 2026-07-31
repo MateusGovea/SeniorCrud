@@ -1,0 +1,608 @@
+2026-07-31 08:56:09.878 -03:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 08:56:09.881 -03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-07-31 08:56:09.883 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-07-31 08:56:09.886 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2026-07-31 08:56:09.888 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 08:56:09.889 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-07-31 08:56:09.890 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-07-31 08:56:09.890 -03:00 [INF] No migrations were applied. The database is already up to date.
+2026-07-31 08:56:09.892 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2026-07-31 08:56:09.893 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [core].[Users] AS [u]
+        WHERE [u].[Email] = N'admin@seniorcrud.com') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-07-31 08:56:09.893 -03:00 [INF] Database migrations applied successfully
+2026-07-31 08:56:09.899 -03:00 [INF] User profile is available. Using 'C:\Users\Mateus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-31 08:56:09.904 -03:00 [INF] Request starting HTTP/1.1 POST https://localhost/api/v1/auth/login - application/json; charset=utf-8 48
+2026-07-31 08:56:09.905 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api)'
+2026-07-31 08:56:09.906 -03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[SeniorCrud.Application.DTOs.Authentication.LoginResponseDto]] Login(SeniorCrud.Application.DTOs.Authentication.LoginRequestDto, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.AuthController (SeniorCrud.Api).
+2026-07-31 08:56:09.907 -03:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-31 08:56:09.909 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:09.910 -03:00 [INF] Starting use case LoginCommand
+2026-07-31 08:56:10.007 -03:00 [INF] HTTP POST /api/v1/users responded 200 in 176.2317 ms (CorrelationId: e1c6743803c344a5bedc042816d2ac7a)
+2026-07-31 08:56:10.150 -03:00 [INF] HTTP POST /api/v1/users responded 200 in 142.7268 ms (CorrelationId: 9715b0cfe8c64ede871a3185088887ee)
+2026-07-31 08:56:10.199 -03:00 [INF] Finished use case LoginCommand with success in 288 ms
+2026-07-31 08:56:10.199 -03:00 [INF] Request LoginCommand took 289 ms
+2026-07-31 08:56:10.199 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 290.1279ms.
+2026-07-31 08:56:10.200 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[SeniorCrud.Application.DTOs.Authentication.LoginResponseDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-31 08:56:10.202 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api) in 295.9246ms
+2026-07-31 08:56:10.203 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api)'
+2026-07-31 08:56:10.203 -03:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 298.3081 ms (CorrelationId: 88170af07aeb446fa8bdcdca68ea7851)
+2026-07-31 08:56:10.203 -03:00 [INF] Request finished HTTP/1.1 POST https://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 299.1625ms
+2026-07-31 08:56:10.204 -03:00 [INF] Request starting HTTP/1.1 GET https://localhost/api/users - null null
+2026-07-31 08:56:10.205 -03:00 [INF] HTTP GET /api/users responded 404 in 0.3762 ms (CorrelationId: aafb8863ba4441a6a9685682d4deddcc)
+2026-07-31 08:56:10.205 -03:00 [INF] Request finished HTTP/1.1 GET https://localhost/api/users - 404 null null 1.1955ms
+2026-07-31 08:56:10.264 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 08:56:10.268 -03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-07-31 08:56:10.270 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-07-31 08:56:10.275 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2026-07-31 08:56:10.277 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 08:56:10.278 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-07-31 08:56:10.279 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-07-31 08:56:10.279 -03:00 [INF] No migrations were applied. The database is already up to date.
+2026-07-31 08:56:10.280 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2026-07-31 08:56:10.282 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [core].[Users] AS [u]
+        WHERE [u].[Email] = N'admin@seniorcrud.com') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-07-31 08:56:10.282 -03:00 [INF] Database migrations applied successfully
+2026-07-31 08:56:10.293 -03:00 [INF] User profile is available. Using 'C:\Users\Mateus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-31 08:56:10.301 -03:00 [INF] Request starting HTTP/1.1 POST https://localhost/api/v1/auth/login - application/json; charset=utf-8 48
+2026-07-31 08:56:10.306 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api)'
+2026-07-31 08:56:10.309 -03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[SeniorCrud.Application.DTOs.Authentication.LoginResponseDto]] Login(SeniorCrud.Application.DTOs.Authentication.LoginRequestDto, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.AuthController (SeniorCrud.Api).
+2026-07-31 08:56:10.309 -03:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-31 08:56:10.315 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:10.316 -03:00 [INF] Starting use case LoginCommand
+2026-07-31 08:56:12.706 -03:00 [INF] Finished use case LoginCommand with success in 2389 ms
+2026-07-31 08:56:12.706 -03:00 [INF] Request LoginCommand took 2389 ms
+2026-07-31 08:56:12.706 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 2390.7956ms.
+2026-07-31 08:56:12.706 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[SeniorCrud.Application.DTOs.Authentication.LoginResponseDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-31 08:56:12.709 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api) in 2400.1307ms
+2026-07-31 08:56:12.709 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api)'
+2026-07-31 08:56:12.709 -03:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 2406.0792 ms (CorrelationId: c224e720a6e1462584cbddb2ac44624c)
+2026-07-31 08:56:12.709 -03:00 [INF] Request finished HTTP/1.1 POST https://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 2407.964ms
+2026-07-31 08:56:12.709 -03:00 [INF] Starting use case ExportUsersCsvCommand
+2026-07-31 08:56:13.150 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 08:56:13.151 -03:00 [INF] Executing ContentResult with HTTP Response ContentType of text/csv
+2026-07-31 08:56:13.155 -03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-07-31 08:56:13.156 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-07-31 08:56:13.158 -03:00 [INF] HTTP GET /api/v1/users/export/csv responded 200 in 3007.8283 ms (CorrelationId: 5105241dbc794b27a8cbcf2bc443b347)
+2026-07-31 08:56:13.193 -03:00 [INF] User profile is available. Using 'C:\Users\Mateus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-31 08:56:13.206 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 08:56:13.207 -03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-07-31 08:56:13.208 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-07-31 08:56:13.209 -03:00 [INF] Request starting HTTP/1.1 POST https://localhost/api/v1/auth/login - application/json; charset=utf-8 48
+2026-07-31 08:56:13.212 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2026-07-31 08:56:13.213 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api)'
+2026-07-31 08:56:13.213 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 08:56:13.214 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-07-31 08:56:13.215 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-07-31 08:56:13.215 -03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[SeniorCrud.Application.DTOs.Authentication.LoginResponseDto]] Login(SeniorCrud.Application.DTOs.Authentication.LoginRequestDto, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.AuthController (SeniorCrud.Api).
+2026-07-31 08:56:13.216 -03:00 [INF] No migrations were applied. The database is already up to date.
+2026-07-31 08:56:13.216 -03:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-31 08:56:13.217 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2026-07-31 08:56:13.218 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [core].[Users] AS [u]
+        WHERE [u].[Email] = N'admin@seniorcrud.com') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-07-31 08:56:13.218 -03:00 [INF] Database migrations applied successfully
+2026-07-31 08:56:13.222 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:13.224 -03:00 [INF] Starting use case LoginCommand
+2026-07-31 08:56:13.229 -03:00 [INF] User profile is available. Using 'C:\Users\Mateus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-31 08:56:13.236 -03:00 [INF] Request starting HTTP/1.1 POST https://localhost/api/v1/auth/login - application/json; charset=utf-8 48
+2026-07-31 08:56:13.239 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api)'
+2026-07-31 08:56:13.241 -03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[SeniorCrud.Application.DTOs.Authentication.LoginResponseDto]] Login(SeniorCrud.Application.DTOs.Authentication.LoginRequestDto, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.AuthController (SeniorCrud.Api).
+2026-07-31 08:56:13.247 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:13.248 -03:00 [INF] Starting use case LoginCommand
+2026-07-31 08:56:13.660 -03:00 [INF] Finished use case LoginCommand with success in 436 ms
+2026-07-31 08:56:13.660 -03:00 [INF] Request LoginCommand took 436 ms
+2026-07-31 08:56:13.660 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 437.8159ms.
+2026-07-31 08:56:13.661 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[SeniorCrud.Application.DTOs.Authentication.LoginResponseDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-31 08:56:13.662 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api) in 446.8031ms
+2026-07-31 08:56:13.662 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api)'
+2026-07-31 08:56:13.663 -03:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 452.2008 ms (CorrelationId: 1296ae535dd64771aa33400a1f81dd40)
+2026-07-31 08:56:13.663 -03:00 [INF] Request finished HTTP/1.1 POST https://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 454.1152ms
+2026-07-31 08:56:13.663 -03:00 [INF] Request starting HTTP/1.1 GET https://localhost/api/v9/users - null null
+2026-07-31 08:56:13.665 -03:00 [INF] HTTP GET /api/v9/users responded 404 in 0.3234 ms (CorrelationId: 81496a3125c74f73a291a989999b1ee3)
+2026-07-31 08:56:13.665 -03:00 [INF] Request finished HTTP/1.1 GET https://localhost/api/v9/users - 404 null null 1.5762ms
+2026-07-31 08:56:13.665 -03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost/api/v9/users, Response status code: 404
+2026-07-31 08:56:13.741 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 08:56:13.746 -03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-07-31 08:56:13.747 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-07-31 08:56:13.752 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2026-07-31 08:56:13.753 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 08:56:13.754 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-07-31 08:56:13.754 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-07-31 08:56:13.754 -03:00 [INF] No migrations were applied. The database is already up to date.
+2026-07-31 08:56:13.755 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2026-07-31 08:56:13.756 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [core].[Users] AS [u]
+        WHERE [u].[Email] = N'admin@seniorcrud.com') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-07-31 08:56:13.757 -03:00 [INF] Database migrations applied successfully
+2026-07-31 08:56:13.778 -03:00 [INF] User profile is available. Using 'C:\Users\Mateus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-31 08:56:13.786 -03:00 [INF] Request starting HTTP/1.1 POST https://localhost/api/v1/auth/login - application/json; charset=utf-8 48
+2026-07-31 08:56:13.789 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api)'
+2026-07-31 08:56:13.791 -03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[SeniorCrud.Application.DTOs.Authentication.LoginResponseDto]] Login(SeniorCrud.Application.DTOs.Authentication.LoginRequestDto, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.AuthController (SeniorCrud.Api).
+2026-07-31 08:56:13.791 -03:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-31 08:56:13.798 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:13.798 -03:00 [INF] Starting use case LoginCommand
+2026-07-31 08:56:14.235 -03:00 [INF] Finished use case LoginCommand with success in 436 ms
+2026-07-31 08:56:14.235 -03:00 [INF] Request LoginCommand took 436 ms
+2026-07-31 08:56:14.235 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 437.6379ms.
+2026-07-31 08:56:14.236 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[SeniorCrud.Application.DTOs.Authentication.LoginResponseDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-31 08:56:14.237 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api) in 445.899ms
+2026-07-31 08:56:14.237 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api)'
+2026-07-31 08:56:14.237 -03:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 449.3685 ms (CorrelationId: 2da5b674e3a44afaa4322597b9f1a4b1)
+2026-07-31 08:56:14.238 -03:00 [INF] Request finished HTTP/1.1 POST https://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 451.1959ms
+2026-07-31 08:56:14.241 -03:00 [INF] Request starting HTTP/1.1 POST https://localhost/api/v1/users - application/json; charset=utf-8 126
+2026-07-31 08:56:14.243 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.UsersController.CreateUser (SeniorCrud.Api)'
+2026-07-31 08:56:14.246 -03:00 [INF] Route matched with {action = "CreateUser", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[SeniorCrud.Application.DTOs.Users.UserResponseDto]] CreateUser(SeniorCrud.Application.DTOs.Users.CreateUserDto, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.UsersController (SeniorCrud.Api).
+2026-07-31 08:56:14.250 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.UsersController.CreateUser (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:14.252 -03:00 [INF] Starting use case CreateUserCommand
+2026-07-31 08:56:14.476 -03:00 [INF] Finished use case CreateUserCommand with success in 223 ms
+2026-07-31 08:56:14.476 -03:00 [INF] Request CreateUserCommand took 223 ms
+2026-07-31 08:56:14.476 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.UsersController.CreateUser (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 226.4669ms.
+2026-07-31 08:56:14.476 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[SeniorCrud.Application.DTOs.Users.UserResponseDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-31 08:56:14.478 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.UsersController.CreateUser (SeniorCrud.Api) in 231.595ms
+2026-07-31 08:56:14.478 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.UsersController.CreateUser (SeniorCrud.Api)'
+2026-07-31 08:56:14.478 -03:00 [INF] HTTP POST /api/v1/users responded 200 in 235.9484 ms (CorrelationId: 0d48665314df49449aaf5552c0527a93)
+2026-07-31 08:56:14.478 -03:00 [INF] Request finished HTTP/1.1 POST https://localhost/api/v1/users - 200 null application/json; charset=utf-8 237.6456ms
+2026-07-31 08:56:14.483 -03:00 [INF] Request starting HTTP/1.1 POST https://localhost/api/v1/addresses - application/json; charset=utf-8 192
+2026-07-31 08:56:14.485 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.AddressesController.CreateAddress (SeniorCrud.Api)'
+2026-07-31 08:56:14.488 -03:00 [INF] Route matched with {action = "CreateAddress", controller = "Addresses"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[SeniorCrud.Application.DTOs.Addresses.AddressResponseDto]] CreateAddress(SeniorCrud.Application.DTOs.Addresses.CreateAddressDto, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.AddressesController (SeniorCrud.Api).
+2026-07-31 08:56:14.491 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.AddressesController.CreateAddress (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:14.500 -03:00 [INF] Starting use case CreateAddressCommand
+2026-07-31 08:56:14.508 -03:00 [INF] Finished use case CreateAddressCommand with success in 8 ms
+2026-07-31 08:56:14.509 -03:00 [INF] Request CreateAddressCommand took 8 ms
+2026-07-31 08:56:14.509 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.AddressesController.CreateAddress (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 17.5869ms.
+2026-07-31 08:56:14.509 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[SeniorCrud.Application.DTOs.Addresses.AddressResponseDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-31 08:56:14.510 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.AddressesController.CreateAddress (SeniorCrud.Api) in 22.6026ms
+2026-07-31 08:56:14.510 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.AddressesController.CreateAddress (SeniorCrud.Api)'
+2026-07-31 08:56:14.510 -03:00 [INF] HTTP POST /api/v1/addresses responded 200 in 27.5999 ms (CorrelationId: 1099549268d843c0adb78b956bc5570b)
+2026-07-31 08:56:14.510 -03:00 [INF] Request finished HTTP/1.1 POST https://localhost/api/v1/addresses - 200 null application/json; charset=utf-8 27.9566ms
+2026-07-31 08:56:14.512 -03:00 [INF] Request starting HTTP/1.1 GET https://localhost/api/v1/addresses/50ab10f6-9e56-4756-8f87-f082a906b924 - null null
+2026-07-31 08:56:14.513 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.AddressesController.GetAddressById (SeniorCrud.Api)'
+2026-07-31 08:56:14.515 -03:00 [INF] Route matched with {action = "GetAddressById", controller = "Addresses"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[SeniorCrud.Application.DTOs.Addresses.AddressResponseDto]] GetAddressById(System.Guid, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.AddressesController (SeniorCrud.Api).
+2026-07-31 08:56:14.515 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.AddressesController.GetAddressById (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:14.516 -03:00 [INF] Starting use case GetAddressByIdQuery
+2026-07-31 08:56:14.531 -03:00 [INF] Finished use case GetAddressByIdQuery with success in 15 ms
+2026-07-31 08:56:14.532 -03:00 [INF] Request GetAddressByIdQuery took 15 ms
+2026-07-31 08:56:14.532 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.AddressesController.GetAddressById (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 16.4609ms.
+2026-07-31 08:56:14.532 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[SeniorCrud.Application.DTOs.Addresses.AddressResponseDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-31 08:56:14.532 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.AddressesController.GetAddressById (SeniorCrud.Api) in 16.9919ms
+2026-07-31 08:56:14.532 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.AddressesController.GetAddressById (SeniorCrud.Api)'
+2026-07-31 08:56:14.532 -03:00 [INF] HTTP GET /api/v1/addresses/50ab10f6-9e56-4756-8f87-f082a906b924 responded 200 in 20.3333 ms (CorrelationId: 78de8cb3b590422192f5de42c8bbd1a0)
+2026-07-31 08:56:14.532 -03:00 [INF] Request finished HTTP/1.1 GET https://localhost/api/v1/addresses/50ab10f6-9e56-4756-8f87-f082a906b924 - 200 null application/json; charset=utf-8 20.648ms
+2026-07-31 08:56:14.534 -03:00 [INF] Request starting HTTP/1.1 PUT https://localhost/api/v1/addresses/50ab10f6-9e56-4756-8f87-f082a906b924 - application/json; charset=utf-8 205
+2026-07-31 08:56:14.535 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.AddressesController.UpdateAddress (SeniorCrud.Api)'
+2026-07-31 08:56:14.537 -03:00 [INF] Route matched with {action = "UpdateAddress", controller = "Addresses"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[SeniorCrud.Application.DTOs.Addresses.AddressResponseDto]] UpdateAddress(System.Guid, SeniorCrud.Application.DTOs.Addresses.UpdateAddressDto, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.AddressesController (SeniorCrud.Api).
+2026-07-31 08:56:14.540 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.AddressesController.UpdateAddress (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:14.545 -03:00 [INF] Starting use case UpdateAddressCommand
+2026-07-31 08:56:14.547 -03:00 [INF] Finished use case UpdateAddressCommand with success in 2 ms
+2026-07-31 08:56:14.548 -03:00 [INF] Request UpdateAddressCommand took 2 ms
+2026-07-31 08:56:14.548 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.AddressesController.UpdateAddress (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 7.8277ms.
+2026-07-31 08:56:14.548 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[SeniorCrud.Application.DTOs.Addresses.AddressResponseDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-31 08:56:14.548 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.AddressesController.UpdateAddress (SeniorCrud.Api) in 10.6611ms
+2026-07-31 08:56:14.548 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.AddressesController.UpdateAddress (SeniorCrud.Api)'
+2026-07-31 08:56:14.548 -03:00 [INF] HTTP PUT /api/v1/addresses/50ab10f6-9e56-4756-8f87-f082a906b924 responded 200 in 13.6454 ms (CorrelationId: 059d05fd21334133aeebdb0c2445de7b)
+2026-07-31 08:56:14.548 -03:00 [INF] Request finished HTTP/1.1 PUT https://localhost/api/v1/addresses/50ab10f6-9e56-4756-8f87-f082a906b924 - 200 null application/json; charset=utf-8 13.9853ms
+2026-07-31 08:56:14.548 -03:00 [INF] Request starting HTTP/1.1 GET https://localhost/api/v1/users/63adb3a0-f1a9-4713-8fd8-9a79a2c54906/addresses - null null
+2026-07-31 08:56:14.549 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.AddressesController.GetAddressesByUser (SeniorCrud.Api)'
+2026-07-31 08:56:14.551 -03:00 [INF] Route matched with {action = "GetAddressesByUser", controller = "Addresses"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[System.Collections.Generic.IReadOnlyList`1[SeniorCrud.Application.DTOs.Addresses.AddressResponseDto]]] GetAddressesByUser(System.Guid, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.AddressesController (SeniorCrud.Api).
+2026-07-31 08:56:14.551 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.AddressesController.GetAddressesByUser (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:14.553 -03:00 [INF] Starting use case GetAddressesByUserQuery
+2026-07-31 08:56:14.557 -03:00 [INF] Finished use case GetAddressesByUserQuery with success in 4 ms
+2026-07-31 08:56:14.557 -03:00 [INF] Request GetAddressesByUserQuery took 4 ms
+2026-07-31 08:56:14.557 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.AddressesController.GetAddressesByUser (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 5.7169ms.
+2026-07-31 08:56:14.557 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[System.Collections.Generic.IReadOnlyList`1[[SeniorCrud.Application.DTOs.Addresses.AddressResponseDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-31 08:56:14.558 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.AddressesController.GetAddressesByUser (SeniorCrud.Api) in 6.7942ms
+2026-07-31 08:56:14.558 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.AddressesController.GetAddressesByUser (SeniorCrud.Api)'
+2026-07-31 08:56:14.558 -03:00 [INF] HTTP GET /api/v1/users/63adb3a0-f1a9-4713-8fd8-9a79a2c54906/addresses responded 200 in 9.5940 ms (CorrelationId: 2e2c32c3cc354f948783cbc8b9d8f671)
+2026-07-31 08:56:14.558 -03:00 [INF] Request finished HTTP/1.1 GET https://localhost/api/v1/users/63adb3a0-f1a9-4713-8fd8-9a79a2c54906/addresses - 200 null application/json; charset=utf-8 9.8694ms
+2026-07-31 08:56:14.560 -03:00 [INF] Request starting HTTP/1.1 DELETE https://localhost/api/v1/addresses/50ab10f6-9e56-4756-8f87-f082a906b924 - null null
+2026-07-31 08:56:14.560 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.AddressesController.DeleteAddress (SeniorCrud.Api)'
+2026-07-31 08:56:14.563 -03:00 [INF] Route matched with {action = "DeleteAddress", controller = "Addresses"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result] DeleteAddress(System.Guid, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.AddressesController (SeniorCrud.Api).
+2026-07-31 08:56:14.563 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.AddressesController.DeleteAddress (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:14.564 -03:00 [INF] Starting use case DeleteAddressCommand
+2026-07-31 08:56:14.565 -03:00 [INF] Finished use case DeleteAddressCommand with success in 0 ms
+2026-07-31 08:56:14.565 -03:00 [INF] Request DeleteAddressCommand took 1 ms
+2026-07-31 08:56:14.565 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.AddressesController.DeleteAddress (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 2.3868ms.
+2026-07-31 08:56:14.565 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result'.
+2026-07-31 08:56:14.566 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.AddressesController.DeleteAddress (SeniorCrud.Api) in 2.9299ms
+2026-07-31 08:56:14.566 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.AddressesController.DeleteAddress (SeniorCrud.Api)'
+2026-07-31 08:56:14.566 -03:00 [INF] HTTP DELETE /api/v1/addresses/50ab10f6-9e56-4756-8f87-f082a906b924 responded 200 in 5.5614 ms (CorrelationId: f44c675799ed46bcb81c7a1685c69b47)
+2026-07-31 08:56:14.566 -03:00 [INF] Request finished HTTP/1.1 DELETE https://localhost/api/v1/addresses/50ab10f6-9e56-4756-8f87-f082a906b924 - 200 null application/json; charset=utf-8 5.811ms
+2026-07-31 08:56:14.601 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 08:56:14.606 -03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-07-31 08:56:14.606 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-07-31 08:56:14.611 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2026-07-31 08:56:14.612 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 08:56:14.613 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-07-31 08:56:14.614 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-07-31 08:56:14.614 -03:00 [INF] No migrations were applied. The database is already up to date.
+2026-07-31 08:56:14.615 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2026-07-31 08:56:14.616 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [core].[Users] AS [u]
+        WHERE [u].[Email] = N'admin@seniorcrud.com') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-07-31 08:56:14.616 -03:00 [INF] Database migrations applied successfully
+2026-07-31 08:56:14.626 -03:00 [INF] User profile is available. Using 'C:\Users\Mateus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-31 08:56:14.634 -03:00 [INF] Request starting HTTP/1.1 POST https://localhost/api/v1/auth/login - application/json; charset=utf-8 48
+2026-07-31 08:56:14.636 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api)'
+2026-07-31 08:56:14.638 -03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[SeniorCrud.Application.DTOs.Authentication.LoginResponseDto]] Login(SeniorCrud.Application.DTOs.Authentication.LoginRequestDto, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.AuthController (SeniorCrud.Api).
+2026-07-31 08:56:14.638 -03:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-31 08:56:14.643 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:14.644 -03:00 [INF] Starting use case LoginCommand
+2026-07-31 08:56:15.076 -03:00 [INF] Finished use case LoginCommand with success in 431 ms
+2026-07-31 08:56:15.076 -03:00 [INF] Request LoginCommand took 432 ms
+2026-07-31 08:56:15.076 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 433.0285ms.
+2026-07-31 08:56:15.077 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[SeniorCrud.Application.DTOs.Authentication.LoginResponseDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-31 08:56:15.078 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api) in 439.9487ms
+2026-07-31 08:56:15.078 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api)'
+2026-07-31 08:56:15.078 -03:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 443.1375 ms (CorrelationId: 78328077176042c58d6764fffc82d68a)
+2026-07-31 08:56:15.078 -03:00 [INF] Request finished HTTP/1.1 POST https://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 444.6784ms
+2026-07-31 08:56:15.126 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 08:56:15.131 -03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-07-31 08:56:15.132 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-07-31 08:56:15.136 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2026-07-31 08:56:15.137 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 08:56:15.138 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-07-31 08:56:15.138 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-07-31 08:56:15.139 -03:00 [INF] No migrations were applied. The database is already up to date.
+2026-07-31 08:56:15.139 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2026-07-31 08:56:15.140 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [core].[Users] AS [u]
+        WHERE [u].[Email] = N'admin@seniorcrud.com') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-07-31 08:56:15.140 -03:00 [INF] Database migrations applied successfully
+2026-07-31 08:56:15.149 -03:00 [INF] User profile is available. Using 'C:\Users\Mateus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-31 08:56:15.156 -03:00 [INF] Request starting HTTP/1.1 POST https://localhost/api/v1/auth/login - application/json; charset=utf-8 48
+2026-07-31 08:56:15.158 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api)'
+2026-07-31 08:56:15.161 -03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[SeniorCrud.Application.DTOs.Authentication.LoginResponseDto]] Login(SeniorCrud.Application.DTOs.Authentication.LoginRequestDto, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.AuthController (SeniorCrud.Api).
+2026-07-31 08:56:15.161 -03:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-07-31 08:56:15.166 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:15.167 -03:00 [INF] Starting use case LoginCommand
+2026-07-31 08:56:15.609 -03:00 [INF] Finished use case LoginCommand with success in 441 ms
+2026-07-31 08:56:15.609 -03:00 [INF] Request LoginCommand took 442 ms
+2026-07-31 08:56:15.609 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 442.9935ms.
+2026-07-31 08:56:15.609 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[SeniorCrud.Application.DTOs.Authentication.LoginResponseDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-31 08:56:15.611 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api) in 450.0651ms
+2026-07-31 08:56:15.611 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.AuthController.Login (SeniorCrud.Api)'
+2026-07-31 08:56:15.611 -03:00 [INF] HTTP POST /api/v1/auth/login responded 200 in 453.5065 ms (CorrelationId: 49e0c81abf3343b29c13000b1e2be308)
+2026-07-31 08:56:15.611 -03:00 [INF] Request finished HTTP/1.1 POST https://localhost/api/v1/auth/login - 200 null application/json; charset=utf-8 454.9972ms
+2026-07-31 08:56:15.612 -03:00 [INF] Request starting HTTP/1.1 POST https://localhost/api/v1/users - application/json; charset=utf-8 120
+2026-07-31 08:56:15.614 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.UsersController.CreateUser (SeniorCrud.Api)'
+2026-07-31 08:56:15.616 -03:00 [INF] Route matched with {action = "CreateUser", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[SeniorCrud.Application.DTOs.Users.UserResponseDto]] CreateUser(SeniorCrud.Application.DTOs.Users.CreateUserDto, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.UsersController (SeniorCrud.Api).
+2026-07-31 08:56:15.619 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.UsersController.CreateUser (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:15.620 -03:00 [INF] Starting use case CreateUserCommand
+2026-07-31 08:56:15.842 -03:00 [INF] Finished use case CreateUserCommand with success in 222 ms
+2026-07-31 08:56:15.842 -03:00 [INF] Request CreateUserCommand took 222 ms
+2026-07-31 08:56:15.843 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.UsersController.CreateUser (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 223.9354ms.
+2026-07-31 08:56:15.843 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[SeniorCrud.Application.DTOs.Users.UserResponseDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-31 08:56:15.845 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.UsersController.CreateUser (SeniorCrud.Api) in 228.359ms
+2026-07-31 08:56:15.845 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.UsersController.CreateUser (SeniorCrud.Api)'
+2026-07-31 08:56:15.845 -03:00 [INF] HTTP POST /api/v1/users responded 200 in 231.4153 ms (CorrelationId: 54afbc5ddca440acb7d6b4592aa31d93)
+2026-07-31 08:56:15.845 -03:00 [INF] Request finished HTTP/1.1 POST https://localhost/api/v1/users - 200 null application/json; charset=utf-8 232.7453ms
+2026-07-31 08:56:15.845 -03:00 [INF] Request starting HTTP/1.1 GET https://localhost/api/v1/users/69f24f14-fe85-45b2-92b2-0ac33d9a78bb - null null
+2026-07-31 08:56:15.847 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.UsersController.GetUserById (SeniorCrud.Api)'
+2026-07-31 08:56:15.849 -03:00 [INF] Route matched with {action = "GetUserById", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[SeniorCrud.Application.DTOs.Users.UserResponseDto]] GetUserById(System.Guid, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.UsersController (SeniorCrud.Api).
+2026-07-31 08:56:15.850 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.UsersController.GetUserById (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:15.851 -03:00 [INF] Starting use case GetUserByIdQuery
+2026-07-31 08:56:15.852 -03:00 [INF] Finished use case GetUserByIdQuery with success in 1 ms
+2026-07-31 08:56:15.852 -03:00 [INF] Request GetUserByIdQuery took 1 ms
+2026-07-31 08:56:15.852 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.UsersController.GetUserById (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 2.384ms.
+2026-07-31 08:56:15.852 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[SeniorCrud.Application.DTOs.Users.UserResponseDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-31 08:56:15.853 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.UsersController.GetUserById (SeniorCrud.Api) in 3.0774ms
+2026-07-31 08:56:15.853 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.UsersController.GetUserById (SeniorCrud.Api)'
+2026-07-31 08:56:15.853 -03:00 [INF] HTTP GET /api/v1/users/69f24f14-fe85-45b2-92b2-0ac33d9a78bb responded 200 in 7.1153 ms (CorrelationId: bf2ad8d6076c4d58a68afcc775b11d88)
+2026-07-31 08:56:15.853 -03:00 [INF] Request finished HTTP/1.1 GET https://localhost/api/v1/users/69f24f14-fe85-45b2-92b2-0ac33d9a78bb - 200 null application/json; charset=utf-8 7.3952ms
+2026-07-31 08:56:15.854 -03:00 [INF] Request starting HTTP/1.1 PUT https://localhost/api/v1/users/69f24f14-fe85-45b2-92b2-0ac33d9a78bb - application/json; charset=utf-8 175
+2026-07-31 08:56:15.856 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.UsersController.UpdateUser (SeniorCrud.Api)'
+2026-07-31 08:56:15.858 -03:00 [INF] Route matched with {action = "UpdateUser", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[SeniorCrud.Application.DTOs.Users.UserResponseDto]] UpdateUser(System.Guid, SeniorCrud.Application.DTOs.Users.UpdateUserDto, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.UsersController (SeniorCrud.Api).
+2026-07-31 08:56:15.860 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.UsersController.UpdateUser (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:15.866 -03:00 [INF] Starting use case UpdateUserCommand
+2026-07-31 08:56:15.868 -03:00 [INF] Finished use case UpdateUserCommand with success in 2 ms
+2026-07-31 08:56:15.868 -03:00 [INF] Request UpdateUserCommand took 2 ms
+2026-07-31 08:56:15.868 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.UsersController.UpdateUser (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 7.7615ms.
+2026-07-31 08:56:15.868 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[SeniorCrud.Application.DTOs.Users.UserResponseDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-31 08:56:15.868 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.UsersController.UpdateUser (SeniorCrud.Api) in 10.4889ms
+2026-07-31 08:56:15.868 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.UsersController.UpdateUser (SeniorCrud.Api)'
+2026-07-31 08:56:15.868 -03:00 [INF] HTTP PUT /api/v1/users/69f24f14-fe85-45b2-92b2-0ac33d9a78bb responded 200 in 13.8644 ms (CorrelationId: 804d3821b9294ab691e4546c0d018cb8)
+2026-07-31 08:56:15.869 -03:00 [INF] Request finished HTTP/1.1 PUT https://localhost/api/v1/users/69f24f14-fe85-45b2-92b2-0ac33d9a78bb - 200 null application/json; charset=utf-8 14.1404ms
+2026-07-31 08:56:15.869 -03:00 [INF] Request starting HTTP/1.1 GET https://localhost/api/v1/users?pageNumber=1&pageSize=10 - null null
+2026-07-31 08:56:15.870 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.UsersController.GetUsers (SeniorCrud.Api)'
+2026-07-31 08:56:15.872 -03:00 [INF] Route matched with {action = "GetUsers", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result`1[System.Collections.Generic.IReadOnlyList`1[SeniorCrud.Application.DTOs.Users.UserListItemDto]]] GetUsers(Int32, Int32, System.String, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.UsersController (SeniorCrud.Api).
+2026-07-31 08:56:15.874 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.UsersController.GetUsers (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:15.875 -03:00 [INF] Starting use case GetUsersQuery
+2026-07-31 08:56:15.878 -03:00 [INF] Finished use case GetUsersQuery with success in 3 ms
+2026-07-31 08:56:15.879 -03:00 [INF] Request GetUsersQuery took 3 ms
+2026-07-31 08:56:15.879 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.UsersController.GetUsers (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 4.0842ms.
+2026-07-31 08:56:15.879 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result`1[[System.Collections.Generic.IReadOnlyList`1[[SeniorCrud.Application.DTOs.Users.UserListItemDto, SeniorCrud.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-31 08:56:15.880 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.UsersController.GetUsers (SeniorCrud.Api) in 7.4683ms
+2026-07-31 08:56:15.880 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.UsersController.GetUsers (SeniorCrud.Api)'
+2026-07-31 08:56:15.880 -03:00 [INF] HTTP GET /api/v1/users responded 200 in 10.1943 ms (CorrelationId: 43bbda62f6184c2791aa9e8dbfeb2051)
+2026-07-31 08:56:15.880 -03:00 [INF] Request finished HTTP/1.1 GET https://localhost/api/v1/users?pageNumber=1&pageSize=10 - 200 null application/json; charset=utf-8 10.4198ms
+2026-07-31 08:56:15.882 -03:00 [INF] Request starting HTTP/1.1 DELETE https://localhost/api/v1/users/69f24f14-fe85-45b2-92b2-0ac33d9a78bb - null null
+2026-07-31 08:56:15.882 -03:00 [INF] Executing endpoint 'SeniorCrud.Api.Controllers.UsersController.DeleteUser (SeniorCrud.Api)'
+2026-07-31 08:56:15.884 -03:00 [INF] Route matched with {action = "DeleteUser", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[SeniorCrud.Application.Results.Result] DeleteUser(System.Guid, System.Threading.CancellationToken) on controller SeniorCrud.Api.Controllers.UsersController (SeniorCrud.Api).
+2026-07-31 08:56:15.885 -03:00 [INF] Executing action method SeniorCrud.Api.Controllers.UsersController.DeleteUser (SeniorCrud.Api) - Validation state: "Valid"
+2026-07-31 08:56:15.886 -03:00 [INF] Starting use case DeleteUserCommand
+2026-07-31 08:56:15.888 -03:00 [INF] Finished use case DeleteUserCommand with success in 2 ms
+2026-07-31 08:56:15.888 -03:00 [INF] Request DeleteUserCommand took 2 ms
+2026-07-31 08:56:15.888 -03:00 [INF] Executed action method SeniorCrud.Api.Controllers.UsersController.DeleteUser (SeniorCrud.Api), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 3.8962ms.
+2026-07-31 08:56:15.889 -03:00 [INF] Executing ObjectResult, writing value of type 'SeniorCrud.Application.Results.Result'.
+2026-07-31 08:56:15.889 -03:00 [INF] Executed action SeniorCrud.Api.Controllers.UsersController.DeleteUser (SeniorCrud.Api) in 4.4138ms
+2026-07-31 08:56:15.889 -03:00 [INF] Executed endpoint 'SeniorCrud.Api.Controllers.UsersController.DeleteUser (SeniorCrud.Api)'
+2026-07-31 08:56:15.889 -03:00 [INF] HTTP DELETE /api/v1/users/69f24f14-fe85-45b2-92b2-0ac33d9a78bb responded 200 in 6.9704 ms (CorrelationId: 2e1ca72d85e34c02a8417340b4e4d004)
+2026-07-31 08:56:15.889 -03:00 [INF] Request finished HTTP/1.1 DELETE https://localhost/api/v1/users/69f24f14-fe85-45b2-92b2-0ac33d9a78bb - 200 null application/json; charset=utf-8 7.2666ms
+2026-07-31 09:02:51.394 -03:00 [WRN] The entity type 'Cpf' is an optional dependent using table sharing without any required non shared property that could be used to identify whether the entity exists. If all nullable properties contain a null value in database then an object instance won't be created in the query. Add a required property to create instances with null values for other properties or mark the incoming navigation as required to always create an instance.
+2026-07-31 09:02:51.592 -03:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 09:02:51.592 -03:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 09:02:51.599 -03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-07-31 09:02:51.599 -03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2026-07-31 09:02:51.611 -03:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-07-31 09:02:51.650 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2026-07-31 09:02:51.659 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 09:02:51.661 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-07-31 09:02:51.663 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-07-31 09:02:51.668 -03:00 [INF] No migrations were applied. The database is already up to date.
+2026-07-31 09:02:51.670 -03:00 [INF] Executed DbCommand (70ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-07-31 09:02:51.670 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2026-07-31 09:02:51.674 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2026-07-31 09:02:51.675 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 09:02:51.676 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-07-31 09:02:51.677 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-07-31 09:02:51.677 -03:00 [INF] No migrations were applied. The database is already up to date.
+2026-07-31 09:02:51.678 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2026-07-31 09:02:51.771 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [core].[Users] AS [u]
+        WHERE [u].[Email] = N'admin@seniorcrud.com') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-07-31 09:02:51.771 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [core].[Users] AS [u]
+        WHERE [u].[Email] = N'admin@seniorcrud.com') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-07-31 09:02:51.778 -03:00 [INF] Database migrations applied successfully
+2026-07-31 09:02:51.778 -03:00 [INF] Database migrations applied successfully
+2026-07-31 09:02:51.826 -03:00 [INF] User profile is available. Using 'C:\Users\Mateus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-31 09:02:51.826 -03:00 [INF] User profile is available. Using 'C:\Users\Mateus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-31 09:02:51.884 -03:00 [INF] Request starting HTTP/1.1 GET https://localhost/api/v1/users - null null
+2026-07-31 09:02:51.884 -03:00 [INF] Request starting HTTP/1.1 GET https://localhost/swagger/v1/swagger.json - null null
+2026-07-31 09:02:51.916 -03:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-07-31 09:02:51.918 -03:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-07-31 09:02:51.919 -03:00 [INF] HTTP GET /api/v1/users responded 401 in 12.6235 ms (CorrelationId: bec42acae2fb408d8c432689895b92f0)
+2026-07-31 09:02:51.924 -03:00 [INF] Request finished HTTP/1.1 GET https://localhost/api/v1/users - 401 null null 40.6971ms
+2026-07-31 09:02:51.999 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 09:02:52.003 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2026-07-31 09:02:52.006 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2026-07-31 09:02:52.008 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-07-31 09:02:52.009 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-07-31 09:02:52.009 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-07-31 09:02:52.011 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2026-07-31 09:02:52.012 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [core].[Users] AS [u]
+        WHERE [u].[Email] = N'admin@seniorcrud.com') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-07-31 09:02:52.012 -03:00 [INF] Database migrations applied successfully

@@ -4,7 +4,6 @@ import { useUsers, useExportUsers } from '@/features/users/hooks'
 import { useAddressesList } from '@/features/addresses/hooks'
 import { UserModal } from '@/features/users/components/UserModal'
 import { AddressModal } from '@/features/addresses/components/AddressModal'
-import { Button } from '@/components/Button'
 import { Badge } from '@/components/Badge'
 
 export function Dashboard() {
@@ -96,26 +95,57 @@ export function Dashboard() {
             Gerencie usuários e endereços através de um painel centralizado.
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <Button size="sm" onClick={() => setShowNewUser(true)}>
-            <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
-            </svg>
-            Novo Usuário
-          </Button>
-          <Button size="sm" onClick={() => setShowNewAddress(true)}>
-            <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-            </svg>
-            Novo Endereço
-          </Button>
-          <Button variant="secondary" size="sm" onClick={handleExport} isLoading={exportMutation.isPending}>
-            <svg className="h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M8 1a.5.5 0 01.5.5v7.793l2.646-2.647a.5.5 0 01.708.708l-3.5 3.5a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 01.708-.708L7.5 9.293V1.5A.5.5 0 018 1z" />
-              <path d="M1.5 10a.5.5 0 01.5.5v3a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-3a.5.5 0 011 0v3A1.5 1.5 0 0113.5 15h-11A1.5 1.5 0 011 13.5v-3a.5.5 0 01.5-.5z" />
-            </svg>
-            {exportMutation.isPending ? 'Exportando...' : 'Exportar CSV'}
-          </Button>
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-sm font-semibold text-text-primary">Ações Rápidas</h2>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <button
+            onClick={() => setShowNewUser(true)}
+            className="flex items-center gap-3 rounded-xl border border-border-primary bg-bg-surface px-4 py-3.5 text-left transition-all duration-200 hover:border-border-hover hover:bg-bg-hover"
+          >
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 text-accent">
+              <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-text-primary">Novo Usuário</p>
+              <p className="text-xs text-text-muted">Criar um novo usuário no sistema</p>
+            </div>
+          </button>
+          <button
+            onClick={() => setShowNewAddress(true)}
+            className="flex items-center gap-3 rounded-xl border border-border-primary bg-bg-surface px-4 py-3.5 text-left transition-all duration-200 hover:border-border-hover hover:bg-bg-hover"
+          >
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 text-accent">
+              <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-text-primary">Novo Endereço</p>
+              <p className="text-xs text-text-muted">Cadastrar um endereço para um usuário</p>
+            </div>
+          </button>
+          <button
+            onClick={handleExport}
+            disabled={exportMutation.isPending}
+            className="flex items-center gap-3 rounded-xl border border-border-primary bg-bg-surface px-4 py-3.5 text-left transition-all duration-200 hover:border-border-hover hover:bg-bg-hover disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 text-accent">
+              <svg className="h-4 w-4" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 1a.5.5 0 01.5.5v7.793l2.646-2.647a.5.5 0 01.708.708l-3.5 3.5a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 01.708-.708L7.5 9.293V1.5A.5.5 0 018 1z" />
+                <path d="M1.5 10a.5.5 0 01.5.5v3a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-3a.5.5 0 011 0v3A1.5 1.5 0 0113.5 15h-11A1.5 1.5 0 011 13.5v-3a.5.5 0 01.5-.5z" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-text-primary">
+                {exportMutation.isPending ? 'Exportando...' : 'Exportar Todos os Usuários (CSV)'}
+              </p>
+              <p className="text-xs text-text-muted">Baixar relatório com todos os usuários</p>
+            </div>
+          </button>
         </div>
       </div>
 

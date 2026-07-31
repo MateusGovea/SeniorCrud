@@ -20,6 +20,35 @@ export interface UpdateUserRequest {
   role: string
 }
 
+async function requestCsv(
+  url: string,
+  params: Record<string, unknown> | undefined,
+  fallbackFilename: string,
+  fallbackError: string,
+): Promise<{ blob: Blob; filename: string }> {
+  try {
+    const response = await api.get<Blob>(url, {
+      params,
+      responseType: 'blob',
+    })
+
+    const disposition = response.headers['content-disposition']
+    let filename = fallbackFilename
+    if (typeof disposition === 'string') {
+      const match = /filename=(.+)/.exec(disposition)
+      if (match) filename = match[1].replace(/['"]/g, '').trim()
+    }
+
+    return { blob: response.data, filename }
+  } catch (error) {
+    if (error instanceof AxiosError && error.response?.data instanceof Blob) {
+      const text = await error.response.data.text()
+      throw new ApiError(text || fallbackError)
+    }
+    throw error
+  }
+}
+
 export const usersApi = {
   async getUsers(): Promise<UserListItem[]> {
     const { data } = await api.get<ApiResult<UserListItem[]>>(`${API_V1_PREFIX}/users`)
@@ -47,26 +76,20 @@ export const usersApi = {
   },
 
   async exportUsersCsv(userIds?: string[]): Promise<{ blob: Blob; filename: string }> {
-    try {
-      const response = await api.get<Blob>(`${API_V1_PREFIX}/users/export/csv`, {
-        params: { userIds },
-        responseType: 'blob',
-      })
+    return requestCsv(
+      `${API_V1_PREFIX}/users/export/csv`,
+      { userIds },
+      'users.csv',
+      'Erro ao exportar usuários',
+    )
+  },
 
-      const disposition = response.headers['content-disposition']
-      let filename = 'users.csv'
-      if (typeof disposition === 'string') {
-        const match = /filename=(.+)/.exec(disposition)
-        if (match) filename = match[1].replace(/['"]/g, '').trim()
-      }
-
-      return { blob: response.data, filename }
-    } catch (error) {
-      if (error instanceof AxiosError && error.response?.data instanceof Blob) {
-        const text = await error.response.data.text()
-        throw new ApiError(text || 'Erro ao exportar usuários')
-      }
-      throw error
-    }
+  async exportUserCsv(id: string): Promise<{ blob: Blob; filename: string }> {
+    return requestCsv(
+      `${API_V1_PREFIX}/users/${id}/export/csv`,
+      undefined,
+      `user_${id}.csv`,
+      'Erro ao exportar usuário',
+    )
   },
 }

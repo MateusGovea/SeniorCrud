@@ -92,7 +92,7 @@ public class UsersHandlersTests
 
         var cache = new Mock<ICacheService>();
 
-        var handler = new DeleteUserCommandHandler(cache.Object, userRepository.Object, unitOfWork.Object);
+        var handler = new DeleteUserCommandHandler(cache.Object, userRepository.Object, Mock.Of<IAddressRepository>(), unitOfWork.Object);
 
         var result = await handler.Handle(new DeleteUserCommand(user.Id), CancellationToken.None);
 

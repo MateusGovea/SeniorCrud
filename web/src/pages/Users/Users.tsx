@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useUsers, useExportUsers } from '@/features/users/hooks'
+import { useUsers, useExportUsers, useExportUser } from '@/features/users/hooks'
 import { UsersTable } from './UsersTable'
 import { UserModal } from '@/features/users/components/UserModal'
 import { DeleteUserDialog } from '@/features/users/components/DeleteUserDialog'
@@ -30,6 +30,7 @@ export function Users() {
   const [showAddressesHint, setShowAddressesHint] = useState(false)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const exportMutation = useExportUsers()
+  const exportUserMutation = useExportUser()
 
   useEffect(() => {
     if (!successMessage) return
@@ -75,6 +76,10 @@ export function Users() {
     exportMutation.mutate(undefined)
   }
 
+  function handleExportUser(user: UserListItem) {
+    exportUserMutation.mutate(user.id)
+  }
+
   function handleCreate() {
     setModal({ type: 'create' })
   }
@@ -100,6 +105,8 @@ export function Users() {
     u.email.toLowerCase().includes(search.toLowerCase())
   ) ?? []
 
+  const exportingUserId = exportUserMutation.isPending ? exportUserMutation.variables : null
+
   const total = users?.length ?? 0
   const ativos = users?.filter((u) => u.isActive).length ?? 0
 
@@ -113,6 +120,8 @@ export function Users() {
         onEdit={handleEdit}
         onDelete={handleDelete}
         onViewAddresses={handleViewAddresses}
+        onExport={handleExportUser}
+        exportingUserId={exportingUserId}
       />
     )
   }
@@ -134,6 +143,15 @@ export function Users() {
             <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 5a1 1 0 012 0v3a1 1 0 01-2 0V5zm1 7a1 1 0 110-2 1 1 0 010 2z" />
           </svg>
           <span>{exportMutation.error?.message ?? 'Erro ao exportar usuários'}</span>
+        </div>
+      )}
+
+      {exportUserMutation.isError && (
+        <div className="flex items-start gap-2.5 rounded-lg bg-danger-light p-3 text-sm text-danger">
+          <svg className="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 5a1 1 0 012 0v3a1 1 0 01-2 0V5zm1 7a1 1 0 110-2 1 1 0 010 2z" />
+          </svg>
+          <span>{exportUserMutation.error?.message ?? 'Erro ao exportar usuário'}</span>
         </div>
       )}
 
