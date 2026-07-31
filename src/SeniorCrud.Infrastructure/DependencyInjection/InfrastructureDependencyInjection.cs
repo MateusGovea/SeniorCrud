@@ -1,5 +1,9 @@
 using System.Net;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Timeout;
@@ -39,7 +43,36 @@ public static class InfrastructureDependencyInjection
 
         services.AddOptions<JwtOptions>()
             .BindConfiguration(JwtOptions.SectionName)
+            .Validate(options => !string.IsNullOrWhiteSpace(options.SecretKey)
+                    && Encoding.UTF8.GetByteCount(options.SecretKey) >= 32,
+                $"{JwtOptions.SectionName}:SecretKey must be provided and contain at least 32 bytes.")
+            .Validate(options => !string.IsNullOrWhiteSpace(options.Issuer),
+                $"{JwtOptions.SectionName}:Issuer must be provided.")
+            .Validate(options => !string.IsNullOrWhiteSpace(options.Audience),
+                $"{JwtOptions.SectionName}:Audience must be provided.")
             .ValidateOnStart();
+
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer();
+
+        services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme)
+            .Configure<IOptions<JwtOptions>>((bearerOptions, jwtOptions) =>
+            {
+                var settings = jwtOptions.Value;
+                bearerOptions.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = settings.Issuer,
+                    ValidAudience = settings.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.SecretKey)),
+                    ValidAlgorithms = [SecurityAlgorithms.HmacSha256]
+                };
+            });
+
+        services.AddAuthorization();
 
         services.AddOptions<ViaCepOptions>()
             .BindConfiguration(ViaCepOptions.SectionName)

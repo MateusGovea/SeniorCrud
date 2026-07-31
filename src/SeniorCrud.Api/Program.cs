@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using SeniorCrud.Api.Middleware;
 using SeniorCrud.Api.DependencyInjection;
+using SeniorCrud.Api.Extensions;
 using SeniorCrud.Persistence.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +19,7 @@ await app.ApplyMigrationsAsync();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseOpenApiWithVersioning();
 }
 
 app.UseExceptionHandler();

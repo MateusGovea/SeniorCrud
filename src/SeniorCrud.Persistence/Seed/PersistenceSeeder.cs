@@ -29,7 +29,7 @@ public sealed class PersistenceSeeder : IPersistenceSeeder
     {
         const string adminEmail = "admin@seniorcrud.com";
 
-        if (await _dbContext.Set<User>().AnyAsync(user => user.Email == new Email(adminEmail), cancellationToken))
+        if (await _dbContext.Set<User>().AnyAsync(user => user.Email.Value == adminEmail, cancellationToken))
         {
             return;
         }

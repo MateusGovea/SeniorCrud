@@ -65,7 +65,7 @@ SeniorCRUD é uma aplicação full stack (.NET 9 + React 19) para gerenciamento 
 | C# + SQL Server | Técnico | ✅ |
 | Clean Architecture, CQRS, FluentValidation | Diferencial | ✅ |
 | Rate Limiting | Diferencial | ⏳ melhoria futura |
-| Versionamento de API | Diferencial | ⏳ melhoria futura |
+| Versionamento de API | Diferencial | ✅ |
 
 ---
 
@@ -93,7 +93,7 @@ flowchart LR
     end
 
     B -->|HTTPS / REST + JSON| R
-    R -->|"/api/* + Authorization: Bearer JWT"| API
+    R -->|"/api/v1/* + Authorization: Bearer JWT"| API
     API -->|EF Core / SQL| SQL
     API -->|HTTPS + Polly| VC
 ```
@@ -503,7 +503,7 @@ Todas as bibliotecas resolvem um problema concreto — nenhuma foi adicionada po
 - **Algoritmo:** HMAC-SHA256 com chave simétrica de 256 bits
 - **Claims:** `sub` (userId), `NameIdentifier` (userId), `Name` (user name), `jti` (token ID único)
 - **Expiração:** 15 minutos (configurável via `Jwt:AccessTokenMinutes`)
-- **Clock skew:** 60 segundos (configurável)
+- **Validação:** assinatura (HMAC-SHA256), emissor, audiência e expiração habilitados no `TokenValidationParameters`
 
 ### Autenticação vs Autorização
 
@@ -523,7 +523,7 @@ sequenceDiagram
     participant B as Banco (SQL Server)
 
     U->>F: E-mail + senha
-    F->>C: POST /api/auth/login
+    F->>C: POST /api/v1/auth/login
     C->>H: LoginCommand
     H->>B: Busca usuário por e-mail
     B-->>H: Usuário (hash da senha)
@@ -549,8 +549,8 @@ sequenceDiagram
 
 ### Autorização e Proteção dos Endpoints
 
-- `[Authorize]` em `UsersController`, `AddressesController` e `ViaCepController`; `[AllowAnonymous]` apenas no login — todos os endpoints, exceto `POST /api/auth/login`, exigem token JWT válido (requests anônimos → `401 Unauthorized`)
-- O middleware extrai `Authorization: Bearer <token>`, valida a assinatura HMAC-SHA256 e a expiração (clock skew de 60s) e expõe as claims no `HttpContext.User` — sem token, inválido ou expirado → `401`, sem executar o endpoint
+- `[Authorize]` em `UsersController`, `AddressesController` e `ViaCepController`; `[AllowAnonymous]` apenas no login — todos os endpoints, exceto `POST /api/v1/auth/login`, exigem token JWT válido (requests anônimos → `401 Unauthorized`)
+- O middleware extrai `Authorization: Bearer <token>`, valida a assinatura HMAC-SHA256, emissor, audiência e expiração e expõe as claims no `HttpContext.User` — sem token, inválido ou expirado → `401`, sem executar o endpoint
 - **Sem role-based authorization:** o campo `role` (Admin/User) existe na entidade e pode habilitar autorização granular futura
 
 Coberto por teste de integração dedicado (`Endpoints protegidos rejeitam requests anônimos → 401`).
@@ -562,7 +562,7 @@ Coberto por teste de integração dedicado (`Endpoints protegidos rejeitam reque
 - CORS `AllowAnyOrigin` apenas em desenvolvimento — deve ser restrito em produção
 - HTTPS obrigatório (`UseHttpsRedirection`)
 - `GlobalExceptionHandler` retorna `ProblemDetails` (RFC 7807) sem stack traces internos
-- Segredos fora do código (`Jwt:Secret`, connection string) via `appsettings.*` / variáveis de ambiente
+- `Jwt:SecretKey` fora do código: User Secrets no desenvolvimento e variável de ambiente `Jwt__SecretKey` (ou `JWT_SECRET_KEY` no docker-compose) em produção — a aplicação não inicia sem chave de pelo menos 32 bytes (`Options Validation` com `ValidateOnStart`)
 - `X-Correlation-ID` rastreia a requisição por logs e traces de ponta a ponta
 
 ---
@@ -575,7 +575,7 @@ Integrações externas (ViaCEP) estão sujeitas a lentidão, indisponibilidade e
 
 ```mermaid
 flowchart TD
-    R["Requisição GET /api/viacep/{cep}"] --> C["Cache check (MemoryCache)"]
+    R["Requisição GET /api/v1/viacep/{cep}"] --> C["Cache check (MemoryCache)"]
     C -->|"hit"| HIT["Retorna resposta em cache"]
     C -->|"miss"| P["Polly Pipeline"]
     P -->|"1. Timeout 5s"| T["Evita thread presa em chamada lenta"]
@@ -701,17 +701,17 @@ Cada tela comunica seu estado sem depender de instruções externas:
 
 ### Autenticação (Login)
 
-- **POST /api/auth/login** — valida credenciais com BCrypt, verifica se o usuário está ativo e retorna JWT de 15 minutos (claims: userId, nome, jti)
+- **POST /api/v1/auth/login** — valida credenciais com BCrypt, verifica se o usuário está ativo e retorna JWT de 15 minutos (claims: userId, nome, jti)
 
 ### CRUD de Usuários
 
 | Método | Rota | Descrição |
 |--------|------|-----------|
-| GET | `/api/users` | Lista paginada com busca por nome/e-mail |
-| GET | `/api/users/{id}` | Detalhe do usuário com endereços |
-| POST | `/api/users` | Criação com validação de CPF, e-mail único |
-| PUT | `/api/users/{id}` | Atualização de perfil |
-| DELETE | `/api/users/{id}` | Exclusão (restrita — apenas se não houver constraint) |
+| GET | `/api/v1/users` | Lista paginada com busca por nome/e-mail |
+| GET | `/api/v1/users/{id}` | Detalhe do usuário com endereços |
+| POST | `/api/v1/users` | Criação com validação de CPF, e-mail único |
+| PUT | `/api/v1/users/{id}` | Atualização de perfil |
+| DELETE | `/api/v1/users/{id}` | Exclusão (restrita — apenas se não houver constraint) |
 
 **Validações:** Nome (3-120), E-mail (formato + único), CPF (11 dígitos + dígitos verificadores), Senha (6-200), BirthDate (≤ hoje)
 
@@ -719,24 +719,32 @@ Cada tela comunica seu estado sem depender de instruções externas:
 
 | Método | Rota | Descrição |
 |--------|------|-----------|
-| GET | `/api/addresses` | Lista paginada com busca |
-| GET | `/api/addresses/{id}` | Detalhe do endereço |
-| GET | `/api/users/{userId}/addresses` | Endereços de um usuário |
-| POST | `/api/addresses` | Criação vinculada a usuário |
-| PUT | `/api/addresses/{id}` | Atualização |
-| DELETE | `/api/addresses/{id}` | Exclusão |
+| GET | `/api/v1/addresses` | Lista paginada com busca |
+| GET | `/api/v1/addresses/{id}` | Detalhe do endereço |
+| GET | `/api/v1/users/{userId}/addresses` | Endereços de um usuário |
+| POST | `/api/v1/addresses` | Criação vinculada a usuário |
+| PUT | `/api/v1/addresses/{id}` | Atualização |
+| DELETE | `/api/v1/addresses/{id}` | Exclusão |
 
 **Validações:** CEP (8 dígitos), Logradouro (1-150), Número (1-20), Bairro (1-120), Cidade (1-120), Estado (2 letras)
 
 ### ViaCEP
 
-- **GET /api/viacep/{cep}** — consulta CEP com cache positivo/negativo e resiliência (TTLs em [Cache](#cache))
+- **GET /api/v1/viacep/{cep}** — consulta CEP com cache positivo/negativo e resiliência (TTLs em [Cache](#cache))
 - Frontend auto-preenche campos ao detectar 8 dígitos
 
 ### Exportação CSV
 
-- **GET /api/users/export/csv** — CSV bruto com endereços expandidos (CsvHelper com delimitador configurável)
+- **GET /api/v1/users/export/csv** — CSV bruto com endereços expandidos (CsvHelper com delimitador configurável)
 - Frontend: baixa, transforma (tradução e formatação de CPF/CEP/datas) e reexporta como `.csv` — justificativa em [Decisões Técnicas](#decisões-técnicas)
+
+### Versionamento de API
+
+- Todas as rotas usam o segmento de URL `/api/v1/...` (`Asp.Versioning.Mvc` 8.x), com `UrlSegmentApiVersionReader`.
+- Novo SwaggerDoc por versão via `IApiVersionDescriptionProvider` — criar a `v2` não exige tocar no Swagger.
+- Configuração centralizada em `OpenApiVersioningExtensions` (registro DI + pipeline) e `ConfigureSwaggerOptions` (documentação por versão).
+- Endpoints sem versão (`/api/...`) ou versão inexistente retornam `404`; o Swagger UI lista cada versão disponível.
+- Health checks (`/health`, `/liveness`, `/readiness`) permanecem fora do versionamento.
 
 ---
 
@@ -811,10 +819,16 @@ xUnit + FluentAssertions + `WebApplicationFactory<Program>`, com repositórios e
 
 ### Com Docker (recomendado)
 
-**Pré-requisito:** Docker Desktop
+**Pré-requisito:** Docker Desktop (ou Docker Engine + Compose v2)
 
 ```bash
-docker compose up --build
+# 1. Crie o .env a partir do modelo (passo 2 funciona também sem ele)
+cp .env.example .env
+
+# 2. Suba a stack (SQL Server + API + Frontend)
+docker compose up -d
+
+# 3. Abra o Swagger: http://localhost:5000/swagger
 ```
 
 | Serviço | URL |
@@ -824,6 +838,17 @@ docker compose up --build
 | Swagger | http://localhost:5000/swagger |
 | Health | http://localhost:5000/health |
 | SQL Server | `localhost,1433` (sa / Your_password123) |
+
+**Chave JWT (`JWT_SECRET_KEY`):** o `docker compose` lê o `.env` automaticamente. Em desenvolvimento, deixe o placeholder (`CHANGE_ME_WITH_A_STRONG_SECRET`): no primeiro boot o container da API gera uma chave aleatória (64 bytes) e a persiste em um volume nomeado (`jwt_dev_secret`), mantendo o login válido entre reinícios. A aplicação nunca inicia com chave fraca ou previsível — o placeholder conhecido nunca é usado como chave de assinatura, e a validação `ValidateOnStart` continua exigindo pelo menos 32 bytes.
+
+**Produção:** defina sempre uma chave forte própria no `.env`:
+
+```bash
+# Linux/macOS/WSL
+openssl rand -base64 48
+# PowerShell (Windows)
+powershell -Command "[Convert]::ToBase64String([System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes(64))"
+```
 
 **Login:** Use o usuário administrador criado automaticamente no primeiro boot do backend (`admin@seniorcrud.com` / `Admin@123`). Após o primeiro acesso, crie novos usuários pela interface e troque a senha padrão em produção.
 
@@ -852,7 +877,7 @@ npm run dev  # http://localhost:5173
 
 ```bash
 dotnet test
-# Unit: 65/65 | Integration: 6/6 (requer SQL Server)
+# Unit: 65/65 | Integration: 11/11 (requer SQL Server)
 ```
 
 ---
@@ -869,7 +894,6 @@ dotnet test
 ### Melhorias Técnicas
 
 - **Rate Limiting** — protege contra força bruta em login e abusos; `System.Threading.RateLimiting` (nativo .NET 7+) ou `AspNetCoreRateLimit`.
-- **Versionamento de API** — evita que mudanças contratuais quebrem consumidores; por URL (`/api/v2/users`) ou header (`Accept: application/vnd.seniorcrud.v2+json`).
 - **Redis como Cache Distribuído** — múltiplas instâncias compartilham o cache ViaCEP/listagens; troca transparente de `MemoryCacheService` por `IDistributedCache` (a interface `ICacheService` já abstrai).
 - **CI/CD Pipeline** — automatiza build, testes, análise de qualidade e deploy (GitHub Actions): `push/PR → dotnet restore → build → test → sonarcloud → docker build/push → deploy (Kubernetes / Azure App Service)`.
 - **Kubernetes** — orquestração com escalabilidade automática, rolling updates, self-healing; manifestos: Deployment, Service, Ingress, ConfigMap, Secret, HorizontalPodAutoscaler.
@@ -898,7 +922,7 @@ O SeniorCRUD foi projetado para crescer em três dimensões:
 | Desafio | Solução | Resultado |
 |---------|---------|-----------|
 | **CSV com múltiplos endereços por usuário** | Exportação expande endereços em linhas; frontend transforma, formata e reordena antes do download | Relatório legível e pronto para Excel |
-| **CRUD global de endereços + CRUD por usuário** | `AddressesController` oferece rotas globais (`/api/addresses`) e por usuário (`/api/users/{id}/addresses`), com queries dedicadas | Duas visões do mesmo dado sem duplicação de regras |
+| **CRUD global de endereços + CRUD por usuário** | `AddressesController` oferece rotas globais (`/api/v1/addresses`) e por usuário (`/api/v1/users/{id}/addresses`), com queries dedicadas | Duas visões do mesmo dado sem duplicação de regras |
 | **Cache versionado para listagens paginadas** | Version tracker (`users:list`) invalida todas as páginas/buscas de uma vez (O(1)) em qualquer mutação | Cache sempre consistente sem varrer chaves |
 | **Integração ViaCEP instável/lenta** | Polly (retry, timeout, circuit breaker) + cache positivo/negativo | Experiência fluida mesmo com falhas do provedor |
 | **Validação em múltiplas camadas sem duplicação** | FluentValidation no pipeline + Value Objects no domínio + Zod no frontend, com as mesmas regras | Mensagens consistentes e dados sempre válidos |

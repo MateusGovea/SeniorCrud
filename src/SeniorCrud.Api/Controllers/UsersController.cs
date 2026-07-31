@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +12,8 @@ using SeniorCrud.Application.Results;
 namespace SeniorCrud.Api.Controllers;
 
 [ApiController]
-[Route("api/users")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/users")]
 [Authorize]
 public sealed class UsersController : ControllerBase
 {

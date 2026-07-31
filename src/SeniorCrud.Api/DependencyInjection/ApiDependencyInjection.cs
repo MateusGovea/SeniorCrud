@@ -1,9 +1,9 @@
 using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using SeniorCrud.Api.ExceptionHandling;
+using SeniorCrud.Api.Extensions;
 using SeniorCrud.Api.HealthChecks;
 using SeniorCrud.Application.Common.Diagnostics;
 using SeniorCrud.Application.DependencyInjection;
@@ -21,8 +21,7 @@ public static class ApiDependencyInjection
         services.AddPersistence();
 
         services.AddControllers();
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddOpenApiVersioning();
 
         services.AddProblemDetails();
         services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -33,11 +32,6 @@ public static class ApiDependencyInjection
         services.AddMemoryCache();
         services.AddHttpClient();
         services.AddOptions();
-
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer();
-
-        services.AddAuthorization();
 
         services.AddCors(options =>
         {

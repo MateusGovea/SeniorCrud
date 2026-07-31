@@ -134,3 +134,7 @@ C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\obj\Debug\net9.0\refint\Se
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\obj\Debug\net9.0\SeniorCrud.Api.pdb
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\obj\Debug\net9.0\SeniorCrud.Api.genruntimeconfig.cache
 C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\obj\Debug\net9.0\ref\SeniorCrud.Api.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\Asp.Versioning.Abstractions.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\Asp.Versioning.Http.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\Asp.Versioning.Mvc.dll
+C:\Users\Mateus\Desktop\SeniorCrud\src\SeniorCrud.Api\bin\Debug\net9.0\Asp.Versioning.Mvc.ApiExplorer.dll

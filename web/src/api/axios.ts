@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { storage } from '@/utils/storage'
 
+export const API_V1_PREFIX = '/api/v1'
+
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   timeout: 30000,

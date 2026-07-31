@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +10,8 @@ using SeniorCrud.Application.Results;
 namespace SeniorCrud.Api.Controllers;
 
 [ApiController]
-[Route("api/auth")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/auth")]
 [AllowAnonymous]
 public sealed class AuthController : ControllerBase
 {

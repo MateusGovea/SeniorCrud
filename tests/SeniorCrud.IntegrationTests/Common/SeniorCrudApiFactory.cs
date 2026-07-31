@@ -17,6 +17,8 @@ public sealed class SeniorCrudApiFactory : WebApplicationFactory<Program>
     {
         builder.UseEnvironment("Testing");
 
+        builder.UseSetting("Jwt:SecretKey", "IntegrationTests-DevSecretKey-ChangeMe-0123456789");
+
         builder.ConfigureServices(services =>
         {
             services.RemoveAll<IUserRepository>();

@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +11,8 @@ using SeniorCrud.Application.Results;
 namespace SeniorCrud.Api.Controllers;
 
 [ApiController]
-[Route("api/addresses")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/addresses")]
 [Authorize]
 public sealed class AddressesController : ControllerBase
 {
@@ -41,7 +43,7 @@ public sealed class AddressesController : ControllerBase
         return await _mediator.Send(new GetAddressByIdQuery(id), cancellationToken);
     }
 
-    [HttpGet("~/api/users/{userId:guid}/addresses")]
+    [HttpGet("~/api/v{version:apiVersion}/users/{userId:guid}/addresses")]
     [ProducesResponseType(typeof(Result<IReadOnlyList<AddressResponseDto>>), StatusCodes.Status200OK)]
     public async Task<Result<IReadOnlyList<AddressResponseDto>>> GetAddressesByUser([FromRoute] Guid userId, CancellationToken cancellationToken = default)
     {

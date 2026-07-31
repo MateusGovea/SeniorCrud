@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios'
-import { api } from '@/api/axios'
+import { api, API_V1_PREFIX } from '@/api/axios'
 import { unwrap, unwrapVoid, ApiError } from '@/utils/api'
 import type { ApiResult } from '@/types/api'
 import type { UserListItem, UserResponse } from '@/features/users/types'
@@ -20,33 +20,33 @@ export interface UpdateUserRequest {
 
 export const usersApi = {
   async getUsers(): Promise<UserListItem[]> {
-    const { data } = await api.get<ApiResult<UserListItem[]>>('/api/users')
+    const { data } = await api.get<ApiResult<UserListItem[]>>(`${API_V1_PREFIX}/users`)
     return unwrap(data)
   },
 
   async getUserById(id: string): Promise<UserResponse> {
-    const { data } = await api.get<ApiResult<UserResponse>>(`/api/users/${id}`)
+    const { data } = await api.get<ApiResult<UserResponse>>(`${API_V1_PREFIX}/users/${id}`)
     return unwrap(data)
   },
 
   async createUser(body: CreateUserRequest): Promise<UserResponse> {
-    const { data } = await api.post<ApiResult<UserResponse>>('/api/users', body)
+    const { data } = await api.post<ApiResult<UserResponse>>(`${API_V1_PREFIX}/users`, body)
     return unwrap(data)
   },
 
   async updateUser(id: string, body: UpdateUserRequest): Promise<UserResponse> {
-    const { data } = await api.put<ApiResult<UserResponse>>(`/api/users/${id}`, body)
+    const { data } = await api.put<ApiResult<UserResponse>>(`${API_V1_PREFIX}/users/${id}`, body)
     return unwrap(data)
   },
 
   async deleteUser(id: string): Promise<void> {
-    const { data } = await api.delete<ApiResult<unknown>>(`/api/users/${id}`)
+    const { data } = await api.delete<ApiResult<unknown>>(`${API_V1_PREFIX}/users/${id}`)
     unwrapVoid(data)
   },
 
   async exportUsersCsv(userIds?: string[]): Promise<{ blob: Blob; filename: string }> {
     try {
-      const response = await api.get<Blob>('/api/users/export/csv', {
+      const response = await api.get<Blob>(`${API_V1_PREFIX}/users/export/csv`, {
         params: { userIds },
         responseType: 'blob',
       })

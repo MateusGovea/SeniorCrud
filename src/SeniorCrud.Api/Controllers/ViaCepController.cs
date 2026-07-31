@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,8 @@ using SeniorCrud.Application.Results;
 namespace SeniorCrud.Api.Controllers;
 
 [ApiController]
-[Route("api/viacep")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/viacep")]
 [Authorize]
 public sealed class ViaCepController : ControllerBase
 {
