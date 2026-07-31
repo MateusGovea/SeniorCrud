@@ -28,7 +28,14 @@ export function Users() {
   const [modal, setModal] = useState<ModalState>({ type: 'closed' })
   const [deleteDialog, setDeleteDialog] = useState<DeleteState>({ type: 'closed' })
   const [showAddressesHint, setShowAddressesHint] = useState(false)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const exportMutation = useExportUsers()
+
+  useEffect(() => {
+    if (!successMessage) return
+    const t = setTimeout(() => setSuccessMessage(null), 4000)
+    return () => clearTimeout(t)
+  }, [successMessage])
 
   useEffect(() => {
     const state = location.state as Record<string, unknown> | null
@@ -112,6 +119,15 @@ export function Users() {
 
   return (
     <div className="animate-fade-in space-y-6">
+      {successMessage && (
+        <div className="flex items-start gap-2.5 rounded-lg bg-success/10 p-3 text-sm text-success">
+          <svg className="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 5a1 1 0 012 0v3a1 1 0 01-2 0V5zm1 7a1 1 0 110-2 1 1 0 010 2z" />
+          </svg>
+          <span>{successMessage}</span>
+        </div>
+      )}
+
       {exportMutation.isError && (
         <div className="flex items-start gap-2.5 rounded-lg bg-danger-light p-3 text-sm text-danger">
           <svg className="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="currentColor">
@@ -169,7 +185,7 @@ export function Users() {
               <path d="M8 1a.5.5 0 01.5.5v7.793l2.646-2.647a.5.5 0 01.708.708l-3.5 3.5a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 01.708-.708L7.5 9.293V1.5A.5.5 0 018 1z" />
               <path d="M1.5 10a.5.5 0 01.5.5v3a.5.5 0 00.5.5h11a.5.5 0 00.5-.5v-3a.5.5 0 011 0v3A1.5 1.5 0 0113.5 15h-11A1.5 1.5 0 011 13.5v-3a.5.5 0 01.5-.5z" />
             </svg>
-            Exportar CSV
+            {exportMutation.isPending ? 'Exportando...' : 'Exportar CSV'}
           </Button>
           <Button size="sm" onClick={handleCreate}>
             <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -186,6 +202,7 @@ export function Users() {
         <UserModal
           isOpen
           onClose={closeModal}
+          onSuccess={() => setSuccessMessage(modal.type === 'create' ? 'Usuário criado com sucesso.' : 'Usuário atualizado com sucesso.')}
           mode={modal.type}
           user={modal.type === 'edit' ? modal.user : undefined}
         />
@@ -195,6 +212,7 @@ export function Users() {
         <DeleteUserDialog
           isOpen
           onClose={closeDelete}
+          onSuccess={() => setSuccessMessage('Usuário excluído com sucesso.')}
           user={deleteDialog.user}
         />
       )}

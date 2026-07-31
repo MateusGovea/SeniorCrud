@@ -14,7 +14,13 @@ const schema = z.object({
   cpf: z.string().optional(),
   role: z.string().min(1, 'Selecione um perfil'),
   isActive: z.boolean().optional(),
-})
+}).refine(
+  (data) => {
+    if (data.password === undefined || data.password === '') return true
+    return data.password.length >= 6
+  },
+  { message: 'Mínimo de 6 caracteres', path: ['password'] },
+)
 
 type FormData = z.infer<typeof schema>
 
@@ -63,7 +69,7 @@ export function UserForm({ mode, defaultValues, onSave, onCancel, serverError }:
   })
 
   async function onSubmit(data: FormData) {
-    if (mode === 'create' && (!data.password || data.password.length < 6)) {
+    if (mode === 'create' && !data.password) {
       setError('password', { message: 'Mínimo de 6 caracteres' })
       return
     }
@@ -86,13 +92,17 @@ export function UserForm({ mode, defaultValues, onSave, onCancel, serverError }:
           label="Nome"
           placeholder="Nome completo"
           error={errors.nome?.message}
+          autoFocus
+          maxLength={120}
           {...register('nome')}
         />
 
         <Input
           label="CPF"
           placeholder="Apenas números"
+          inputMode="numeric"
           error={errors.cpf?.message}
+          maxLength={14}
           {...register('cpf')}
         />
       </FormSection>
@@ -103,6 +113,7 @@ export function UserForm({ mode, defaultValues, onSave, onCancel, serverError }:
           type="email"
           placeholder="seu@email.com"
           error={errors.email?.message}
+          maxLength={255}
           {...register('email')}
         />
 
@@ -165,7 +176,7 @@ export function UserForm({ mode, defaultValues, onSave, onCancel, serverError }:
           Cancelar
         </Button>
         <Button type="submit" isLoading={isSubmitting}>
-          {mode === 'create' ? 'Criar Usuário' : 'Salvar Alterações'}
+          {isSubmitting ? 'Salvando...' : mode === 'create' ? 'Criar Usuário' : 'Salvar Alterações'}
         </Button>
       </div>
     </form>

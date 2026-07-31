@@ -53,11 +53,11 @@ export function UsersTable({ users, onEdit, onDelete, onViewAddresses }: UsersTa
         <table className="w-full">
           <thead>
             <tr className="border-b border-border-primary bg-bg-secondary">
-              <th className="px-4 py-3 text-left text-[11px] font-semibold tracking-wider text-text-muted uppercase">Usuário</th>
-              <th className="px-4 py-3 text-left text-[11px] font-semibold tracking-wider text-text-muted uppercase">E-mail</th>
-              <th className="px-4 py-3 text-left text-[11px] font-semibold tracking-wider text-text-muted uppercase">Função</th>
-              <th className="px-4 py-3 text-left text-[11px] font-semibold tracking-wider text-text-muted uppercase">Status</th>
-              <th className="px-4 py-3 text-right text-[11px] font-semibold tracking-wider text-text-muted uppercase">Ações</th>
+              <th className="px-5 py-3.5 text-left text-xs font-semibold tracking-wider text-text-muted uppercase">Usuário</th>
+              <th className="px-5 py-3.5 text-left text-xs font-semibold tracking-wider text-text-muted uppercase">E-mail</th>
+              <th className="px-5 py-3.5 text-left text-xs font-semibold tracking-wider text-text-muted uppercase">Função</th>
+              <th className="px-5 py-3.5 text-left text-xs font-semibold tracking-wider text-text-muted uppercase">Status</th>
+              <th className="px-5 py-3.5 text-right text-xs font-semibold tracking-wider text-text-muted uppercase">Ações</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border-primary">
@@ -66,7 +66,7 @@ export function UsersTable({ users, onEdit, onDelete, onViewAddresses }: UsersTa
                 key={user.id ?? index}
                 className="group bg-bg-surface transition-colors hover:bg-bg-hover"
               >
-                <td className="px-4 py-3.5">
+                <td className="px-5 py-4">
                   <div className="flex items-center gap-3">
                     <UserAvatar nome={user.nome} email={user.email} />
                     <div>
@@ -75,15 +75,15 @@ export function UsersTable({ users, onEdit, onDelete, onViewAddresses }: UsersTa
                     </div>
                   </div>
                 </td>
-                <td className="px-4 py-3.5">
+                <td className="px-5 py-4">
                   <p className="text-sm text-text-secondary">{user.email}</p>
                 </td>
-                <td className="px-4 py-3.5">
+                <td className="px-5 py-4">
                   <Badge variant={user.role === 'Admin' ? 'accent' : 'default'}>
                     {user.role === 'Admin' ? 'Admin' : 'Usuário'}
                   </Badge>
                 </td>
-                <td className="px-4 py-3.5">
+                <td className="px-5 py-4">
                   <div className="flex items-center gap-1.5">
                     <span
                       className={`h-2 w-2 rounded-full ${
@@ -95,7 +95,7 @@ export function UsersTable({ users, onEdit, onDelete, onViewAddresses }: UsersTa
                     </span>
                   </div>
                 </td>
-                <td className="px-4 py-3.5">
+                <td className="px-5 py-4">
                   <div className="flex items-center justify-end gap-1">
                     <Button
                       variant="ghost"

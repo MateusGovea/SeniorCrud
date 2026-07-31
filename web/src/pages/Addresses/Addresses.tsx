@@ -1,12 +1,12 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useAddressesList } from '@/features/addresses/hooks'
 import { useUsers } from '@/features/users/hooks'
 import { AddressesTable } from './AddressesTable'
 import { AddressModal } from '@/features/addresses/components/AddressModal'
 import { DeleteAddressDialog } from '@/features/addresses/components/DeleteAddressDialog'
 import { LoadingState } from '@/features/users/components/LoadingState'
-import { ErrorState } from '@/features/users/components/ErrorState'
-import { EmptyState } from '@/features/users/components/EmptyState'
+import { ErrorState } from '@/components/ErrorState'
+import { EmptyState } from '@/components/EmptyState'
 import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
 import type { AddressResponse } from '@/features/addresses/types'
@@ -24,6 +24,13 @@ export function Addresses() {
   const [search, setSearch] = useState('')
   const [modal, setModal] = useState<ModalState>({ type: 'closed' })
   const [deleteDialog, setDeleteDialog] = useState<DeleteState>({ type: 'closed' })
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!successMessage) return
+    const t = setTimeout(() => setSuccessMessage(null), 4000)
+    return () => clearTimeout(t)
+  }, [successMessage])
 
   const { data: addresses, isLoading, isError, error, refetch } = useAddressesList()
   const { data: users } = useUsers()
@@ -99,6 +106,15 @@ export function Addresses() {
 
   return (
     <div className="animate-fade-in space-y-6">
+      {successMessage && (
+        <div className="flex items-start gap-2.5 rounded-lg bg-success/10 p-3 text-sm text-success">
+          <svg className="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 5a1 1 0 012 0v3a1 1 0 01-2 0V5zm1 7a1 1 0 110-2 1 1 0 010 2z" />
+          </svg>
+          <span>{successMessage}</span>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-xl border border-border-primary bg-bg-surface p-4">
           <p className="text-xs font-medium text-text-muted">Total de Endereços</p>
@@ -135,6 +151,7 @@ export function Addresses() {
         <AddressModal
           isOpen
           onClose={closeModal}
+          onSuccess={() => setSuccessMessage(modal.type === 'create' ? 'Endereço criado com sucesso.' : 'Endereço atualizado com sucesso.')}
           mode={modal.type}
           userId={modal.type === 'edit' ? modal.address.userId : undefined}
           address={modal.type === 'edit' ? modal.address : undefined}
@@ -145,6 +162,7 @@ export function Addresses() {
         <DeleteAddressDialog
           isOpen
           onClose={closeDelete}
+          onSuccess={() => setSuccessMessage('Endereço excluído com sucesso.')}
           address={deleteDialog.address}
         />
       )}

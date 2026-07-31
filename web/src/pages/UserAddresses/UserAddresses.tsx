@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useLocation, useNavigate, Link } from 'react-router-dom'
 import { useAddresses } from '@/features/addresses/hooks'
 import { AddressTable } from './AddressTable'
@@ -6,8 +6,8 @@ import { AddressModal } from '@/features/addresses/components/AddressModal'
 import { DeleteAddressDialog } from '@/features/addresses/components/DeleteAddressDialog'
 import { Button } from '@/components/Button'
 import { Loading } from '@/components/Loading'
-import { EmptyState } from '@/features/users/components/EmptyState'
-import { ErrorState } from '@/features/users/components/ErrorState'
+import { EmptyState } from '@/components/EmptyState'
+import { ErrorState } from '@/components/ErrorState'
 import type { AddressResponse } from '@/features/addresses/types'
 
 type ModalState =
@@ -34,6 +34,13 @@ export function UserAddresses() {
   const { data: addresses, isLoading, isError, error, refetch } = useAddresses(id)
   const [modal, setModal] = useState<ModalState>({ type: 'closed' })
   const [deleteDialog, setDeleteDialog] = useState<DeleteState>({ type: 'closed' })
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!successMessage) return
+    const t = setTimeout(() => setSuccessMessage(null), 4000)
+    return () => clearTimeout(t)
+  }, [successMessage])
 
   const navState = location.state as { userName?: string; fromUsersSearch?: string } | null
   const userName = navState?.userName
@@ -66,6 +73,15 @@ export function UserAddresses() {
 
   return (
     <div className="animate-fade-in space-y-6">
+      {successMessage && (
+        <div className="flex items-start gap-2.5 rounded-lg bg-success/10 p-3 text-sm text-success">
+          <svg className="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7 5a1 1 0 012 0v3a1 1 0 01-2 0V5zm1 7a1 1 0 110-2 1 1 0 010 2z" />
+          </svg>
+          <span>{successMessage}</span>
+        </div>
+      )}
+
       <div className="flex items-center gap-2 text-xs text-text-muted">
         <Link to="/dashboard" className="hover:text-text-secondary transition-colors">Dashboard</Link>
         <Chevron />
@@ -140,6 +156,7 @@ export function UserAddresses() {
         <AddressModal
           isOpen
           onClose={closeModal}
+          onSuccess={() => setSuccessMessage(modal.type === 'create' ? 'Endereço criado com sucesso.' : 'Endereço atualizado com sucesso.')}
           mode={modal.type}
           userId={id}
           address={modal.type === 'edit' ? modal.address : undefined}
@@ -150,6 +167,7 @@ export function UserAddresses() {
         <DeleteAddressDialog
           isOpen
           onClose={closeDelete}
+          onSuccess={() => setSuccessMessage('Endereço excluído com sucesso.')}
           address={deleteDialog.address}
         />
       )}

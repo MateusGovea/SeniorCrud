@@ -37,18 +37,18 @@ export function AddressTable({ addresses, onEdit, onDelete }: AddressTableProps)
         <table className="w-full">
           <thead>
             <tr className="border-b border-border-primary bg-bg-secondary">
-              <th className="px-4 py-3 text-left text-[11px] font-semibold tracking-wider text-text-muted uppercase">Logradouro</th>
-              <th className="px-4 py-3 text-left text-[11px] font-semibold tracking-wider text-text-muted uppercase">Cidade</th>
-              <th className="px-4 py-3 text-left text-[11px] font-semibold tracking-wider text-text-muted uppercase">Estado</th>
-              <th className="px-4 py-3 text-left text-[11px] font-semibold tracking-wider text-text-muted uppercase">CEP</th>
-              <th className="px-4 py-3 text-left text-[11px] font-semibold tracking-wider text-text-muted uppercase">Tipo</th>
-              <th className="px-4 py-3 text-right text-[11px] font-semibold tracking-wider text-text-muted uppercase">Ações</th>
+              <th className="px-5 py-3.5 text-left text-xs font-semibold tracking-wider text-text-muted uppercase">Logradouro</th>
+              <th className="px-5 py-3.5 text-left text-xs font-semibold tracking-wider text-text-muted uppercase">Cidade</th>
+              <th className="px-5 py-3.5 text-left text-xs font-semibold tracking-wider text-text-muted uppercase">Estado</th>
+              <th className="px-5 py-3.5 text-left text-xs font-semibold tracking-wider text-text-muted uppercase">CEP</th>
+              <th className="px-5 py-3.5 text-left text-xs font-semibold tracking-wider text-text-muted uppercase">Tipo</th>
+              <th className="px-5 py-3.5 text-right text-xs font-semibold tracking-wider text-text-muted uppercase">Ações</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border-primary">
             {paged.map((addr, index) => (
               <tr key={addr.id ?? index} className="group bg-bg-surface transition-colors hover:bg-bg-hover">
-                <td className="px-4 py-3.5">
+                <td className="px-5 py-4">
                   <div>
                     <p className="text-sm font-medium text-text-primary">{addr.street}, {addr.number}</p>
                     {addr.complement && (
@@ -56,17 +56,17 @@ export function AddressTable({ addresses, onEdit, onDelete }: AddressTableProps)
                     )}
                   </div>
                 </td>
-                <td className="px-4 py-3.5 text-sm text-text-secondary">{addr.city}</td>
-                <td className="px-4 py-3.5 text-sm text-text-secondary">{addr.state}</td>
-                <td className="px-4 py-3.5 text-sm font-mono text-text-secondary">{addr.cep}</td>
-                <td className="px-4 py-3.5">
+                <td className="px-5 py-4 text-sm text-text-secondary">{addr.city}</td>
+                <td className="px-5 py-4 text-sm text-text-secondary">{addr.state}</td>
+                <td className="px-5 py-4 text-sm font-mono text-text-secondary">{addr.cep.replace(/^(\d{5})(\d{3})$/, '$1-$2')}</td>
+                <td className="px-5 py-4">
                   {addr.isPrimary ? (
                     <Badge variant="accent">Principal</Badge>
                   ) : (
                     <Badge variant="default">Secundário</Badge>
                   )}
                 </td>
-                <td className="px-4 py-3.5">
+                <td className="px-5 py-4">
                   <div className="flex items-center justify-end gap-1">
                     <Button variant="ghost" size="sm" onClick={() => onEdit(addr)} title="Editar">
                       <svg className="h-4 w-4" viewBox="0 0 16 16" fill="currentColor">

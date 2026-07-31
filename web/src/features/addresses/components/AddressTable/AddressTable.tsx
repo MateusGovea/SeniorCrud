@@ -43,7 +43,7 @@ export function AddressTable({ addresses, onEdit, onDelete }: AddressTableProps)
           {addresses.map((address) => (
             <tr key={address.id} className="transition-colors hover:bg-bg-hover">
               <td className="whitespace-nowrap px-5 py-4 text-sm font-mono text-text-primary">
-                {address.cep}
+                {address.cep.replace(/^(\d{5})(\d{3})$/, '$1-$2')}
               </td>
               <td className="whitespace-nowrap px-5 py-4 text-sm text-text-secondary">
                 {address.street}

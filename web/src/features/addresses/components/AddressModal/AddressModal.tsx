@@ -10,12 +10,13 @@ import type { AddressResponse } from '@/features/addresses/types'
 interface AddressModalProps {
   isOpen: boolean
   onClose: () => void
+  onSuccess?: () => void
   mode: 'create' | 'edit'
   userId?: string
   address?: AddressResponse
 }
 
-export function AddressModal({ isOpen, onClose, mode, userId, address }: AddressModalProps) {
+export function AddressModal({ isOpen, onClose, onSuccess, mode, userId, address }: AddressModalProps) {
   const { data: addressDetail, isLoading } = useAddress(mode === 'edit' ? address?.id : undefined)
   const createMutation = useCreateAddress()
   const updateMutation = useUpdateAddress()
@@ -74,6 +75,7 @@ export function AddressModal({ isOpen, onClose, mode, userId, address }: Address
           },
         })
       }
+      onSuccess?.()
       onClose()
     } catch (err) {
       setServerError(err instanceof Error ? err.message : 'Erro inesperado')

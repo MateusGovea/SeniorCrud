@@ -124,7 +124,10 @@ export function AddressForm({ defaultValues, onSave, onCancel, serverError }: Ad
           <Input
             label="CEP"
             placeholder="Somente números"
+            inputMode="numeric"
             error={errors.cep?.message || viaCepErrorMessage || undefined}
+            autoFocus
+            maxLength={9}
             {...cepField}
             onBlur={(e) => {
               cepField.onBlur(e)
@@ -145,6 +148,7 @@ export function AddressForm({ defaultValues, onSave, onCancel, serverError }: Ad
             label="Logradouro"
             placeholder="Nome da rua, avenida..."
             error={errors.street?.message}
+            maxLength={150}
             {...register('street')}
           />
         </div>
@@ -152,6 +156,7 @@ export function AddressForm({ defaultValues, onSave, onCancel, serverError }: Ad
           label="Número"
           placeholder="Nº"
           error={errors.number?.message}
+          maxLength={20}
           {...register('number')}
         />
       </div>
@@ -168,12 +173,14 @@ export function AddressForm({ defaultValues, onSave, onCancel, serverError }: Ad
           label="Bairro"
           placeholder="Bairro"
           error={errors.neighborhood?.message}
+          maxLength={120}
           {...register('neighborhood')}
         />
         <Input
           label="Cidade"
           placeholder="Cidade"
           error={errors.city?.message}
+          maxLength={120}
           {...register('city')}
         />
       </div>
@@ -207,7 +214,7 @@ export function AddressForm({ defaultValues, onSave, onCancel, serverError }: Ad
           Cancelar
         </Button>
         <Button type="submit" isLoading={isSubmitting}>
-          Salvar
+          {isSubmitting ? 'Salvando...' : 'Salvar'}
         </Button>
       </div>
     </form>

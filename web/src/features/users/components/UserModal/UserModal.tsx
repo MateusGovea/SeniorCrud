@@ -7,11 +7,12 @@ import type { UserListItem } from '@/features/users/types'
 interface UserModalProps {
   isOpen: boolean
   onClose: () => void
+  onSuccess?: () => void
   mode: 'create' | 'edit'
   user?: UserListItem
 }
 
-export function UserModal({ isOpen, onClose, mode, user }: UserModalProps) {
+export function UserModal({ isOpen, onClose, onSuccess, mode, user }: UserModalProps) {
   const { data: userDetail, isLoading } = useUser(mode === 'edit' ? user?.id : undefined)
   const createMutation = useCreateUser()
   const updateMutation = useUpdateUser()
@@ -57,6 +58,7 @@ export function UserModal({ isOpen, onClose, mode, user }: UserModalProps) {
         },
       })
     }
+    onSuccess?.()
     onClose()
   }
 
